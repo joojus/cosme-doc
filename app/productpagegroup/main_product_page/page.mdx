@@ -1,0 +1,302 @@
+---
+sidebarTitle: Product Page
+---
+
+import { Callout } from 'nextra/components'
+
+# Product Page
+
+The **Product Page** is the core purchasing experience of the COSME theme. It combines a premium editorial gallery with a clean, conversion‑focused product information panel, followed by detailed product information, reviews, and product recommendations. Every element is designed to feel calm, sophisticated, and brand‑first, continuing the visual language established on the Home Page.
+
+The page is built as a single cohesive experience, with the main product section handling the primary purchase flow and additional sections providing supporting content.
+
+![Product Page in action](/img/product-page-main.png)
+
+---
+
+## Overview
+
+The Product Page is a full‑width, editorial‑style page that typically follows a product card click. It includes:
+
+- **Main Product Section** – a two‑column layout with a large media gallery on the left and product information on the right.
+- **Media Gallery** – images, videos, and 3D models with thumbnail navigation, zoom, and lightbox.
+- **Product Information** – title, price, availability, variants, quantity, Add to Cart, and Buy It Now.
+- **Trust Bar** – compact shipping, payment, and returns information below the purchase controls.
+- **Product Details** – expandable accordion rows for Description, Ingredients, How to use, Shipping & returns, and Additional information, driven by metafields.
+- **Reviews & Full Description** – tabbed content below the main product area, with a full description and customer reviews (via app blocks).
+- **Complementary Products** – products that work well with the current product (manual selection).
+- **Related Products** – similar products recommended by Shopify.
+- **Recently Viewed** – client‑side product history stored in the browser.
+- **Sticky Add to Cart** – a subtle purchase bar that appears when scrolling past the main Add to Cart area.
+
+All sections and settings are available directly in the Shopify Theme Editor under **Products → Default product** – no code required.
+
+---
+
+## Main Product Section
+
+The **Main Product** section is the heart of the Product Page. It handles the primary purchase flow and displays the product’s media, title, price, variants, quantity, and Add to Cart functionality.
+
+### Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+#### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+| **Content width** | Select | `Page`, `Full` | `Page` | Whether the content is constrained to the page width or spans the full viewport. |
+| **Gallery width** | Range (50–65%) | – | `58%` | The width of the media gallery column on desktop. |
+| **Information width** | Range (280–560px) | – | `440px` | The maximum width of the product information column. |
+| **Information alignment** | Select | `Left`, `Center` | `Left` | The horizontal alignment of the product information. |
+| **Gallery spacing** | Range (16–80px) | – | `48px` | The gap between the gallery and the information column. |
+| **Image spacing** | Range (4–24px) | – | `12px` | The gap between images and thumbnails in the gallery. |
+
+#### Gallery Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Gallery layout** | Select | `Editorial`, `Media only` | `Editorial` | Whether to show thumbnails beside the main media. |
+| **Thumbnail position** | Select | `Left`, `Right`, `Bottom` | `Left` | Where thumbnails appear (only in Editorial layout). |
+| **Image aspect** | Select | `Natural`, `Square`, `Portrait`, `Landscape` | `Portrait` | The aspect ratio of the media gallery. |
+| **Image fit** | Select | `Contain`, `Cover` | `Contain` | How images fill the gallery area. |
+| **Image focal** | Select | `Center`, `Top`, `Bottom`, `Left`, `Right` | `Center` | The focal point used when cropping with `Cover`. |
+| **Show thumbnails** | Checkbox | – | `true` | Whether to show thumbnail navigation. |
+| **Show arrows** | Checkbox | – | `false` | Whether to show previous/next arrows in the gallery. |
+| **Show media count** | Checkbox | – | `true` | Whether to show the current media index (e.g., "1 / 5"). |
+| **Enable zoom** | Checkbox | – | `true` | Whether clicking the main image opens the zoom/lightbox. |
+| **Enable lightbox** | Checkbox | – | `true` | Whether the lightbox modal is enabled. |
+| **Enable video controls** | Checkbox | – | `true` | Whether native video controls are shown. |
+
+#### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show badges** | Checkbox | `true` | Whether to show product badges (Sale, custom). |
+| **Custom badge** | Text | – | A custom badge label (e.g., "Best Seller"). |
+| **Show rating** | Checkbox | `true` | Whether to show the product rating (from metafields). |
+| **Reviews link** | URL | `#ProductReviews` | Where the rating link points (e.g., to the reviews tab). |
+| **Show availability** | Checkbox | `true` | Whether to show "In stock", "Low stock", or "Sold out". |
+| **Low stock threshold** | Range (1–20) | `5` | The inventory quantity below which "Low stock" is shown. |
+
+#### Accordion Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Show description** | Checkbox | – | `true` | Whether the Description accordion row is shown. |
+| **Open first accordion** | Checkbox | – | `true` | Whether the first accordion row is open by default. |
+| **Accordion icon style** | Select | `Plus / Minus`, `Chevron` | `Plus / Minus` | The style of the toggle icon. |
+| **Show vendor** | Checkbox | – | `true` | Whether to show the product vendor. |
+| **Show SKU** | Checkbox | – | `true` | Whether to show the product SKU. |
+| **Show product type** | Checkbox | – | `false` | Whether to show the product type. |
+| **Show share** | Checkbox | – | `true` | Whether to show the share button. |
+
+#### Button Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Button style** | Select | `Primary`, `Secondary`, `Outline` | `Primary` | The style of the Add to Cart button. |
+| **Buy It Now style** | Select | `Default (Shopify)`, `Outline` | `Default` | The style of the Buy It Now button. |
+| **Show Buy It Now** | Checkbox | – | `true` | Whether to show the Buy It Now button. |
+
+#### Trust Bar Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show trust** | Checkbox | `true` | Whether to show the trust bar (Free shipping, Secure payment, Easy returns). |
+| **Trust shipping** | Text | `Free shipping` | The label for the shipping trust item. |
+| **Trust payment** | Text | `Secure payment` | The label for the payment trust item. |
+| **Trust returns** | Text | `Easy returns` | The label for the returns trust item. |
+
+#### Sticky Add to Cart Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable sticky Add to Cart** | Checkbox | `true` | Whether the sticky purchase bar is enabled. |
+| **Sticky ATC — desktop** | Checkbox | `true` | Whether the sticky bar appears on desktop. |
+| **Sticky ATC — mobile** | Checkbox | `true` | Whether the sticky bar appears on mobile. |
+| **Show product image** | Checkbox | `true` | Whether to show the product thumbnail in the sticky bar. |
+| **Show product title** | Checkbox | `true` | Whether to show the product title in the sticky bar. |
+| **Show price** | Checkbox | `true` | Whether to show the price in the sticky bar. |
+| **Show variant** | Checkbox | `true` | Whether to show the variant selector in the sticky bar. |
+| **Sticky ATC color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the sticky Add to Cart bar. |
+
+---
+
+### Blocks
+
+The Main Product section uses two block types: **Description** and **Information**. These control the accordion rows in the right column.
+
+#### Description Block
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enabled** | Checkbox | `true` | Whether the Description row is shown. |
+| **Heading** | Text | `Description` | The heading of the accordion row. |
+
+<Callout type="info">
+  The Description row displays a **short excerpt** of the product description (truncated to 200 characters). The full description is shown in the tabs section below.
+</Callout>
+
+#### Information Block
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enabled** | Checkbox | `true` | Whether this information row is shown. |
+| **Heading** | Text | `Ingredients` | The heading of the accordion row. |
+| **Metafield namespace** | Text | `custom` | The metafield namespace (e.g., `custom`). |
+| **Metafield key** | Text | `ingredients` | The metafield key (e.g., `ingredients`, `how_to_use`, `shipping_information`, `additional_information`). |
+| **Fallback content** | Rich text | – | Content shown when the metafield is empty. |
+
+---
+
+## Metafield Setup for Product Details
+
+The Product Details accordion rows (Ingredients, How to use, Shipping & returns, Additional information) are driven by **Shopify metafields**. This allows merchants to add unique content for each product directly from the product admin.
+
+### What are Metafields?
+
+Metafields are custom fields that allow you to store additional information about your products. They are perfect for beauty products where you need to display ingredients, usage instructions, or shipping details that vary by product.
+
+### How to Set Up Metafields
+
+1. **Open the product** in Shopify Admin (Products → select a product).
+
+2. **Scroll down to the "Metafields" section** (it may be called "Product metafields" or "Custom data").
+
+3. **Add a new metafield** by clicking "Add a new metafield" or the "+" button.
+
+4. **Fill in the following details:**
+
+| Field | Value | Example |
+|-------|-------|---------|
+| **Namespace** | `custom` | `custom` |
+| **Key** | The metafield key for the row | `ingredients`, `how_to_use`, `shipping_information`, `additional_information` |
+| **Type** | `Text` or `Rich text` | `Rich text` for formatted content |
+| **Name** | A human‑readable name | `Ingredients` |
+
+5. **Click Save** to create the metafield.
+
+6. **Enter the content** for your product in the newly created field.
+
+7. **Save the product**.
+
+### Default Metafield Keys
+
+The section expects the following metafield keys by default:
+
+| Row | Namespace | Key | Description |
+|-----|-----------|-----|-------------|
+| **Ingredients** | `custom` | `ingredients` | A list of ingredients, formatted with line breaks. |
+| **How to use** | `custom` | `how_to_use` | Usage instructions. |
+| **Shipping & returns** | `custom` | `shipping_information` | Shipping and return policy information. |
+| **Additional information** | `custom` | `additional_information` | Any extra product details. |
+
+### Fallback Content
+
+If a metafield is empty, the row will be **hidden automatically** unless you provide **fallback content** in the block settings. This is useful for products that don't need certain information fields.
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- The product media gallery and product information sit side by side.
+- The gallery column is approximately 58% of the width; the information column is the remainder.
+- Thumbnails appear vertically on the left (or right/bottom, depending on settings).
+- The product information includes the title, price, variants, quantity, and Add to Cart button.
+- The trust bar appears below the Add to Cart button.
+- Product details (accordion) are in the right column, below the purchase controls.
+- The full description and reviews tabs appear below the main product area, spanning the full width.
+
+### Tablet (768–989px)
+
+- The two‑column grid is maintained with adjusted spacing.
+- Thumbnails appear at the bottom.
+- The product information remains readable with slightly smaller typography.
+
+### Mobile (768px)
+
+- The gallery and product information stack vertically (gallery first, then information).
+- Thumbnails appear horizontally at the bottom of the gallery.
+- All controls are touch‑friendly with a minimum tap target of 44px.
+- The trust bar stacks vertically (each item on its own line).
+- The sticky Add to Cart bar appears at the bottom of the viewport.
+
+---
+
+## Accessibility
+
+The Main Product section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h1>`, `<h2>`, `<dl>`, `<form>` appropriately.
+- **Keyboard navigation** – all interactive elements (variants, quantity, buttons, share) are focusable and have visible `:focus-visible` rings.
+- **ARIA labels** – the gallery has `role="region"` and `aria-label`; the rating has visually hidden text.
+- **Reduced motion** – all animations respect `prefers-reduced-motion`.
+- **Touch targets** – all buttons are at least 44px for easy interaction on mobile.
+- **Screen reader feedback** – the Add to Cart status is announced via `aria-live="polite"`.
+
+---
+
+## Performance
+
+- Images are lazy‑loaded (except the first image, which is eager).
+- Videos use `preload="none"` to avoid unnecessary loading.
+- The gallery uses native scrolling and lightweight JavaScript.
+- No third‑party libraries are used.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-product.liquid`
+- **Dependencies:** `cosme-product-gallery`, `cosme-variant-picker`, `cosme-price`, `cosme-button`, `cosme-product-accordion`, `cosme-trust-bar`, `cosme-sticky-atc`
+- **CSS classes:** `.cosme-main-product`, `__inner`, `__media`, `__info`, `__badges`, `__title`, `__rating`, `__stars`, `__price`, `__availability`, `.cosme-product-form`, `__row`, `__quantity`, `__buy-now`, `__actions`, `__status`, `__meta`, `__share`, `__trust`.
+- **CSS variables (tokens):**
+  - `--product-media-width`, `--product-info-width`, `--product-gallery-gap`, `--product-image-gap`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-success`, `--color-error`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+
+---
+
+## Troubleshooting
+
+### Variants are not updating
+- Ensure the product has options set in Shopify.
+- Check that the variant picker snippet is included.
+- Verify that the `data-option-value-id` attributes are correctly set.
+
+### Add to Cart is disabled
+- Ensure the product has at least one available variant.
+- If the product is sold out, the button will be disabled.
+- Check that the variant ID is populated in the hidden input.
+
+### Buy It Now button does not appear
+- Ensure **Show Buy It Now** is enabled in the section settings.
+- Check that the product has a valid variant and is available.
+- The button is hidden when the product is sold out.
+
+### Sticky Add to Cart is not showing
+- Ensure **Enable sticky Add to Cart** is enabled.
+- Check that the **Sticky ATC — desktop** or **mobile** settings are enabled.
+- The sticky bar only appears after the main Add to Cart button leaves the viewport.
+
+### Accordion rows are hidden
+- Ensure the row is **Enabled** in the block settings.
+- Check that the metafield has content (or fallback content is provided).
+- If the metafield is empty and no fallback is set, the row will be hidden.
+
+---
+
+## Conclusion
+
+The Main Product section is the foundation of the COSME Product Page, providing a premium, editorial purchase experience. With flexible settings, real Shopify product data, and full colour‑scheme integration, it delivers a polished, on‑brand experience that sits naturally within the COSME theme.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

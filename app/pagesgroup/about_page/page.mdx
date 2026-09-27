@@ -1,0 +1,391 @@
+---
+sidebarTitle: About Page
+---
+
+# About Page
+
+The **About Page** is the editorial brand story of the COSME theme. It presents the philosophy, values, and visual identity of a luxury beauty brand through a carefully composed sequence of sections — from a full‑width hero to a closing call‑to‑action. The page is designed to feel like a premium editorial magazine spread, not a generic Shopify About Us template.
+
+The page is built as a custom template (`page.about.json`) composed of seven independent sections, each with its own Theme Editor settings. Merchants can create a standard Shopify page (e.g., `About`) and assign the `about` template.
+
+---
+
+## Overview
+
+The About Page provides the following key features:
+
+- **Editorial Hero** – full‑width hero with eyebrow, large headline, description, and a prominent image (desktop and mobile versions).
+- **Brand Story** – asymmetric layout with image and copy; image position can be switched left/right.
+- **Manifesto** – a typographic pause with a large statement and supporting text.
+- **Philosophy** – editorial list of principles (3–6 items) with numbering and hairline dividers.
+- **Image + Story** – visual composition with a primary image, optional secondary image, and copy.
+- **Brand Facts** – optional row of facts (2–4 items) with oversized numbers and short descriptions.
+- **Final CTA** – closing section with primary and secondary CTAs, optionally disable‑able.
+- **Color schemes** – each section can have its own colour scheme (Light, Dark, Light+Accent).
+- **Responsive** – adapts from desktop to tablet to mobile.
+- **Accessibility** – semantic headings, focus states, reduced‑motion support.
+
+All content is fully editable through the Theme Editor.
+
+---
+
+## How to Use
+
+1. In Shopify Admin, go to **Online Store → Pages**.
+2. Create a new page (e.g., `About`).
+3. In the **Theme template** dropdown, select **`about`**.
+4. Save the page.
+5. Go to **Online Store → Themes → Customize**.
+6. Select the **About** page from the dropdown at the top.
+7. Configure each section’s content and settings via the Theme Editor.
+
+---
+
+## Component Sections
+
+The About page is composed of seven independent sections, arranged in a deliberate editorial rhythm.
+
+---
+
+### 1. Editorial Hero (`main-about-hero.liquid`)
+
+The opening full‑width hero establishes the page’s tone with a large heading, supporting text, and a prominent image.
+
+![Editorial Hero](/img/main-about-hero.png)
+
+**Default content:**
+
+| Setting | Default |
+|---------|---------|
+| Eyebrow | `ABOUT COSME` |
+| Heading | `Beauty, thoughtfully considered.` |
+| Description | `Cosme is a modern approach to beauty — thoughtful formulas, intentional rituals, and products designed to become part of everyday life.` |
+| Image | (placeholder) |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Eyebrow | Text | Small uppercase label. |
+| Heading | Text | Main H1. |
+| Description | Textarea | Supporting text. |
+| Text alignment | Select | Left / Center / Right. |
+| Content width | Select | Narrow / Medium / Wide. |
+| Image | Image picker | Desktop image. |
+| Mobile image | Image picker | Mobile‑specific image (optional). |
+| Image alt | Text | Alt text for accessibility. |
+| Image ratio | Select | Portrait / Square / Landscape / Wide / Adapt. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+
+**Accessibility:** Uses `<h1>` for the main heading; `aria-labelledby` connects the heading to the section.
+
+---
+
+### 2. Brand Story (`about-story.liquid`)
+
+A two‑column editorial layout with an asymmetrical image‑to‑text ratio. The image can be placed on the left or right.
+
+![Brand Story](/img/about-story.png)
+
+**Default content:**
+
+| Setting | Default |
+|---------|---------|
+| Eyebrow | `OUR STORY` |
+| Heading | `Beauty begins with intention.` |
+| Body | *Multi‑paragraph story text.* |
+| Secondary text | *Supporting paragraph.* |
+| CTA label | `EXPLORE THE COLLECTION` |
+| CTA link | `/collections/all` |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Eyebrow | Text | Small label. |
+| Heading | Text | Section H2. |
+| Body | Textarea | Primary story text. |
+| Secondary text | Textarea | Optional supporting text. |
+| Text alignment | Select | Left / Center / Right. |
+| Content width | Select | Narrow / Medium / Wide. |
+| Image | Image picker | Editorial image. |
+| Image alt | Text | Alt text. |
+| Image position | Select | Left / Right. |
+| Image ratio | Select | Portrait / Square / Landscape / Wide / Adapt. |
+| Show CTA | Checkbox | Toggle CTA visibility. |
+| CTA label | Text | Button label. |
+| CTA link | URL | Button destination. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+
+---
+
+### 3. Manifesto (`about-manifesto.liquid`)
+
+A full‑width typographic section that creates a visual pause. It features a large statement, supporting text, and optional decorative elements.
+
+![Manifesto](/img/about-manifesto.png)
+
+**Default content:**
+
+| Setting | Default |
+|---------|---------|
+| Eyebrow | `THE COSME PHILOSOPHY` |
+| Statement | `Beauty should feel intentional.` |
+| Supporting text | `Less noise. Better rituals. Products chosen for how they work, how they feel, and how naturally they become part of your everyday.` |
+| Index | `01 / PHILOSOPHY` |
+| Divider | On |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Eyebrow | Text | Small label. |
+| Statement | Text | Large editorial statement. |
+| Supporting text | Textarea | Supporting paragraph. |
+| Alignment | Select | Left / Center. |
+| Statement max width | Select | Narrow / Medium / Wide. |
+| Show index | Checkbox | Toggle index label. |
+| Index text | Text | Custom index label. |
+| Show divider | Checkbox | Toggle decorative rule. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+
+---
+
+### 4. Philosophy (`about-philosophy.liquid`)
+
+An editorial list of brand principles. Each item includes a number, title, and short description. The list uses a 2‑column grid (desktop) or a single column (mobile/tablet).
+
+![Philosophy](/img/about-philosophy.png)
+
+**Default content:**
+
+| Block | Title | Description |
+|-------|-------|-------------|
+| 01 | Thoughtful Formulas | Ingredients and formulas chosen with purpose. |
+| 02 | Skin First | Beauty starts with understanding what your skin actually needs. |
+| 03 | Intentional Rituals | Simple routines designed to feel as good as they are effective. |
+| 04 | Less, Better | Thoughtful choices over unnecessary complexity. |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Eyebrow | Text | Small label. |
+| Heading | Text | Section H2. |
+| Description | Textarea | Optional supporting text. |
+| Layout | Select | Grid / List. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+| Blocks | – | Add up to 6 principle blocks. |
+
+**Block settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Title | Text | Principle title. |
+| Description | Textarea | Supporting text. |
+
+---
+
+### 5. Image + Story (`about-image-story.liquid`)
+
+A visual editorial composition that combines a large primary image, an optional secondary image, and copy in an asymmetrical layout.
+
+![Image + Story](/img/about-image-story.png)
+
+**Default content:**
+
+| Setting | Default |
+|---------|---------|
+| Eyebrow | `THE RITUAL` |
+| Heading | `Designed for the moments in between.` |
+| Body | *Story text about rituals.* |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Eyebrow | Text | Small label. |
+| Heading | Text | Section H2. |
+| Body | Textarea | Story text. |
+| Primary image | Image picker | Main visual. |
+| Primary image alt | Text | Alt text. |
+| Show secondary image | Checkbox | Toggle second image. |
+| Secondary image | Image picker | Offset image. |
+| Secondary image alt | Text | Alt text (empty = decorative). |
+| Image position | Select | Left / Right. |
+| Image aspect ratio | Select | Portrait / Square / Landscape / Wide / Adapt. |
+| Show CTA | Checkbox | Toggle CTA. |
+| CTA label | Text | Button label. |
+| CTA link | URL | Button destination. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+
+---
+
+### 6. Brand Facts (`about-brand-facts.liquid`)
+
+An optional, quiet row of brand facts with oversized numbers and short descriptions.
+
+![Brand Facts](/img/about-brand-facts.png)
+
+**Default content:**
+
+| Block | Title | Description |
+|-------|-------|-------------|
+| 01 | Thoughtfully Made | Every product begins with a clear purpose. |
+| 02 | Everyday Rituals | Beauty designed to become part of real routines. |
+| 03 | Less, Better | A considered approach to modern skincare. |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Enable section | Checkbox | Toggle the entire section. |
+| Eyebrow | Text | Small label. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+| Blocks | – | Add 2–4 fact blocks. |
+
+**Block settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Number | Text | Displayed number (e.g., `01`). |
+| Title | Text | Short title. |
+| Description | Textarea | Supporting text. |
+
+---
+
+### 7. Final CTA (`about-cta.liquid`)
+
+![Final CTA](/img/about-cta.png)
+
+The closing section with a primary and optional secondary CTA, designed to drive the visitor to shop or explore the journal.
+
+**Default content:**
+
+| Setting | Default |
+|---------|---------|
+| Eyebrow | `DISCOVER COSME` |
+| Heading | `Make beauty part of your ritual.` |
+| Description | `Explore our considered collection of skincare and beauty essentials.` |
+| Primary label | `SHOP ALL` |
+| Primary link | `/collections/all` |
+| Show secondary CTA | `true` |
+| Secondary label | `READ THE JOURNAL` |
+| Secondary link | `/blogs/news` |
+
+**Theme Editor settings:**
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| Enable section | Checkbox | Toggle the section. |
+| Eyebrow | Text | Small label. |
+| Heading | Text | Section H2. |
+| Description | Textarea | Supporting text. |
+| Primary label | Text | Main button label. |
+| Primary link | URL | Main button link. |
+| Show secondary CTA | Checkbox | Toggle second button. |
+| Secondary label | Text | Second button label. |
+| Secondary link | URL | Second button link. |
+| Alignment | Select | Left / Center. |
+| Color scheme | Select | Light / Dark / Light+Accent. |
+| Section spacing | Select | Small / Medium / Large. |
+
+---
+
+## Visual Rhythm
+
+The sections are sequenced to create a deliberate editorial flow:
+
+1. **Hero** – opens with a strong visual and headline.
+2. **Story** – introduces the brand narrative.
+3. **Manifesto** – provides a typographic pause.
+4. **Philosophy** – lists core principles.
+5. **Image + Story** – returns to visual storytelling.
+6. **Brand Facts** – optional, quiet factual layer.
+7. **CTA** – closes the page with a clear action.
+
+The transition between sections is smooth, with consistent spacing and colour‑scheme transitions.
+
+---
+
+## Accessibility
+
+- **Semantic headings**: Each section uses a logical heading hierarchy (H1 for hero, H2 for subsequent sections).
+- **Image alt text**: All images support custom alt text; secondary images default to decorative (`alt=""`, `aria-hidden="true"`).
+- **Keyboard navigation**: All interactive elements (buttons, links) are focusable with visible focus states.
+- **Reduced motion**: CSS animations respect `prefers-reduced-motion`.
+- **Colour contrast**: All text meets WCAG contrast requirements across the three colour schemes.
+
+---
+
+## Performance
+
+- **No JavaScript**: The About page is entirely CSS + Liquid; no client‑side JavaScript.
+- **Lazy loading**: Images below the fold use `loading="lazy"`.
+- **Responsive images**: Uses Shopify's `image_url` with appropriate `sizes`.
+- **CSS scoped**: All styles are scoped to their respective sections; no global pollution.
+
+---
+
+## Troubleshooting
+
+### The About template is not showing in the Theme Editor
+- Ensure `templates/page.about.json` exists in the theme.
+- Create a page in Shopify Admin and assign the `about` template.
+- In Theme Editor, select the **About** page from the dropdown.
+
+### Images are not displaying
+- Check that images are uploaded in the Theme Editor.
+- If using desktop/mobile separate images, ensure both are set.
+- If no image is set, a placeholder appears (SVG in production, hint in editor).
+
+### A section is not visible on the storefront
+- Some sections have an **Enable section** checkbox (Brand Facts, Final CTA). Ensure it is checked.
+- If a section has no content (e.g., empty heading or body), it may still render; check that required fields are filled.
+
+### The secondary image in Image + Story overlaps the text
+- This is a known layout nuance. Adjust the image aspect ratio or use the Theme Editor to reposition.
+- Alternatively, disable the secondary image if it is not needed.
+
+### The layout is broken on mobile
+- All sections are responsive; mobile layouts are purpose‑built.
+- If something appears broken, check that no custom CSS overrides the theme’s default styles.
+
+### The colour scheme does not match the rest of the theme
+- Each section has its own colour scheme setting. Ensure they are set consistently (e.g., all `scheme-1` for a uniform look, or intentionally varied).
+
+---
+
+## Usage Examples
+
+### Full editorial About page
+- Enable all sections.
+- Use the default copy or customise it to match your brand.
+- Set all colour schemes to `Light` for a consistent, clean look.
+
+### Minimal About page (no facts, no CTA)
+- Disable **Brand Facts** and **Final CTA**.
+- Only Hero, Story, Manifesto, Philosophy, and Image+Story remain.
+
+### Dark + Accent variation
+- Set the hero, story, and image sections to `Dark`.
+- Set Manifesto, Philosophy, and CTA to `Light+Accent` for contrast.
+
+### Image‑heavy About
+- Upload high‑quality primary and secondary images.
+- Use `Adapt` ratio to preserve original image proportions.
+- Disable secondary image if it clutters the layout.
+
+---
+
+## Conclusion
+
+The COSME About Page is a carefully crafted editorial brand story that elevates a simple Shopify page into a premium brand experience. Its modular sections, flexible settings, and consistent design language make it a powerful tool for merchants to communicate their story.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

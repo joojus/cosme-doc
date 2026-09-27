@@ -1,0 +1,230 @@
+---
+sidebarTitle: 404 Page
+---
+
+# 404 Page
+
+The **404 Page** is the not‑found experience for the COSME theme — a minimal, editorial error page that maintains the brand's premium aesthetic while helping visitors find their way back to the store. It provides clear navigation options, an optional search, and a subtle visual touch, all within the Cosme design language.
+
+The page is built as a single section (`404.liquid`) that uses Shopify's native route helpers (`routes.all_products_collection_url`, `routes.root_url`, `routes.search_url`) and integrates with the existing Cosme design system.
+
+![404 Page example](/img/404.png)
+
+---
+
+## Overview
+
+The 404 Page provides the following key features:
+
+- **Restrained editorial design** – large “404” eyebrow, clear heading, and brief description.
+- **Primary navigation** – “Continue shopping” (to `/collections/all`) and “Back to home” (to `/`) buttons.
+- **Optional search** – native Shopify search form that works without JavaScript.
+- **Optional image** – subtle editorial image (off by default) with configurable aspect ratio.
+- **Color schemes** – fully supports Light, Dark, and Light+Accent.
+- **Subtle animation** – gentle fade‑in when global animations are enabled; respects `prefers-reduced-motion`.
+- **Responsive** – adapts to all screen sizes with comfortable touch targets.
+
+All settings are available in the Theme Editor under **Templates → 404**.
+
+---
+
+## Section Settings
+
+The 404 section provides a focused set of options, grouped by functionality.
+
+![404 Page settings](/img/404-settings.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `404` | The large number displayed above the heading. |
+| **Heading** | Text | `We couldn't find that page.` | The main page heading. |
+| **Description** | Textarea | `The page you're looking for may have moved or no longer exists.` | Supporting text below the heading. |
+| **Primary label** | Text | `Continue shopping` | Label for the primary CTA button (links to `/collections/all`). |
+| **Secondary label** | Text | `Back to home` | Label for the secondary CTA button (links to `/`). |
+
+### Search Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show search** | Checkbox | `true` | Enables or disables the native Shopify search form. |
+| **Search label** | Text | `Search Cosme` | Accessible label and placeholder for the search input. |
+
+### Image Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show image** | Checkbox | `false` | Enables or disables the optional editorial image. |
+| **Image** | Image picker | – | The image displayed above the content. |
+| **Image ratio** | Select | `Portrait`, `Square`, `Landscape`, `Wide` | `Portrait` | Aspect ratio of the image. |
+
+### Color Scheme
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the page background and text. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Centered composition**: all content is centred with generous whitespace.
+- **Image (optional)**: appears above the text, centred, with configurable aspect ratio.
+- **Buttons**: primary and secondary CTAs side‑by‑side.
+- **Search (optional)**: appears below the buttons with inline layout (label + input + button).
+
+### Tablet (768–989px)
+
+- Same centred layout with slightly reduced spacing.
+- Image width scaled proportionally.
+- Search remains inline if space permits.
+
+### Mobile (768px)
+
+- **Stacked layout**: image, eyebrow, heading, description, buttons (stacked), search (stacked field + button).
+- **Buttons**: full‑width for comfortable touch targets.
+- **Search**: stacked email + button (inline on tablet+).
+- **Typography**: scales down using `clamp()`.
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Main wrapper | `.cosme-404` | Full‑width container with color scheme. |
+| Inner container | `.cosme-404__inner` | Centered, constrained width, minimum height. |
+| Media | `.cosme-404__media` | Optional image container. |
+| Content | `.cosme-404__content` | Text, CTAs, and search. |
+| Code/eyebrow | `.cosme-404__code` | Large “404” number (decorative). |
+| Title | `.cosme-404__title` | Page heading `<h1>`. |
+| Description | `.cosme-404__description` | Supporting text. |
+| Actions | `.cosme-404__actions` | Primary and secondary button wrappers. |
+| Search | `.cosme-404__search` | Native Shopify search form. |
+
+### Modifier Classes
+
+| Class | Effect |
+|-------|--------|
+| `cosme-404--has-image` | Adds spacing and layout adjustments when an image is present. |
+| `cosme-404--animated` | Enables subtle fade‑in animation (controlled by global animation setting). |
+
+---
+
+## Button & Search Behaviour
+
+- **Continue shopping** – uses `routes.all_products_collection_url` (typically `/collections/all`). Merchants can change the destination by modifying the `shop_url` variable if needed.
+- **Back to home** – uses `routes.root_url` (`/`).
+- **Search** – is a standard `<form>` with `method="get"` to `routes.search_url`. It includes hidden fields for `type=product` and `options[prefix]=last`. The form works without JavaScript.
+
+---
+
+## Animation
+
+When global animations are enabled (`settings.enable_animations`) and the user has not set `prefers-reduced-motion`:
+
+- The eyebrow, heading, description, buttons, search, and image fade in with a slight upward translation.
+- Delays are staggered (0.06s, 0.12s, 0.18s, 0.24s) for a polished entrance.
+- All animations respect `prefers-reduced-motion` and are disabled when animations are turned off.
+
+---
+
+## Accessibility
+
+The 404 Page is built with accessibility as a priority:
+
+- **Heading hierarchy** – exactly one `<h1>` for the main heading.
+- **Semantic HTML** – uses `<main>`, `<h1>`, `<p>`, `<form>`, and buttons with appropriate semantics.
+- **Button labels** – clear, meaningful labels for both CTAs.
+- **Search** – has an associated visible label and proper `id`/`name` attributes.
+- **Keyboard navigation** – all interactive elements are focusable with visible focus rings.
+- **Focus indicators** – uses `--color-accent` with `--focus-ring-width`.
+- **Color contrast** – all text meets WCAG contrast requirements in all three color schemes.
+- **Reduced motion** – the animation respects `prefers-reduced-motion` and is disabled when animations are off.
+
+---
+
+## Performance
+
+- **Minimal JavaScript** – no client‑side JavaScript required; the page is pure Liquid + CSS.
+- **Eager loading** – the optional image (if used) loads eagerly (`loading="eager"`).
+- **Responsive images** – uses Shopify's `image_url` with appropriate `sizes`.
+- **No external libraries** – only native Shopify routes and form functionality.
+- **CSS variables** – uses existing Cosme tokens for consistent styling.
+
+---
+
+## Technical Details
+
+- **File:** `sections/404.liquid`
+- **Template:** `templates/404.json` (or `404.liquid`)
+- **Snippets used:** `cosme-image`, `cosme-form-field`, `cosme-button`
+- **CSS classes:** `.cosme-404`, `__inner`, `__media`, `__image`, `__content`, `__code`, `__title`, `__description`, `__actions`, `__cta`, `__cta-secondary`, `__search`, `__search-field`, `__search-submit`
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **Animation keyframe:** `cosme-404-enter`
+- **JavaScript:** none.
+
+---
+
+## Troubleshooting
+
+### The 404 page is not showing for unknown URLs
+- Ensure the `templates/404.liquid` or `templates/404.json` exists.
+- In Shopify, the 404 template is automatically used for any non‑existent path.
+- Check that the theme is correctly published.
+
+### The buttons do not navigate correctly
+- **Continue shopping** uses `routes.all_products_collection_url`. If this does not exist, the button will be empty. Verify that the store has at least one collection.
+- **Back to home** uses `routes.root_url`. This is always `/`.
+
+### The search form does not work
+- The form uses `method="get"` and `action="{{ routes.search_url }}"`. Ensure the store's search is enabled.
+- The search input has `name="q"` and hidden fields for `type=product` and `options[prefix]=last`.
+- The form works without JavaScript; if it fails, check the URL structure.
+
+### The image is not displaying
+- Ensure **Show image** is enabled.
+- Select an image in the **Image** picker.
+- If the image does not appear, check that the file is uploaded and accessible.
+
+### The animation does not play
+- The animation only plays when global animations are enabled (`settings.enable_animations`).
+- The animation respects `prefers-reduced-motion`; if the user has this setting, the animation is disabled.
+- You can force the animation to always play by removing the `prefers-reduced-motion` condition, but this is not recommended.
+
+### The page is too tall or too short
+- The section has a minimum height of `min(70svh, 46rem)` on desktop and `min(78svh, 52rem)` on tablet.
+- If you need more or less vertical space, adjust the `min-height` values in the CSS.
+
+---
+
+## Usage Examples
+
+### Minimal 404 (no image, no search)
+- Disable **Show image** and **Show search**.
+- Only the eyebrow, heading, description, and two CTAs appear.
+
+### Full 404 (with image and search)
+- Enable **Show image**, upload an editorial image, and choose an aspect ratio.
+- Enable **Show search** and set a custom search label.
+- The page will display the image, text, CTAs, and a search form.
+
+### Dark scheme
+- Set **Color scheme** to `Dark` (scheme-2) for a dramatic, high‑contrast error page.
+
+---
+
+## Conclusion
+
+The COSME 404 Page is a minimal, elegant not‑found experience that respects the brand's premium aesthetic while providing clear navigation options. With optional image and search, it balances simplicity with utility, ensuring visitors can easily return to the store.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

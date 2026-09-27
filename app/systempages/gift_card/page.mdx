@@ -1,0 +1,260 @@
+---
+sidebarTitle: Gift Card
+---
+
+# Gift Card
+
+The **Gift Card** page is the system template for viewing and using Shopify gift cards. It presents the gift card balance, code, and actions in a premium editorial layout that aligns with the Cosme brand — transforming a functional system page into a thoughtful, polished brand experience.
+
+The page uses Shopify's native gift card object (`gift_card`) and preserves all core functionality: balance display, expiration status, code copying, Apple Wallet integration, and the gift card visual. It is built as a standalone template with `{% layout none %}` and does not require any merchant setup.
+
+![Gift Card example](/img/gift-card.png)
+
+---
+
+## Overview
+
+The Gift Card page provides the following key features:
+
+- **Editorial introduction** – configurable eyebrow, heading, and description (centre‑aligned by default).
+- **Two‑column layout** – gift card visual on the left, information and actions on the right (stacks on mobile).
+- **Gift card visual** – features the shop name, balance, formatted code, and the native Shopify card SVG.
+- **Balance display** – dynamic from `gift_card.balance | money`.
+- **Status & expiration** – shows if the card is disabled or expired, and the expiration date if set.
+- **Code copy** – copies the native gift card code via the Clipboard API (fallback to `execCommand`); visual feedback and live region announcement.
+- **Apple Wallet** – if `gift_card.pass_url` exists, displays the native Apple Wallet add button.
+- **Optional editorial message** – a configurable brand story section below the card.
+- **Continue shopping** – links to the store's product collection page.
+- **Color schemes** – main page and editorial section each have independent colour scheme settings.
+- **Accessibility** – skip link, heading hierarchy, ARIA labels, focus states, reduced‑motion support.
+- **No external dependencies** – pure Liquid + CSS + Vanilla JS.
+
+All settings are available in the Shopify Theme Editor under **Theme settings → Gift card**.
+
+---
+
+## Settings
+
+Because the Gift Card template uses `{% layout none %}`, its settings are managed through the global **Theme settings** (in `config/settings_schema.json`), not as a section schema.
+
+![Gift Card settings](/img/gift-card-settings.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show eyebrow** | Checkbox | `true` | Toggles the eyebrow text above the heading. |
+| **Eyebrow** | Text | `GIFT CARD` | Small uppercase text above the heading. |
+| **Heading** | Text | `A gift of beauty` | The main page heading. |
+| **Description** | Textarea | `Give someone special the freedom to choose something they truly love.` | Supporting text below the heading. |
+| **Text alignment** | Select | `Left`, `Center`, `Right` | `Center` | Alignment of the intro text. |
+
+### Gift Card Visual Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Colour scheme for the main page. |
+
+### Editorial Message Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show editorial message** | Checkbox | `true` | Toggles the optional editorial section below the gift card. |
+| **Editorial eyebrow** | Text | `A THOUGHTFUL GIFT` | Small uppercase text above the editorial heading. |
+| **Editorial heading** | Text | `Something they'll love` | Main heading of the editorial section. |
+| **Editorial text** | Textarea | `From everyday essentials to beautiful skincare rituals, let them choose what feels right for them.` | Supporting text. |
+| **Editorial color scheme** | Color scheme picker | Light, Dark, Light+Accent | Inherits main colour scheme | Colour scheme for the editorial section (can differ from the main page). |
+
+### Action Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Continue shopping label** | Text | `Continue Shopping` | Label for the final CTA button. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥768px)
+
+- **Two‑column grid**:
+  - **Left**: gift card visual (shop name, balance, card SVG).
+  - **Right**: balance, status, expiration, formatted code, copy button, Apple Wallet (if available).
+- **Intro**: centered by default, with generous spacing.
+- **Editorial section**: full‑width, centred, below the main card.
+- **Continue Shopping**: centred button at the bottom.
+
+### Mobile (768px)
+
+- **Stacked layout**: intro, visual (top), information/actions (bottom).
+- Gift card visual is full‑width with `max-width: 32rem` and auto margins.
+- All text scales appropriately; no horizontal overflow.
+
+---
+
+## Component Structure
+
+The `cosme-gift-card` snippet contains all markup, styles, and behaviour.
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Skip link | `.cosme-gift-card__skip` | Visible on focus for keyboard users. |
+| Container | `.cosme-gift-card` | Full‑width wrapper with colour scheme and animation class. |
+| Main | `.cosme-gift-card__main` | Constrained to `max-width: 74rem`. |
+| Intro | `.cosme-gift-card__intro` | Eyebrow, heading, description with alignment modifiers. |
+| Stage | `.cosme-gift-card__stage` | Two‑column grid wrapper. |
+| Visual column | `.cosme-gift-card__visual-col` | Left column (gift card face). |
+| Gift card face | `.cosme-gift-card__face` | The card visual – aspect‑ratio, border, background, padding. |
+| Shop name | `.cosme-gift-card__shop` | `shop.name` displayed on the card. |
+| Balance on card | `.cosme-gift-card__face-balance` | Row with balance label and amount. |
+| Card SVG | `.cosme-gift-card__asset` | Native `gift-card/card.svg`. |
+| Info column | `.cosme-gift-card__info` | Right column with status, balance, code, copy, wallet. |
+| Code block | `.cosme-gift-card__code-block` | Wrapper for code and copy button. |
+| Copy button | `.cosme-gift-card__copy` | Button with copy icon and label. |
+| Editorial section | `.cosme-gift-card__editorial` | Optional brand message with independent colour scheme. |
+| Continue | `.cosme-gift-card__continue` | CTA button wrapper. |
+
+---
+
+## Native Shopify Data
+
+All dynamic data comes directly from the `gift_card` object:
+
+
+| Variable | Description |
+|----------|-------------|
+|  gift_card.balance | money  | Remaining balance, formatted with currency. |
+| ` gift_card.enabled ` | Boolean – whether the card is active. |
+| `{{ gift_card.expired }}` | Boolean – whether the card has expired. |
+| `{{ gift_card.expires_on }}` | Expiration date, if set. |
+|  gift_card.code | format_code  | The gift card code, formatted with spaces. |
+| `{{ gift_card.pass_url }}` | URL to add to Apple Wallet. |
+
+
+These values are never hardcoded; they are always sourced from Shopify.
+
+---
+
+## Code Copy Functionality
+
+- The formatted code is displayed in a `<p>` tag with `user-select: all`.
+- The **Copy code** button uses the Clipboard API (`navigator.clipboard.writeText`) to copy the raw code.
+- If the Clipboard API is unavailable, a fallback uses `document.execCommand('copy')`.
+- On success, the button label changes to `COPIED` (via CSS `text-transform: uppercase`) and returns to `COPY CODE` after 2 seconds.
+- A live region (`role="status"`) announces the copy result for screen readers.
+- The code remains selectable even without JavaScript.
+
+---
+
+## Accessibility
+
+- **Skip link** – visible on focus, skips to main content.
+- **Heading hierarchy** – intro heading is `<h1>`, editorial uses `<h2>`.
+- **Copy button** – has `aria-describedby` referencing the code element.
+- **Live region** – announces copy success/failure.
+- **Keyboard navigation** – all interactive elements (button, links) are focusable with visible focus rings.
+- **Reduced motion** – animations are disabled when `prefers-reduced-motion` is set.
+- **Contrast** – all text meets WCAG contrast requirements in all three colour schemes.
+- **Alt text** – images have appropriate `alt` attributes.
+
+---
+
+## Performance
+
+- **No external libraries** – pure Liquid + CSS + Vanilla JS.
+- **Minimal JavaScript** – only the copy code functionality.
+- **CSS animations** – use `prefers-reduced-motion` and global animation setting.
+- **Eager loading** – the gift card SVG is a lightweight asset; no images are lazy‑loaded.
+- **CSS variables** – uses existing Cosme tokens.
+
+---
+
+## Technical Details
+
+- **File:** `templates/gift_card.liquid` (system template with `{% layout none %}`)
+- **Snippet:** `snippets/cosme-gift-card.liquid`
+- **Settings:** `config/settings_schema.json` (under a `Gift card` group)
+- **Snippets used:** `cosme-icon`, `cosme-button`
+- **CSS classes:** `.cosme-gift-card`, `__skip`, `__main`, `__intro`, `__intro--center`, `__eyebrow`, `__title`, `__description`, `__stage`, `__visual-col`, `__figure`, `__face`, `__shop`, `__face-balance`, `__face-label`, `__face-amount`, `__asset`, `__info`, `__status`, `__expires`, `__balance-block`, `__balance`, `__instruction`, `__code-block`, `__code`, `__copy`, `__wallet`, `__editorial`, `__continue`, etc.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-error`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** Handles:
+  - Code copying with Clipboard API + fallback.
+  - Button label update and timeout reset.
+  - Live region announcement.
+
+---
+
+## How to Preview
+
+Because the Gift Card is a system page, it cannot be accessed via a regular storefront URL. To preview it:
+
+1. **Theme Editor**: In Customize, select **Templates → Gift card** from the dropdown.
+2. **Shopify Admin**: Create a test gift card (Products → Gift cards) and use the preview link.
+3. **Local development**: With `shopify theme dev`, press `g` in the terminal or visit the special preview URL (e.g., `http://127.0.0.1:9292/gift_cards/[store_id]/preview`).
+
+---
+
+## Troubleshooting
+
+### The gift card visual does not show
+- Ensure the `gift_card` object is passed to the snippet.
+- The card uses `{{ 'gift-card/card.svg' | shopify_asset_url }}` – this is a Shopify‑provided asset.
+
+### The balance is not formatted correctly
+- The balance uses `{{ gift_card.balance | money }}` – this respects the store's currency settings.
+
+### The copy button does not work
+- Check that the button has the `data-code` attribute with the raw code.
+- If the Clipboard API is blocked, the fallback `execCommand` is used.
+- Ensure the button is not disabled.
+
+### The Apple Wallet button does not appear
+- Apple Wallet is shown only when `gift_card.pass_url` is present (Shopify provides this for eligible cards).
+
+### The expired/disabled status is not shown
+- The status is shown when `gift_card.enabled == false` or `gift_card.expired` is true.
+- If neither condition is met, the status block is hidden.
+
+### The editorial section is not visible
+- Enable **Show editorial message** in Theme Settings.
+- Fill in at least one of the editorial fields (eyebrow, heading, or text).
+
+### The page does not respect the colour scheme
+- The main page uses `settings.gift_card_color_scheme`.
+- The editorial section uses `settings.gift_card_editorial_color_scheme`.
+- If these settings are empty, they fall back to the global `settings.color_scheme`.
+
+### The layout is broken on mobile
+- The grid uses `grid-template-columns: 1fr` on mobile and switches to `1fr 1fr` at `768px`.
+- Check that no custom CSS overrides these values.
+
+---
+
+## Usage Examples
+
+### Full editorial gift card (default)
+- Enable all settings.
+- Use the default copy for intro and editorial.
+- Light scheme for main page, Light+Accent for editorial (if desired).
+
+### Minimal gift card (no editorial message)
+- Disable **Show editorial message**.
+- The page will show only the intro, gift card, actions, and Continue Shopping.
+
+### Brand‑focused gift card
+- Customise the heading, description, and editorial text to match your brand voice.
+- Set the editorial colour scheme to `Dark` for contrast.
+
+---
+
+## Conclusion
+
+The COSME Gift Card page transforms a functional system template into a premium brand experience. By preserving all native Shopify data and adding editorial polish, it ensures that gift card recipients feel the brand's thoughtfulness. The page is fully configurable, accessible, and lightweight, requiring no merchant effort beyond setting up gift cards in Shopify.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

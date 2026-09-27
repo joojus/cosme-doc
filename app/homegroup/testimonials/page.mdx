@@ -1,0 +1,277 @@
+---
+sidebarTitle: Testimonials
+---
+
+import { Callout } from 'nextra/components'
+
+# Testimonials
+
+The **Testimonials** section presents customer feedback in a refined, editorial carousel. It is designed for beauty and lifestyle brands that want to build trust through authentic, human‑centred reviews without relying on third‑party review apps.
+
+The section features a horizontal carousel with a subtle peek of the next card, optional rating summary, individual star ratings, author avatars, verified badges, and optional product references. Every testimonial is managed manually through Theme Editor blocks, giving merchants full control over the content.
+
+![Testimonials in action](/img/testimonials-main.png)
+
+---
+
+## Overview
+
+The Testimonials section is a full‑width, editorial‑style carousel that typically sits lower on the homepage, providing a visual pause after more dynamic sections like Hero or Vertical Video. It includes:
+
+- **Editorial header** – eyebrow, heading, and optional descriptive text.
+- **Rating summary** – compact score, stars, and review count (optional).
+- **Testimonial cards** – quotes, author name, location, avatar, role, and star rating.
+- **Verified badge** – optional label to indicate verified customers.
+- **Product reference** – optional link to a product with image, title, and price.
+- **Quick View** – plus button on product references opens the global Quick View modal.
+- **Horizontal carousel** – smooth, native scrolling with arrows and optional autoplay.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile with native touch scrolling.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+![Testimonials in action](/img/testimonials-editor.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `TESTIMONIALS` | Small text displayed above the heading. |
+| **Heading** | Text | `Loved by our customers` | Main section heading. |
+| **Description** | Textarea | `Real experiences from people who use our products every day.` | Supporting text below the heading. |
+| **Heading alignment** | Select | `Left`, `Center` | `Left` | Alignment of the header content. |
+
+### Rating Summary Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show rating summary** | Checkbox | `true` | Displays the overall rating summary (score + stars + label). |
+| **Rating** | Range (1–5, step 0.1) | `4.9` | The average rating displayed in the summary. |
+| **Review count** | Number | `120` | The number of reviews shown in the summary label. |
+| **Rating label** | Text | `Based on 120+ reviews` | The label displayed next to the rating. |
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop cards** | Select | `2`, `3`, `4` | `3` | Number of cards visible on desktop. |
+| **Tablet cards** | Select | `1`, `2` | `2` | Number of cards visible on tablet. |
+| **Show arrows** | Checkbox | – | `true` | Displays left/right chevron buttons on the carousel. |
+| **Autoplay** | Checkbox | – | `false` | Automatically advances the carousel. **Disabled by default.** |
+| **Autoplay interval** | Range (3000–8000 ms, step 1000) | `5000` | How long each slide group is shown before advancing (only when autoplay is enabled). |
+
+### Colour Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+---
+
+## Blocks
+
+The section uses one block type: **Testimonial**. Each block represents a single customer testimonial card.
+
+### Testimonial Block
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Quote** | Textarea | – | The testimonial text. **Required** to render the card. |
+| **Author name** | Text | `Emma R.` | The customer’s name. |
+| **Author location** | Text | `New York` | Optional city or region. |
+| **Avatar** | Image picker | – | A circular portrait image. If empty, initials are used as a fallback. |
+| **Author role** | Text | – | Optional role or title (e.g., “Skincare Enthusiast”). |
+| **Rating** | Range (1–5, step 1) | `5` | The star rating for this specific testimonial. |
+| **Verified** | Checkbox | `false` | Shows a “Verified” badge next to the author name. |
+| **Verified label** | Text | `Verified` | The text of the verified badge. |
+| **Product** | Product picker | – | A product to link from the testimonial. |
+| **Show product** | Checkbox | `false` | Displays the product reference at the bottom of the card (image, title, price, and Quick View button). |
+
+<Callout type="info">
+  The **Show product** setting only works when a product is actually selected. If no product is chosen, the product area remains hidden.
+</Callout>
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- The header and optional rating summary sit at the top.
+- The carousel shows the number of cards set in **Desktop cards** (2, 3, or 4).
+- The next card is partially visible (approximately 18% peek) to indicate more content.
+- Cards have a consistent minimum height; long quotes are clamped at 8 lines.
+- Arrow buttons appear on the sides when there is overflow.
+
+### Tablet (750–989px)
+
+- The carousel shows 1 or 2 cards (as set in **Tablet cards**).
+- The next card is partially visible.
+- Arrow buttons remain functional.
+
+### Mobile (750px)
+
+- The carousel shows 1 card with a partial peek of the next card.
+- Touch scrolling works natively.
+- Arrow buttons are slightly smaller but remain touch‑friendly (44px minimum).
+
+---
+
+## Carousel & Autoplay Behaviour
+
+### Native Scrolling
+
+- The carousel uses native horizontal scrolling with `scroll-snap-type: x proximity` for smooth, natural touch interaction.
+- Cards snap into place when scrolling stops, but the snap is not aggressive – users can stop mid‑scroll.
+- Arrow buttons move the carousel by one “card group” (the number of visible cards).
+
+### Autoplay
+
+- **Autoplay is disabled by default** – merchants must explicitly enable it.
+- When enabled, the carousel advances automatically at the chosen interval.
+- Autoplay pauses when:
+  - The user clicks an arrow button.
+  - The user scrolls the carousel manually.
+  - The user focuses any interactive element inside the section.
+  - The section is not sufficiently visible (intersection ratio < 35%).
+  - The browser tab is hidden.
+  - `prefers-reduced-motion` is active.
+  - Global `enable_animations` is disabled.
+- Autoplay resumes after a short idle period, provided the section is still visible and autoplay is still allowed.
+
+### Arrows
+
+- Left/right chevron buttons are shown only when there is overflow (more cards than visible).
+- Buttons are disabled at the start/end of the carousel.
+- Each click moves the carousel by one card group.
+
+---
+
+## Accessibility
+
+The Testimonials section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<article>`, `<blockquote>`, `<ul>`, `<li>` appropriately.
+- **Heading hierarchy** – the section heading is an `<h2>`; author names are not headings.
+- **Star ratings** – each rating has a visually hidden text equivalent (e.g., “5 out of 5 stars”).
+- **Avatar alt text** – uses the author name when available; otherwise a generic fallback.
+- **Keyboard navigation** – all interactive elements (arrows, product links, Quick View buttons) are focusable and have visible `:focus-visible` rings.
+- **No focus trap** – keyboard focus moves naturally through the page.
+- **Reduced motion** – autoplay and smooth scrolling are disabled when `prefers-reduced-motion` is active.
+- **Touch targets** – all buttons are at least 44px for easy interaction on mobile.
+
+---
+
+## Performance
+
+- The carousel uses native scrolling – no third‑party libraries.
+- JavaScript is lightweight, using `IntersectionObserver` for visibility checks and `ResizeObserver` for responsive updates.
+- Autoplay pauses when the section is not visible or when the tab is hidden.
+- Cards have a minimum height to prevent layout shift when avatars or products are missing.
+- Images (avatars, product thumbnails) use `loading="lazy"`.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `sections/testimonials.liquid`
+- **Dependencies:** `cosme-icon` (for stars, chevrons, plus), `cosme-image`, `cosme-price`
+- **CSS classes:** `.cosme-testimonials`, `__inner`, `__header`, `__eyebrow`, `__heading`, `__description`, `__summary`, `__summary-score`, `__summary-label`, `__stars`, `__star`, `__star-base`, `__star-fill`, `__carousel`, `__viewport`, `__track`, `__slide`, `__card`, `__card-top`, `__author`, `__avatar`, `__avatar--fallback`, `__initials`, `__author-copy`, `__author-row`, `__author-name`, `__author-role`, `__author-location`, `__card-rating`, `__quote`, `__verified`, `__product-container`, `__product`, `__product-image`, `__product-copy`, `__product-title`, `__product-price`, `__product-add`, `__arrow`, `__arrow--prev`, `__arrow--next`.
+- **CSS variables (tokens):**
+  - `--testimonials-gap`, `--testimonials-desktop-cards`, `--testimonials-tablet-cards`, `--testimonials-peek`, `--testimonials-visible`, `--testimonials-card-min-height`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-slider-arrows`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`, `--letter-spacing-body`
+  - `--radius-card`, `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** All logic is self‑contained inside the section. It handles:
+  - Carousel initialisation and arrow state management.
+  - Arrow click navigation (moves by one card group).
+  - Autoplay with `setTimeout` and `IntersectionObserver` for visibility.
+  - Autoplay pause on user interaction (scroll, focus, arrow click).
+  - Reduced motion and visibility change handling.
+  - Cleanup on section unload.
+
+---
+
+## Customization Tips
+
+- **Adjust card count** – change **Desktop cards** and **Tablet cards** to control how many testimonials are visible at once.
+- **Disable rating summary** – turn off **Show rating summary** for a cleaner header.
+- **Add avatars** – upload customer photos for a more personal feel; the fallback initials work well for minimal branding.
+- **Enable product references** – select products and turn on **Show product** to link testimonials to specific items.
+- **Use Quick View** – the plus button on product references opens the global Quick View modal, allowing customers to preview products without leaving the page.
+- **Enable autoplay** – turn on **Autoplay** for a dynamic, self‑playing carousel (useful for hero‑style placements).
+- **Adjust verified badge** – the badge is useful for building trust; consider enabling it for your real testimonials.
+
+---
+
+## Demo Data
+
+The section comes pre‑populated with 5 fictional testimonial blocks on the homepage:
+
+| Author | Location | Quote |
+|--------|----------|-------|
+| Emma R. | New York | “The texture feels incredibly luxurious on the skin…” |
+| Sofia M. | London | “Quietly beautiful, and now part of my every morning.” |
+| Olivia K. | Sydney | “I love how lightweight it feels, and the glow looks like my own skin…” |
+| Maya L. | Toronto | “The packaging is as considered as the formula…” |
+| Nora P. | Copenhagen | “A true everyday essential.” |
+
+All demo testimonials have **Verified** set to `false` (off) to clearly indicate they are placeholder content, not real customer reviews. Merchants should replace them with actual testimonials in the Theme Editor.
+
+---
+
+## Troubleshooting
+
+### Testimonial card does not appear
+
+- Ensure the **Quote** field is not empty – it is required to render the card.
+- Check that the block is not disabled or deleted.
+
+### Arrows are hidden
+
+- Arrows only appear when there are more testimonials than can fit in the viewport (overflow).
+- If **Show arrows** is disabled in settings, arrows are hidden regardless of overflow.
+
+### Autoplay does not work
+
+- Autoplay is **disabled by default** – enable it in the section settings.
+- Check that **Autoplay** is `true` and **Autoplay interval** is set.
+- If `prefers-reduced-motion` is active, autoplay will not run.
+- If the global `enable_animations` setting is `false`, autoplay will not run.
+- Autoplay pauses when the section is not sufficiently visible (intersection ratio < 35%).
+
+### Stars are not displaying correctly
+
+- The star system uses the existing `cosme-icon` for the `star` icon. Ensure the icon asset exists.
+- If stars appear empty, check that the `--star-fill` CSS variable is being applied correctly.
+- For individual testimonial ratings, the value must be between 1 and 5 (step 1).
+
+### Product reference does not show
+
+- Ensure a product is selected in the block settings.
+- Ensure **Show product** is checked.
+- If the product is unpublished or out of stock, the reference may not render.
+
+### Quick View does not open
+
+- Ensure the global Quick View modal is enabled in Theme Settings (`quick_view_enabled`).
+- Check that the product has a valid handle and URL.
+- Look for JavaScript errors in the browser console.
+
+---
+
+## Conclusion
+
+The Testimonials section is a refined, editorial way to showcase customer feedback. With its optional rating summary, individual star ratings, avatars, verified badges, and product references, it provides a flexible and trustworthy way to build social proof. The carousel is smooth, accessible, and performant, making it a natural fit for premium beauty and lifestyle brands.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,237 @@
+---
+sidebarTitle: Header
+---
+
+import { Callout } from 'nextra/components'
+
+# Header
+
+The **Header** is the primary navigation element of your COSME store. It sits at the very top of every page and provides access to your logo, main navigation, search, account, and cart.
+
+You can choose between two distinct layouts: **Standard** (logo left, navigation center) or **Centered Logo** (menu button left, logo center, icons right). The header adapts to your store's active color scheme and offers advanced appearance modes like transparent and blur.
+
+![Header Settings in Theme Editor](/img/header.png)
+
+
+
+---
+
+## Overview
+
+The Header is part of the **header group** and appears above all page content (below the Announcement Bar). It includes:
+
+- **Logo** – Upload your brand logo or use the store name as fallback.
+- **Navigation** – Choose a Shopify menu for desktop (Standard layout) or the drawer (Centered Logo layout).
+- **Search** – Opens a search overlay (basic or predictive).
+- **Account** – Customer account link/button (uses Shopify's customer account system).
+- **Cart** – Links to the cart page or opens a cart drawer (depending on global cart setting).
+- **Mobile menu** – A left‑side drawer that contains navigation, search, and account links.
+- **Mega Menu** – Optional advanced menu with columns and editorial images (covered in a separate guide).
+- **Sticky behavior** – Header can stay fixed at the top or hide/reappear on scroll.
+- **Appearance modes** – Solid, Transparent, or Blur (with backdrop blur).
+- **Color Scheme** – Inherits from the global scheme or can be overridden per header state.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The Header provides a comprehensive set of options grouped into logical sections.
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Header layout** | Select | `Standard`, `Centered logo` | `Centered logo` | Choose between the two visual layouts. |
+| **Header width** | Select | `Full width`, `Page width` | `Full width` | Whether the header spans the full viewport or respects the page width. |
+| **Header height** | Range (40–120 px, step 2) | – | `80` | The minimum height of the header bar (affects both desktop and mobile). |
+| **Sticky header** | Select | `Off`, `On` | `Off` | Enables sticky behavior. |
+| **Sticky behavior** | Select | `Always`, `Hide on scroll down, show on scroll up` | `Always` | How the sticky header behaves when scrolling. |
+
+### Appearance Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Header appearance** | Select | `Solid`, `Transparent`, `Blur` | `Solid` | The visual style of the header at the top of the page. |
+| **Header color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Color scheme for the solid header state. |
+| **Transparent header color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Color scheme used when header is transparent or blur and not scrolled. |
+| **Scrolled header color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Color scheme used after the page is scrolled down. |
+
+<Callout type="info">
+  The transparent and scrolled schemes allow you to create a smooth transition: the header starts semi‑transparent over a hero image and becomes solid as the user scrolls.
+</Callout>
+
+### Content Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Menu** | Link list picker | – | – | The Shopify menu to display in the header (desktop navigation or drawer). |
+| **Menu style** | Select | `Simple`, `Mega menu`, `Mega menu + image` | `Mega menu + image` | The type of navigation drawer (see Mega Menu guide). |
+| **Menu color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Color scheme for the navigation drawer (independent of header). |
+
+### Component Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show search** | Checkbox | `true` | Toggles the search icon in the header. |
+| **Search style** | Select | `Basic`, `Predictive` | `Predictive` | Whether search shows suggestions as you type. |
+| **Show account** | Checkbox | `true` | Toggles the account link/icon. |
+| **Show cart** | Checkbox | `true` | Toggles the cart icon. |
+| **Customer account menu** | Link list picker | – | The menu used for customer account dropdown (if enabled). |
+
+---
+
+## Layouts in Detail
+
+### Centered Logo (Primary)
+
+This is the default COSME layout, inspired by the editorial beauty reference. On desktop, the header is divided into three columns:
+
+### [ Menu ] [ Search ] LOGO [ Account ] [ Cart ]
+
+![Header](/img/header-center.png)
+
+- The logo is perfectly centered using `1fr auto 1fr` CSS grid.
+- The left side contains the Menu button (opens the navigation drawer) and Search icon.
+- The right side contains Account and Cart icons.
+- **No horizontal navigation row** – navigation lives entirely in the drawer (which supports Mega Menu).
+
+On mobile, the layout adapts to:
+
+### [ Menu ] LOGO [ Cart ]
+
+
+Search and Account move inside the drawer for a clean mobile experience.
+
+### Standard
+
+A more traditional e‑commerce header:
+
+### LOGO Navigation (centered) Search · Account · Cart
+
+
+- Logo is aligned left.
+- The selected Shopify menu appears as a horizontal navigation row with dropdown submenus.
+- Search, Account, and Cart are on the right side.
+- On mobile, this layout also collapses to a hamburger menu and drawer, but the drawer content remains the same.
+
+---
+
+## Appearance Modes
+
+### Solid
+
+The header has a solid background color (from the selected color scheme). It always occupies space and pushes content down.
+
+### Transparent
+
+The header background becomes fully transparent at the top of the page. Useful when you have a full‑width hero image or video behind it. As the user scrolls, the header smoothly transitions to the **scrolled color scheme** (usually solid).
+
+### Blur
+
+Similar to Transparent, but with a `backdrop-filter: blur(12px)` applied. The header remains see‑through but blurs the content behind it, creating a modern glass‑effect. The transition to the scrolled scheme works the same way.
+
+<Callout type="info">
+  Both Transparent and Blur modes are designed to overlay hero sections. To avoid content overlap, ensure your hero section has enough top padding or uses the `full-width` class.
+</Callout>
+
+---
+
+## Sticky Behavior
+
+When **Sticky header** is turned on, the header stays at the top of the viewport as the user scrolls.
+
+- **Always** – The header is always visible.
+- **Hide on scroll down, show on scroll up** – The header slides out of view when scrolling down and reappears when scrolling up. This gives more screen space for content while keeping the header accessible.
+
+The sticky behavior respects `prefers-reduced-motion` and the global `enable_animations` setting.
+
+---
+
+## Color Scheme Integration
+
+The Header uses the same Color Scheme system as the rest of COSME. You can assign **three separate schemes**:
+
+1. **Header color scheme** – used for the solid state.
+2. **Transparent header color scheme** – used when the header is transparent or blur (at the top of the page).
+3. **Scrolled header color scheme** – used after the user scrolls past the threshold.
+
+This allows for a smooth transition from a transparent/light header over a hero to a solid/darker header as the user scrolls.
+
+The drawer (mega menu) has its own **Menu color scheme** setting, independent of the header bar.
+
+---
+
+## Accessibility
+
+The Header is built with accessibility as a priority:
+
+- **Semantic HTML** – Uses `<header>`, `<nav>`, `<button>` elements appropriately.
+- **Keyboard navigation** – All interactive elements (menu button, search, cart, links) are focusable and respond to keyboard events.
+- **ARIA attributes** – `aria-expanded`, `aria-controls`, `aria-label` are used on toggle buttons and drawers.
+- **Focus management** – Focus is properly trapped inside drawers and returned to the triggering element when closed.
+- **Reduced motion** – All animations respect `prefers-reduced-motion` and the global animation setting.
+- **Screen readers** – The navigation drawer uses `role="dialog"` with accessible labels.
+
+---
+
+## Example Use Cases
+
+- **Beauty brand with hero imagery** – Use Centered Logo + Transparent header to let the hero shine, with a dark scrolled scheme for readability.
+- **Clean editorial store** – Centered Logo + Solid header with Light scheme for a minimal, airy feel.
+- **Traditional e‑commerce** – Standard layout with a mega menu for large product catalogs.
+
+---
+
+## Technical Details
+
+- **File:** `sections/header.liquid`
+- **CSS classes:** `.cosme-header`, `.cosme-header-group`, `.cosme-header__inner`, `.cosme-header__leading`, `.cosme-header__logo`, `.cosme-header__nav`, `.cosme-header__actions`, `.cosme-header__menu-toggle`, `.cosme-header__drawer`, etc.
+- **Snippets used:** `cosme-icon`, `cosme-image`, `cosme-button`, `cosme-form-field` (in search), `cosme-header-drawer-content`, `cosme-header-search`, `cosme-cart-drawer-content`.
+- **CSS variables (tokens):**
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-accent`, `--color-border`, `--color-overlay`, `--color-input-background`, etc.
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-*`, `--line-height-*`, `--letter-spacing-*`
+  - `--radius-button`, `--radius-input`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** Provides scroll handling, sticky logic, drawer open/close, search overlay, cart drawer, and color scheme switching on scroll.
+
+---
+
+## Customization Tips
+
+- **Change logo width** – Use the global `Logo width` setting (in Theme Settings → Brand).
+- **Adjust header height** – The `Header height` setting controls the minimum height; increase it for a taller, more premium look.
+- **Add custom CSS** – Use the **Custom CSS** field in the section to fine‑tune spacing or styles without editing code.
+- **Modify sticky behavior** – The `Sticky behavior` option lets you choose between always visible or hide‑on‑scroll.
+
+---
+
+## Troubleshooting
+
+### The header is not sticky
+
+- Ensure `Sticky header` is set to `On`.
+- Check that the parent container does not have `overflow: hidden` or `transform` that breaks `position: sticky`/`fixed`.
+
+### The logo is not centered in Centered Logo layout
+
+- The logo is centered using a CSS grid; if it appears off‑center, verify that the left and right columns have equal width (they use `1fr` each). Custom CSS may override this.
+
+### The transparent header does not stay transparent
+
+- The `Transparent header color scheme` setting controls the colors when the header is transparent. Ensure it is set to a scheme with a transparent or semi‑transparent background (e.g., use a color with alpha or the default transparent behavior).
+
+### The drawer does not open
+
+- Make sure a menu is selected in the `Menu` setting.
+- Check that JavaScript is not blocked or that the `data-header-menu-toggle` button is present.
+
+---
+
+## Conclusion
+
+The Header is the most critical navigation element of your store. COSME provides a flexible, premium header that adapts to your brand's style while maintaining excellent accessibility and performance. The two layout options, advanced appearance modes, and color scheme integration give you full control without touching code.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

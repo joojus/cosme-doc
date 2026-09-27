@@ -1,0 +1,217 @@
+---
+sidebarTitle: Benefits / Trust Bar
+---
+
+import { Callout } from 'nextra/components'
+
+# Benefits / Trust Bar
+
+The **Benefits / Trust Bar** section is a premium utility strip that communicates key store values and policies in a clean, editorial style. Positioned near the bottom of the homepage (typically after the Editorial CTA and before the Footer), it helps build trust and reduce purchase hesitation without feeling like a generic Shopify icon‑with‑text block.
+
+The section uses repeatable blocks, allowing merchants to add, remove, or reorder benefits (2–6 items). It integrates seamlessly with the COSME design system, inheriting colour schemes, typography, spacing, and icon styles.
+
+![Benefits in action](/img/benefits-editor.png)
+
+---
+
+## Overview
+
+The Benefits / Trust Bar section is a full‑width, flat editorial strip that typically sits just above the footer. It includes:
+
+- **Repeatable benefit blocks** – each with an icon, heading, description, and optional link.
+- **Flexible column layout** – automatic or explicit (2–4 columns) with adaptive behaviour for 5–6 items.
+- **Icon management** – choose from existing COSME icons (shipping, return, secure, support, gift, star, discount), with adjustable size and position (top or left).
+- **Divider controls** – optional subtle vertical hairlines between items.
+- **Link support** – entire benefit becomes clickable; link label appears only when a link is set.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Subtle animation** – optional reveal on scroll, respecting reduced motion.
+- **Fully responsive** – adapts to desktop, tablet, and mobile with consistent spacing.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Columns** | Select | `Auto`, `2`, `3`, `4` | `Auto` | Number of columns on desktop. `Auto` adapts to the number of visible blocks (2–4 in a row, 5–6 use 3+2 or 3+3). |
+| **Alignment** | Select | `Left`, `Center` | `Center` | Horizontal alignment of benefit content. |
+| **Show dividers** | Checkbox | – | `true` | Adds subtle vertical hairlines between benefits. |
+| **Section spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the section. |
+
+### Icon Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Icon size** | Range (16–28px) | `20px` | Size of the benefit icons. |
+| **Icon position** | Select | `Top`, `Left` | `Top` | Whether the icon appears above the text or to the left. |
+
+### Appearance Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+---
+
+## Blocks
+
+The section uses one block type: **Benefit**. Each block represents a single trust/value proposition.
+
+### Benefit Block
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Icon** | Select | – | Choose from existing COSME icons: `None`, `Shipping`, `Return`, `Secure`, `Support`, `Gift`, `Star`, `Discount`. |
+| **Heading** | Text | `Free shipping` | The main benefit headline. |
+| **Description** | Textarea | `On orders over $75` | Supporting text below the heading. |
+| **Link** | URL | – | Optional link destination. When set, the entire benefit becomes clickable. |
+| **Link label** | Text | – | Optional label for the link. Only visible when a link is set. If left blank, only the heading/description is linked. |
+
+<Callout type="info">
+  If a block has no content (empty heading, description, icon, and no link), it is skipped entirely. Empty link labels are not rendered.
+</Callout>
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Benefits are arranged in a single horizontal row.
+- Column count is determined by the **Columns** setting or automatically computed from the number of visible blocks.
+- Dividers (if enabled) appear as subtle 1px vertical hairlines between benefits.
+- Icons use the selected size and position (top or left).
+- Text is centred or left‑aligned based on the **Alignment** setting.
+
+### Tablet (750–989px)
+
+- The grid adapts to 2 columns (2×2 for four items).
+- Spacing and typography are slightly reduced.
+- Dividers follow the column layout automatically.
+
+### Mobile (750px)
+
+- Benefits are displayed in a 2×2 grid (for four items) or as a single column (for fewer items).
+- Icons and text remain readable; typography is scaled down slightly.
+- Dividers are hidden on the last item in each row.
+- No horizontal overflow – all content fits within the viewport.
+
+---
+
+## Accessibility
+
+The Benefits section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<ul>`, `<li>` appropriately for a list of benefits.
+- **Decorative icons** – all icons have `aria-hidden="true"` and are not announced by screen readers.
+- **Keyboard navigation** – interactive benefits (with links) are focusable and have visible `:focus-visible` rings.
+- **Focus management** – focus outline uses the global `--color-accent` and `--focus-ring-width` tokens.
+- **Link fallback** – when a benefit has only an icon and a link (no heading/description), the link receives an accessible label to ensure screen reader comprehension.
+- **Contrast** – all text uses scheme‑appropriate colour tokens (e.g., `--color-heading`, `--color-muted`, `--color-foreground`).
+
+---
+
+## Performance
+
+- No JavaScript is used in this section – all interactivity is handled by native HTML/CSS.
+- Icons are loaded via the existing `cosme-icon` snippet, which inlines SVG assets.
+- CSS is scoped to the section using BEM‑style classes and `{% stylesheet %}`.
+- The section uses existing COSME variables and components, avoiding duplication.
+- Empty blocks are stripped at render time, preventing unnecessary DOM nodes.
+
+---
+
+## Technical Details
+
+- **File:** `sections/benefits.liquid`
+- **Dependencies:** `cosme-icon`
+- **CSS classes:** `.cosme-benefits`, `__inner`, `__list`, `__item`, `__content`, `__icon`, `__copy`, `__heading`, `__description`, `__link-label`.
+- **CSS variables (tokens):**
+  - `--benefits-icon-size`, `--benefits-cols`, `--benefits-col-gap`, `--benefits-delay`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--font-body--weight`, `--line-height-body`
+  - `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** None – the section is completely static (CSS‑only animation).
+- **Block limit:** Maximum 6 benefits; no minimum enforced.
+
+---
+
+## Customization Tips
+
+- **Adjust column count** – choose `Auto` for adaptive behaviour, or manually set 2/3/4 columns to control the layout.
+- **Change icon position** – `Top` works well for a clean, stacked look; `Left` is better when space is limited or you want a more compact design.
+- **Add dividers** – keep them enabled for a polished, structured appearance; disable them for a more minimal, open feel.
+- **Link benefits** – turn each benefit into a clickable card to drive traffic to specific pages (e.g., shipping policy, returns page, contact page).
+- **Use link labels** – add a subtle call‑to‑action like “Learn more” or “See details” when a link is set.
+- **Experiment with icons** – choose from the available icon set to match your brand voice (e.g., `gift` for promotions, `star` for quality, `discount` for sales).
+
+---
+
+## Demo Data
+
+The section comes pre‑populated with 4 default benefits on first installation:
+
+| Icon | Heading | Description |
+|------|---------|-------------|
+| `shipping` | Free shipping | On orders over $75 |
+| `return` | Easy returns | 30-day hassle-free returns |
+| `secure` | Secure checkout | Safe and secure payments |
+| `support` | Customer care | We're here whenever you need us |
+
+All demo benefits have no links set, so they appear as static content. Merchants can easily add links, change icons, or modify the text in the Theme Editor.
+
+---
+
+## Troubleshooting
+
+### Benefits are not showing
+
+- Ensure at least one benefit block has content (heading, description, icon, or link).
+- If all blocks are empty, the section will not render.
+- Check that the section is added to the template in the Theme Editor.
+
+### Dividers appear in the wrong place
+
+- Dividers are automatically placed between items based on the column count.
+- On desktop, dividers appear between each item except the last in each row.
+- On mobile/tablet, dividers are hidden after every second item.
+- If dividers seem misaligned, check your **Columns** setting and the number of visible blocks.
+
+### Icons are not displaying
+
+- Ensure a valid icon name is selected in the block settings.
+- Check that the icon SVG exists in `assets/` (e.g., `icon-shipping.svg`, `icon-return.svg`).
+- If an icon is missing, the section will render without it – no broken UI.
+
+### Links are not working
+
+- Verify that a valid URL is set in the **Link** field.
+- If a link is set but the benefit is not clickable, check that the **Link** field is not empty and that the URL is correct.
+- The entire benefit content (including icon, heading, description) becomes a single clickable area.
+
+### Heading hover effect does not work
+
+- The hover effect on headings only applies when a link is set.
+- If no link is set, the heading remains static.
+
+### Layout breaks with 5 or 6 benefits
+
+- The `Auto` column setting automatically adjusts to 3 columns for 5–6 items (3+2 or 3+3).
+- If you manually set 4 columns with 5 items, the last row will have only 1 item, which may look uneven. Consider using `Auto` for the best balance.
+
+---
+
+## Conclusion
+
+The Benefits / Trust Bar section is a refined, flexible way to communicate your store’s key value propositions. With its adaptive column layout, icon management, and link support, it provides a polished, on‑brand trust strip that integrates seamlessly into the COSME theme.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,271 @@
+---
+sidebarTitle: Password Page
+---
+
+# Password Page
+
+The **Password Page** is the storefront lock screen for the COSME theme — a premium, editorial launch landing page that replaces the generic Shopify password template. It transforms a functional storefront password form into a beautiful brand experience, ideal for pre‑launch, private collections, or store maintenance.
+
+The page is built as a single section (`password.liquid`) that integrates Shopify's native `{% form 'storefront_password' %}` and an optional `{% form 'customer' %}` newsletter sign‑up. It supports a split‑layout with an image, full color scheme control, and extensive Theme Editor settings.
+
+![Password Page example](/img/password.png)
+
+---
+
+## Overview
+
+The Password Page provides the following key features:
+
+- **Editorial launch copy** – configurable eyebrow, headline, and description.
+- **Brand identity** – uses the existing Cosme logo or falls back to the shop name.
+- **Native Shopify password form** – real storefront password protection with error handling.
+- **Optional newsletter sign‑up** – native `{% form 'customer' %}` with configurable copy and independent color scheme.
+- **Split layout** – with image (desktop) or solo centred layout (image‑off).
+- **Image control** – optional editorial image with aspect ratio selection (portrait, square, landscape, wide).
+- **Color schemes** – main page and newsletter each have independent colour scheme settings.
+- **Accessibility** – skip link, visible focus states, semantic HTML, ARIA labels.
+- **Lightweight** – minimal JavaScript (none), pure Liquid + CSS.
+
+All settings are available in the Theme Editor under **Templates → Password**.
+
+---
+
+## Section Settings
+
+The Password section provides a comprehensive set of options, grouped by functionality.
+
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `COMING SOON` | Small uppercase text above the headline. |
+| **Heading** | Text | `Something beautiful is coming.` | The main page headline. If empty, falls back to the shop name. |
+| **Description** | Textarea | `Cosme is preparing a new collection of beauty essentials, thoughtfully curated for your everyday ritual.` | Supporting text below the headline. |
+| **Password label** | Text | `Enter store password` | Label for the password input field. |
+| **Password button label** | Text | `Enter` | Label for the password submit button. |
+
+### Image Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show image** | Checkbox | `true` | Enables or disables the editorial image. |
+| **Image** | Image picker | – | The editorial image displayed on the right (desktop) or below the copy (mobile). |
+| **Image ratio** | Select | `Portrait`, `Square`, `Landscape`, `Wide` | `Portrait` | Aspect ratio of the image when displayed. |
+
+### Newsletter Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show newsletter** | Checkbox | `true` | Enables or disables the newsletter sign‑up section. |
+| **Newsletter eyebrow** | Text | `THE COSME JOURNAL` | Small uppercase text above the newsletter heading. |
+| **Newsletter heading** | Text | `Be the first to know.` | Main heading of the newsletter block. |
+| **Newsletter description** | Textarea | `Receive launch news, beauty stories and new discoveries from Cosme.` | Supporting text below the heading. |
+| **Newsletter button label** | Text | `Subscribe` | Label for the newsletter submit button. |
+| **Newsletter color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Independent color scheme for the newsletter block. |
+
+### Color Scheme
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the main page background and text. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Image enabled**: two‑column split layout.
+  - **Left column**: brand, copy, password form, and optional newsletter.
+  - **Right column**: large editorial image (full height).
+- **Image disabled**: single‑column centred layout with the same content.
+
+### Tablet (768–989px)
+
+- **Image enabled**: stacks vertically — brand/copy, image, forms.
+- **Image disabled**: remains centred.
+- **Typography**: scales down slightly.
+
+### Mobile (768px)
+
+- **Single column**: all content stacks vertically.
+- **Image**: appears between the intro copy and the forms.
+- **Forms**: full‑width with comfortable touch targets.
+- **Newsletter**: stacked fields (email + button) on mobile; switches to inline on tablet.
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Skip link | `.cosme-skip-link` | Visible on focus for keyboard users. |
+| Main wrapper | `.cosme-password` | Full‑width container with color scheme. |
+| Panel | `.cosme-password__panel` | Contains intro and forms. |
+| Brand | `.cosme-password__brand` | Logo or shop name. |
+| Intro | `.cosme-password__intro` | Eyebrow, headline, description. |
+| Forms | `.cosme-password__forms` | Password form and newsletter. |
+| Password form | `.cosme-password__form` | Native `{% form 'storefront_password' %}`. |
+| Newsletter | `.cosme-password__newsletter` | Native `{% form 'customer' %}` with independent color scheme. |
+| Media | `.cosme-password__media` | Image container (optional). |
+
+### Modifier Classes
+
+| Class | Effect |
+|-------|--------|
+| `cosme-password--solo` | Image disabled – centred single‑column layout. |
+| `cosme-password--has-image` | Image enabled – split layout on desktop. |
+
+---
+
+## Password Form
+
+The password form uses Shopify's native `{% form 'storefront_password' %}`:
+
+- Input name: `password`
+- Autocomplete: `current-password`
+- Validation: if the password is incorrect, Shopify returns `form.errors`.
+- Error display: uses `cosme-form-field` with `role="alert"` and `aria-invalid="true"`.
+- After successful login: the user is redirected to the storefront.
+
+**This is the same form that protects the storefront — the theme does not store or process passwords.**
+
+---
+
+## Newsletter Form
+
+The newsletter form uses Shopify's native `{% form 'customer' %}`:
+
+- Hidden fields: `contact[tags] = "prospect, password page"`
+- Accepts marketing: `customer[accepts_marketing] = "true"`
+- Submits the email to the store's customer list.
+- Success message: displayed without page reload (via form submission).
+- Error handling: shows validation errors via `cosme-form-field`.
+
+**No third‑party app is required. This is native Shopify functionality.**
+
+---
+
+## Brand / Logo
+
+The page uses the existing Cosme logo settings:
+
+- If a custom logo is uploaded (`settings.logo`), it is displayed using `cosme-image`.
+- Logo width is controlled by `settings.logo_width`.
+- If no logo is set, the shop name is displayed as a text fallback (`shop.name`).
+
+---
+
+## Accessibility
+
+The Password Page is built with accessibility as a priority:
+
+- **Skip link** – visible on focus for keyboard users.
+- **Heading hierarchy** – one `<h1>` for the main headline; newsletter has an `<h2>`.
+- **Form labels** – all inputs have visible labels.
+- **Error handling** – password errors use `role="alert"` and `aria-invalid`.
+- **Keyboard navigation** – all interactive elements are focusable with visible focus rings.
+- **Focus indicators** – uses `--color-accent` with `--focus-ring-width`.
+- **Color contrast** – all text meets WCAG contrast requirements in all schemes.
+- **ARIA labels** – the main section and newsletter have appropriate `aria-label` and `aria-labelledby`.
+- **Reduced motion** – no motion effects in this section.
+
+---
+
+## Performance
+
+- **No JavaScript** – the Password Page is pure Liquid + CSS.
+- **Eager loading** – the hero image uses `loading="eager"` and `fetchpriority="high"`.
+- **Responsive images** – uses Shopify's `image_url` with appropriate `sizes`.
+- **CSS variables** – uses existing Cosme tokens for consistent styling.
+- **No external dependencies** – only uses Shopify’s native forms and objects.
+
+---
+
+## Technical Details
+
+- **File:** `sections/password.liquid`
+- **Template:** `templates/password.json` (or `password.liquid`)
+- **Snippets used:** `cosme-image`, `cosme-form-field`, `cosme-button`
+- **CSS classes:** `.cosme-password`, `__panel`, `__intro`, `__brand`, `__logo-media`, `__logo-text`, `__eyebrow`, `__title`, `__description`, `__forms`, `__form`, `__submit`, `__media`, `__image`, `__newsletter`, etc.
+- **CSS variables (tokens):**
+  - `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--border-width`, `--focus-ring-width`
+  - `--cosme-password-logo-width` (set via inline style)
+- **JavaScript:** none.
+
+---
+
+## Troubleshooting
+
+### The password form does not work
+- Ensure the storefront password is set in Shopify admin (**Settings → Storefront password**).
+- The form uses `name="password"` – if this is changed, the form will not work.
+- Check that `{% form 'storefront_password' %}` is rendered correctly.
+
+### The password error is not showing
+- The error is displayed via `form.errors.messages['form']`.
+- If the password is incorrect, Shopify returns a `form` error.
+- The error is passed to `cosme-form-field` via the `error` parameter.
+
+### The newsletter form does not submit
+- Ensure the store has customer accounts enabled.
+- The form uses `contact[email]` – if this is changed, the submission will fail.
+- Check that `{% form 'customer' %}` is correctly rendered.
+
+### The image is not displaying
+- Ensure **Show image** is enabled.
+- Select an image in the **Image** picker.
+- If the image is not visible, check that the file is uploaded and accessible.
+
+### The split layout does not work on desktop
+- The split layout requires the `cosme-password--has-image` class.
+- This class is added when `show_image` is true and an image is selected.
+- The layout uses CSS Grid with `grid-template-columns: 1fr 1fr`.
+
+### The logo is too large or too small
+- The logo width is controlled by the global **Logo width** setting (`settings.logo_width`).
+- Adjust this value in Theme Editor under **Header** or **Theme settings**.
+
+### The newsletter appears even when disabled
+- Ensure **Show newsletter** is unchecked in Theme Editor.
+- The newsletter block is only rendered when `section.settings.show_newsletter` is true.
+
+### The page does not respect the colour scheme
+- The main page uses `section.settings.color_scheme`.
+- The newsletter uses `section.settings.newsletter_color_scheme` (independent).
+- If the newsletter colours are not updating, check that the `color-` class is correctly applied.
+
+---
+
+## Usage Examples
+
+### Standard launch page (with image)
+- Leave all settings as default.
+- Upload a high‑quality editorial image.
+- The page will display a split layout with brand, copy, password form, and newsletter on the left, and a large image on the right.
+
+### Minimal password page (no image, no newsletter)
+- Disable **Show image** and **Show newsletter**.
+- The page will display a centred, clean password form with only the brand, copy, and password field.
+
+### Brand‑focused password page
+- Upload a custom logo via Theme Settings.
+- Disable **Show image** for a centred layout.
+- Enable the newsletter with a custom heading and description.
+
+### Dark scheme with image
+- Set **Color scheme** to `Dark` (scheme-2).
+- The image will remain full‑height, but the background and text will invert for a dramatic look.
+
+---
+
+## Conclusion
+
+The COSME Password Page is a premium storefront lock screen that combines beauty and function. With native Shopify password protection, optional newsletter sign‑up, and full visual control, it provides a polished launch experience that aligns with the Cosme brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,243 @@
+---
+sidebarTitle: Product Recommendations
+---
+
+import { Callout } from 'nextra/components'
+
+# Product Recommendations
+
+The **Product Recommendations** section displays a curated grid of products at the bottom of the Product Page. It supports three distinct recommendation modes: related products, complementary products, and recommended products. This section helps merchants increase average order value by showing customers products they are likely to be interested in.
+
+The section uses Shopify's native product recommendation engine and automatically hides when no recommendations are available.
+
+![Product Recommendations in action](/img/product-recommendations.png)
+
+---
+
+## Overview
+
+The Product Recommendations section is a full‑width, editorial‑style product grid that typically sits below the product details and reviews. It includes:
+
+- **Three recommendation modes** – Related products, Complementary products, and Recommended products.
+- **Shopify native recommendations** – uses the Shopify product recommendation API.
+- **Responsive grid** – configurable columns (3–5 on desktop, 2 on mobile).
+- **Pagination** – Previous/Next navigation when products exceed the visible area.
+- **Touch support** – swipe to navigate on mobile devices.
+- **Editorial product cards** – reuses the same `cosme-product-card` component as Popular Products.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Heading** | Text | `You may also like` | The main heading of the section. If left blank, a default heading is used based on the selected product source. |
+| **Subheading** | Textarea | – | An optional supporting text displayed below the heading. |
+
+### Product Source Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Product source** | Select | `Related products`, `Complementary products`, `Recommended` | `Related products` | The type of product recommendations to display. |
+| **Products to show** | Range (3–10, step 1) | `8` | The maximum number of products to display. |
+
+<Callout type="info">
+  **Complementary products** require the [Search & Discovery](https://apps.shopify.com/search-and-discovery) app to be installed and configured. Related and Recommended products work with Shopify's native recommendation engine without additional apps.
+</Callout>
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop columns** | Select | `3`, `4`, `5` | `4` | The number of product columns on desktop (≥990px). |
+| **Show vendor** | Checkbox | – | `true` | Whether to display the product vendor/brand. |
+| **Show badges** | Checkbox | – | `true` | Whether to display product badges (Sale, Sold out). |
+| **Show navigation** | Checkbox | – | `true` | Whether to show Previous/Next pagination buttons. |
+
+### Colour Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+---
+
+## Product Source Modes
+
+The section supports three distinct recommendation modes, each serving a different purpose.
+
+### 1. Related Products
+
+**Purpose:** Show products that are similar to the current product. This is the standard Shopify recommendation mode.
+
+**Use case:** When a customer is viewing a product, showing similar products helps them find alternatives if the current product doesn't suit them.
+
+**Data source:** Shopify's built‑in product recommendation engine.
+
+**Default heading:** `You may also like`
+
+**Example:** A customer viewing a mascara might see other mascaras from the same brand or category.
+
+### 2. Complementary Products
+
+**Purpose:** Show products that work well together with the current product. These are products that complement or complete a routine.
+
+**Use case:** When a customer is viewing a product, showing complementary products encourages them to purchase additional items.
+
+**Data source:** Shopify's Search & Discovery app. Merchants can manually select complementary products for each product.
+
+**Default heading:** `Complete your routine`
+
+**Requirement:** The Search & Discovery app must be installed and configured.
+
+**Example:** A customer viewing a face serum might see a moisturizer and eye cream that complement it.
+
+### 3. Recommended Products
+
+**Purpose:** Show products that are algorithmically recommended by Shopify. This mode uses the same `related` intent but is labelled differently for merchants who want to distinguish between algorithmically recommended and manually curated products.
+
+**Use case:** When merchants want to differentiate between "Recommended" (algorithmic) and "Related" (category‑based) products.
+
+**Data source:** Shopify's built‑in product recommendation engine (same as Related).
+
+**Default heading:** `You may also like`
+
+### Comparison Table
+
+| Mode | Data Source | Default Heading | Requires App |
+|------|-------------|-----------------|--------------|
+| **Related** | Shopify recommendation engine | `You may also like` | ❌ No |
+| **Complementary** | Search & Discovery app | `Complete your routine` | ✅ Yes |
+| **Recommended** | Shopify recommendation engine | `You may also like` | ❌ No |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Products are displayed in a grid with the chosen number of columns (3, 4, or 5).
+- The heading and optional subheading sit on the left; navigation buttons appear on the right.
+- Each product card shows the image, title, vendor, price, and badges.
+- Hover reveals secondary image and quick action buttons (where enabled).
+- If navigation is enabled, Previous/Next buttons appear when products exceed the visible columns.
+
+### Tablet (768–989px)
+
+- The grid adapts to a maximum of 3 columns (even if desktop columns are set to 4 or 5).
+- Navigation buttons remain visible if there are more products than the current columns.
+
+### Mobile (768px)
+
+- The grid uses 2 columns by default.
+- The heading and navigation stack vertically, with navigation aligned to the right.
+- Touch swipe navigation works natively.
+
+---
+
+## Pagination Behaviour
+
+When **Show navigation** is enabled and the number of products exceeds the number of visible columns, the section activates a pagination system:
+
+- **Pages** – Each page shows exactly the number of products that fit in one row (equal to desktop columns or the current effective columns on tablet).
+- **Previous / Next buttons** – Clicking moves one page forward or backward.
+- **Disabled state** – Buttons are disabled when on the first or last page.
+- **Live region** – A hidden live region announces the current page number (e.g., "Page 1 of 3") to screen readers.
+- **Responsive** – On resize, pagination recalculates; if the columns change, the current page resets.
+- **No pagination** – When products fit in one row (or navigation is off), the buttons are hidden and all products are shown.
+
+---
+
+## Accessibility
+
+The Product Recommendations section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<nav>`, `<ul>`, `<li>` appropriately.
+- **ARIA attributes** – the section has `aria-label`; navigation buttons have `aria-label` for Previous/Next; the live region announces page changes.
+- **Keyboard navigation** – all interactive elements (buttons) are focusable and have visible `:focus-visible` rings.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – navigation buttons are at least 44px for easy interaction on mobile.
+
+---
+
+## Performance
+
+- Recommendations are loaded lazily when the section enters the viewport (via `IntersectionObserver`).
+- The section uses Shopify's native recommendation API via AJAX, reducing initial page load time.
+- Product images use appropriate lazy loading; the first row of products is loaded with `eager` priority.
+- No third‑party libraries are used.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `sections/product-recommendations.liquid`
+- **Dependencies:** `cosme-product-card`
+- **CSS classes:** `.cosme-related-products`, `__inner`, `__header`, `__titles`, `__heading`, `__subheading`, `__navigation`, `__nav-button`, `__nav-divider`, `__grid`.
+- **CSS variables (tokens):**
+  - `--related-products-columns-desktop`, `--related-products-columns-mobile`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** All logic is self‑contained inside the section. It handles:
+  - Lazy loading of recommendations via `IntersectionObserver`.
+  - Pagination and navigation with page‑based product grouping.
+  - Touch swipe support on mobile.
+  - Responsive recalculation on resize.
+  - Cleanup on section unload.
+
+---
+
+## Customization Tips
+
+- **Choose the right product source** – use `Complementary` for curated product bundles, `Related` for standard recommendations.
+- **Install Search & Discovery** – required for complementary products. It allows manual pairing of products.
+- **Adjust columns** – choose 3, 4, or 5 desktop columns to control the grid density.
+- **Hide navigation** – if you prefer a static grid without pagination, turn off `Show navigation`.
+- **Customise the heading** – the heading can be overridden; if left blank, it will use the default for the selected source.
+
+---
+
+## Troubleshooting
+
+### Recommendations are not showing
+- Ensure the product has Shopify recommendations available (related or recommended).
+- For complementary products, ensure the Search & Discovery app is installed and configured.
+- The section only shows recommendations if there are at least as many products as the number of columns.
+
+### Navigation buttons do not appear
+- Check that `Show navigation` is enabled.
+- Navigation only appears when the number of products exceeds the visible columns.
+- On tablet, columns are capped at 3; if products ≤ 3, navigation is hidden.
+
+### The section is hidden
+- If Shopify returns no recommendations, the section is hidden on the storefront.
+- In Theme Editor (design mode), the section shows an empty message instead of hiding.
+
+### Complementary products are not showing
+- Install and configure the Search & Discovery app.
+- In Search & Discovery, manually select complementary products for each product.
+- Ensure the selected products are published and available.
+
+### Products are not showing after adding to cart
+- The section uses real product data from Shopify. If products are out of stock or unpublished, they may not appear.
+
+---
+
+## Conclusion
+
+The Product Recommendations section is a powerful way to increase average order value by showing customers relevant products. With three distinct recommendation modes, flexible grid settings, and pagination, it provides a polished, editorial shopping experience that sits naturally within the COSME theme.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

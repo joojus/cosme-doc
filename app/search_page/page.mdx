@@ -1,0 +1,328 @@
+---
+sidebarTitle: Search Page
+---
+
+# Search Page
+
+The **Search Page** (`/search`) is a premium editorial search experience for the COSME theme. It transforms the standard Shopify search into a visually refined discovery tool, allowing customers to find products, browse popular searches, and filter results — all within a clean, brand‑aligned interface.
+
+The page is built as a single section (`search.liquid`) that integrates with Shopify's native search, filtering, and sorting APIs. It reuses the existing `cosme-product-card` component (with Quick View and Add to Cart) to ensure consistency with the rest of the theme.
+
+![Search Page example](/img/search.png)
+
+---
+
+## Overview
+
+The Search Page provides the following key features:
+
+- **Editorial search header** – configurable eyebrow, heading, and a large, minimal search input.
+- **Search states**:
+  - **Empty search** – shows a stylish intro and optional popular searches.
+  - **Results** – displays product results with count, filters, and sorting.
+  - **No results** – elegant empty state with a CTA to explore collections.
+  - **Filtered empty** – shows a “No products found” message with a clear filters action.
+- **Native Shopify search** – uses `search.terms`, `search.results`, and `search.results_count`.
+- **Product grid** – configurable 3/4/5 columns on desktop, 2 columns on mobile, using `cosme-product-card`.
+- **Toolbar with filters and sorting** – a compact bar with result count, filter button (opens a drawer), and sort dropdown.
+- **Filter drawer** – reuses the Collection Page filter drawer visual language and interaction (left‑side panel with accordion groups, apply/clear, chips).
+- **Sorting** – native `search.sort_options` with query and filter preservation.
+- **Popular searches** – merchant‑configurable blocks that appear on the empty search state.
+- **Color schemes** – fully supports Light, Dark, and Light+Accent.
+- **Accessibility** – semantic heading hierarchy, keyboard navigation, focus management, live regions.
+
+All settings are available in the Theme Editor under **Templates → Search**.
+
+---
+
+## Section Settings
+
+The Search section provides a curated set of options, grouped by functionality.
+
+![Search Page settings](/img/search-settings.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `Search` | Small uppercase text above the heading. |
+| **Heading** | Text | `What are you looking for?` | The main page heading. |
+| **Placeholder** | Text | `Search skincare, products, collections...` | Placeholder text for the search input. |
+| **No results heading** | Text | `Nothing matched your search` | Heading shown when no results are found. |
+| **No results text** | Textarea | `Try another search or explore our collections.` | Supporting text for the no‑results state. |
+| **No results CTA label** | Text | `Explore collections` | Label for the CTA link to `/collections/`. |
+| **Show popular searches** | Checkbox | `true` | Enables the popular searches block on the empty search state. |
+
+### Grid Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Desktop columns** | Select | `3`, `4`, `5` | `4` | Number of product columns on desktop (≥990px). |
+
+### Color Scheme
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+---
+
+## Blocks
+
+The Search section supports a single block type for popular searches.
+
+### Popular Search Block
+
+Each block represents one popular search term. Merchants can add, remove, and reorder blocks.
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| **Term** | Text | The search query (e.g., `serum`). This is used to build the `/search?q=...` URL. |
+| **Label** | Text | The displayed text. If empty, the term is used as the label. |
+
+The blocks appear only when the search page has no query and `Show popular searches` is enabled. Clicking a popular search link navigates to `/search?q=TERM&type=product`.
+
+---
+
+## Snippet: `cosme-search-facets`
+
+The filter and sort toolbar is extracted into a separate snippet to keep the main section clean and reusable. It is rendered when results exist or when filters are active.
+
+### Snippet Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `section` | Object | The parent search section (for IDs). |
+| `results_count` | Number | The native search result count. |
+| `count_id` | String | The ID attribute for the count element. |
+| `color_scheme` | String | The color scheme class (e.g., `scheme-1`). |
+
+### Toolbar Components
+
+- **Result count** – displays `X results` using the `search.results_count`.
+- **Filter button** – opens a drawer with native search filters.
+- **Sort dropdown** – custom dropdown using `search.sort_options`; preserves query and filters.
+- **Active filter chips** – show applied filters with remove actions and a “Clear all” link.
+- **Filter drawer** – reuses the same visual language and interaction as the Collection Page filter drawer (left panel, accordion groups, price range, swatches, apply/clear).
+
+The snippet includes its own CSS and JavaScript (for dropdowns and drawer) but shares styles with the Collection Page to maintain visual consistency.
+
+---
+
+## Page States
+
+The Search page intelligently adapts based on the presence of a query and the result set.
+
+### 1. Empty Search (no query)
+
+- Shows the editorial intro (eyebrow, heading).
+- Displays the search form.
+- If `Show popular searches` is enabled and at least one popular search block exists, renders a subtle list of popular search links.
+- No products or grid are displayed.
+
+### 2. Results (query with products)
+
+- The intro adapts: eyebrow becomes `Search results for`, heading becomes the query itself.
+- The search form retains the query.
+- A toolbar appears with result count, Filters, and Sort.
+- Products are rendered in a responsive grid using `cosme-product-card`.
+- Pagination appears if more than 24 results (configurable via `products_per_page` – currently fixed at 24).
+
+### 3. No Results (query with no products, no active filters)
+
+- The intro shows `Search results for` + the query.
+- The toolbar is hidden.
+- A clean no‑results block is displayed with the heading, text, and an “Explore collections” CTA (links to `/collections/`).
+- The search input remains filled with the query.
+
+### 4. Filtered Empty (query with active filters that yield zero products)
+
+- The toolbar is visible (with the filter count chip).
+- The grid is replaced with an empty state: “No products found” and a “Clear filters” link that removes all filters but preserves the query and sort.
+- The no‑results block is *not* shown; this state is distinct to avoid confusing the customer.
+
+---
+
+## Visual States
+
+The page uses the following visual hierarchy:
+
+**Empty Search:**
+SEARCH (eyebrow)
+What are you looking for? (h1)
+[ Search input with icon and clear ]
+Popular searches (optional)
+Skincare · Serums · Moisturizers · Cleansers · Masks
+
+
+**Results:**
+SEARCH RESULTS FOR (eyebrow)
+"serum" (h1)
+[ Search input with query ]
+24 results Filter Sort ▼
+[ Product grid with cosme-product-card ]
+1 2 3 ... Next (pagination)
+
+
+**No Results:**
+SEARCH RESULTS FOR (eyebrow)
+"xyz" (h1)
+[ Search input with query ]
+Nothing matched your search
+Try another search or explore our collections.
+Explore collections →
+
+
+**Filtered Empty:**
+SEARCH RESULTS FOR (eyebrow)
+"serum" (h1)
+[ Search input with query ]
+0 results Filter (1) Sort ▼
+No products found
+Clear filters
+
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-search` | Main container with full width and color scheme. |
+| Inner container | `.cosme-search__inner` | Constrained to `--page-width` with `--page-margin`. |
+| Intro | `.cosme-search__intro` | Eyebrow + heading. |
+| Form | `.cosme-search__form` | Search form with hidden `type` and `options[prefix]` inputs. |
+| Field | `.cosme-search__field` | Input + clear + submit button. |
+| Clear | `.cosme-search__clear` | Link to reset the search (visible when query exists). |
+| Submit | `.cosme-search__submit` | Button with search icon. |
+| Popular searches | `.cosme-search__popular` | Nav block with heading and list. |
+| Popular item | `.cosme-search__popular-item` | Each link with separator after. |
+| Empty states | `.cosme-search__empty` | Container for no‑results and filtered‑empty messages. |
+| Grid | `.cosme-search__grid` | Product grid (CSS Grid). |
+| Grid item | `.cosme-search__item` | Individual product card wrapper. |
+| Pagination | `.cosme-search__pagination` | Numbered pagination (when > 24 results). |
+| Toolbar snippet | `.cosme-search-toolbar` | Wrapper for the facets. |
+| Filter button | `.cosme-collection-toolbar__filters-button` | Reuses Collection toolbar button. |
+| Sort dropdown | `.cosme-dropdown` | Custom dropdown with hidden native select. |
+| Filter drawer | `.cosme-collection-filters` | Reuses Collection filter drawer. |
+| Chips | `.cosme-collection-toolbar__chips` | Active filter chips and Clear all. |
+
+---
+
+## Accessibility
+
+The Search page is built with accessibility as a priority:
+
+- **Heading hierarchy** – the main heading is an `<h1>`; the query itself is the heading text. On empty search, the heading is “What are you looking for?”.
+- **Search form** – has a visible label (hidden visually) and `role="search"`.
+- **Input** – uses proper `autocomplete`, `autocorrect`, and `spellcheck` attributes.
+- **Live regions** – the result count and status messages are announced via `role="status"` and `aria-live="polite"`.
+- **Keyboard navigation** – all interactive elements (input, clear, submit, filter button, sort dropdown, pagination) are focusable and have visible focus rings.
+- **Filter drawer** – uses a `<dialog>` with proper `aria-labelledby`, focus trapping, and Escape closing.
+- **Clear link** – is a real `<a>` with a valid `href`, so it works without JavaScript.
+- **Popular searches** – links are keyboard‑accessible and have visible focus states.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Contrast** – all text meets WCAG contrast requirements in all three color schemes.
+
+---
+
+## Performance
+
+- **Native Shopify search** – uses server‑side rendering, no AJAX fetching (except standard form submissions).
+- **Eager loading** – first row of products on the first page uses `loading="eager"` and first card `fetchpriority="high"`; subsequent pages lazy‑loaded.
+- **Responsive images** – the `sizes` attribute is calculated based on `desktop_columns`.
+- **No external libraries** – all JavaScript is vanilla and minimal.
+- **CSS** – uses existing Cosme tokens; no heavy frameworks.
+- **Pagination** – standard Shopify `paginate` object, no infinite scroll.
+
+---
+
+## Technical Details
+
+- **File:** `sections/search.liquid`
+- **Snippet:** `snippets/cosme-search-facets.liquid`
+- **Template:** `templates/search.json` (uses the section)
+- **Snippets used:** `cosme-product-card`, `cosme-icon`, `cosme-button`
+- **CSS classes:** as listed above.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** handles:
+  - Filter drawer open/close (dialog, overlay, scroll lock, focus).
+  - Sort dropdown toggle with keyboard support.
+  - Sort select change triggers form submission.
+  - Live region updates for filter/result states.
+- **Filters:** native `search.filters` (dynamic; depends on Search & Discovery configuration).
+- **Sorting:** native `search.sort_options` (dynamic).
+
+---
+
+## Troubleshooting
+
+### The search input does not show the query after submission
+- The input uses `value="{{ search.terms | escape }}"`. This is the correct Shopify object.
+- Ensure the template uses the `search` object correctly.
+
+### Popular searches do not appear
+- Ensure **Show popular searches** is enabled.
+- Add at least one popular search block with a non‑empty **Term**.
+- They only appear when the search page has **no query**.
+
+### Filters are not showing
+- Filters are driven by `search.filters`. They require configuration in Shopify **Search & Discovery**.
+- If only Price and Availability appear, you need to add more filters in the admin.
+
+### The filter drawer does not open
+- Check that the `data-filter-open` button exists and the dialog `id` matches.
+- Look for JavaScript errors in the console.
+
+### Sorting options are missing
+- Sorting options come from `search.sort_options`. Ensure the store has sorting enabled.
+- The dropdown is hidden if there are fewer than 2 options.
+
+### Product cards do not show Quick View/Add to Cart
+- The Search page uses the shared `cosme-product-card`. If those actions are missing, verify the card snippet is correctly configured and the corresponding global scripts are loaded.
+
+### No‑results state shows products (if query has no results but filters are active)
+- This is handled by the `is_empty_filters` logic. If filters are active and results are zero, the “No products found” + “Clear filters” state appears.
+- If no filters are active, the standard no‑results state appears.
+
+### Pagination is not showing
+- Pagination appears only when there are more than 24 results (the current `products_per_page`).
+- The limit is fixed; to change it, modify `products_per_page` in the Liquid (currently `24`).
+
+### The page does not respect the Page width setting
+- The section uses `--page-width` and `--page-margin`. Ensure these are set in the theme’s global CSS.
+
+---
+
+## Usage Examples
+
+### Minimal search page (no popular searches)
+- Disable **Show popular searches**.
+- The empty search page only shows the intro and the search form.
+
+### Full editorial search with popular searches
+- Enable **Show popular searches**.
+- Add 3–6 popular search blocks with relevant terms (e.g., “Serums”, “Moisturizers”, “Cleansers”).
+- The popular searches appear as a clean, separator‑delimited list.
+
+### Wide product grid (5 columns)
+- Set **Desktop columns** to `5`.
+- This is ideal for stores with a wide layout and many products.
+- The grid automatically adjusts image sizes.
+
+### Dark scheme
+- Select **Color scheme**: `Dark` (scheme-2) for a dramatic, high‑contrast search experience.
+
+---
+
+## Conclusion
+
+The COSME Search Page is a premium, editorial discovery tool that leverages Shopify's native search capabilities while providing a beautiful, consistent brand experience. With flexible settings, reusable components, and full accessibility, it offers merchants a powerful and maintainable search solution.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

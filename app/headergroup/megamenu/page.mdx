@@ -1,0 +1,197 @@
+---
+sidebarTitle: Mega Menu
+---
+
+import { Callout } from 'nextra/components'
+
+# Mega Menu
+
+The **Mega Menu** is a premium, expandable navigation drawer that replaces the standard mobile/desktop dropdown. It provides a rich, editorial browsing experience with multi‑column layouts, hierarchical navigation, and optional promotional images.
+
+The Mega Menu is part of the Header section and is activated by clicking the **Menu** button (in Centered Logo layout) or the hamburger icon (in Standard layout on mobile).
+
+You can choose from three menu styles: **Simple**, **Mega menu**, and **Mega menu + image**. The latter allows you to display editorial images alongside specific menu sections, creating a curated storefront feel.
+
+
+![Mega Menu Settings in Theme Editor](/img/mega-menu.png)
+---
+
+## Overview
+
+The Mega Menu is built on top of the existing COSME header drawer. It includes:
+
+- **Three menu modes** – Simple (accordion), Mega menu (tabbed columns), Mega menu + image (editorial image per section).
+- **Shopify menu integration** – Uses your existing navigation menu; no hard‑coded links.
+- **Image blocks** – Assign an image to any top‑level menu item (e.g., "Shop", "Catalog") to appear as an editorial panel.
+- **Multi‑column layout** – Automatically distributes sub‑items into columns (up to 6).
+- **Color Scheme support** – The drawer can have its own color scheme, independent of the header bar.
+- **Accessibility** – Full keyboard navigation, ARIA roles, focus management.
+- **Responsive** – On desktop, the drawer slides in from the left; on mobile, it becomes a full‑width panel with accordion behaviour.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings (within Header)
+
+The Mega Menu settings are located inside the **Header** section settings panel:
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Menu** | Link list picker | – | – | The Shopify menu to display in the drawer. |
+| **Menu style** | Select | `Simple`, `Mega menu`, `Mega menu + image` | `Mega menu + image` | The type of navigation drawer. |
+| **Menu color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Color scheme for the drawer panel (background, text, borders, etc.). |
+
+---
+
+## Menu Styles
+
+### Simple Menu
+
+- Displays the Shopify menu as a clean vertical accordion list.
+- Nested items are revealed using `<details>`/`<summary>` (click to expand).
+- Supports up to 3 levels of nesting.
+- No columns, no images – ideal for smaller catalogs or minimal sites.
+
+### Mega Menu
+
+- **Desktop**: Left‑side tabs (top‑level menu items) switch the content panel on the right.
+- Each tab shows the sub‑items of that menu section arranged in **columns** (automatically determined by the number of sub‑items).
+- **Mobile**: The same content is displayed as an accordion (full‑width) for touch devices.
+- No image area – only navigation columns.
+
+### Mega Menu + Image
+
+- Same as Mega Menu, but with an **additional editorial image panel** for each top‑level menu item.
+- You can assign a custom image, heading, text, and call‑to‑action to any menu section.
+- This turns the navigation into a curated, magazine‑style experience.
+
+<Callout type="info">
+  The image panel appears only when you have added at least one **Mega menu image** block and correctly linked it to a menu item using the `Menu item trigger` field.
+</Callout>
+
+---
+
+## Blocks: Mega Menu Image
+
+To display an image for a specific menu section, you must add a **Mega menu image** block to the Header section and configure it properly.
+
+### Block Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| **Menu item trigger** | Text | **Exactly** the name of the top‑level menu item (e.g., `Shop`, `Catalog`, `Home`). This must match the title of a menu item in your selected Shopify menu. |
+| **Image** | Image picker | The editorial image to display. |
+| **Image link** | URL | Optional link for the entire image area. |
+| **Image heading** | Text | A headline displayed over or below the image. |
+| **Image text** | Textarea | Supporting copy. |
+| **Image position** | Select (`Left`, `Right`) | Where the image appears relative to the navigation columns. |
+| **CTA label** | Text | Call‑to‑action button text. |
+| **CTA link** | URL | Link for the CTA button. |
+
+<Callout type="warning">
+  **The `Menu item trigger` field is case‑sensitive.** It must exactly match the title of the menu item. If the menu item is `Catalog`, you must enter `Catalog`, not `catalog` or `CATALOG`. Otherwise, the image will not appear.
+</Callout>
+
+### How the Image Block Works
+
+1. The Mega Menu loops through your Shopify menu items.
+2. For each top‑level item, it looks for a block where `Menu item trigger` matches the item's title.
+3. If a match is found, that block's image and content are rendered in the editorial panel.
+4. If no block matches, the menu section displays navigation columns **without** an image.
+
+This allows you to have images for some sections and not for others, or to show different images for different sections.
+
+---
+
+## Visual Layout
+
+### Desktop (Mega Menu + Image)
+
+images here
+
+
+- **Left column**: Tabs (top‑level menu items).
+- **Middle**: Navigation columns (sub‑items arranged automatically).
+- **Right**: Editorial image (if a matching block exists).
+
+If no image is present, the right column is omitted and the navigation columns take up the full width.
+
+### Mobile
+
+The drawer becomes full‑width and all content (tabs, columns, images) is displayed as an accordion for easy touch interaction.
+
+---
+
+## Color Scheme Integration
+
+The Mega Menu uses its own **Menu color scheme** setting. This allows the drawer to have a different appearance from the header bar (e.g., a dark drawer with a light header).
+
+All elements inside the drawer inherit the selected scheme:
+- Background
+- Text (heading, links, muted text)
+- Borders
+- Hover states
+- Active states
+- Icons
+- Buttons
+
+This ensures consistency with the rest of the theme while giving you flexibility.
+
+---
+
+## Accessibility
+
+The Mega Menu is built with accessibility as a priority:
+
+- **Role and ARIA** – Uses `role="tablist"`, `role="tab"`, `role="tabpanel"` for desktop tabs.
+- **Keyboard navigation** – Arrow keys (Up/Down, Home, End) navigate between tabs.
+- **Focus management** – Focus is trapped inside the drawer and returns to the menu button when closed.
+- **Screen readers** – Proper labels and `aria-selected`/`aria-hidden` attributes.
+- **Reduced motion** – Animations respect `prefers-reduced-motion` and the global animation setting.
+
+---
+
+## Example Use Cases
+
+- **Beauty catalog with editorial imagery** – Use `Mega menu + image` and assign product hero shots to each category (e.g., "Skincare", "Makeup").
+- **Simple navigation** – Use `Simple` mode if you have a small menu and don't need columns or images.
+- **Large product catalog** – Use `Mega menu` to organise dozens of sub‑categories into clear columns.
+
+---
+
+## Technical Details
+
+- **File:** `sections/header.liquid` (drawer content is rendered via `snippets/cosme-header-drawer-content.liquid`).
+- **CSS classes:** `.cosme-header__drawer`, `.cosme-header__mega`, `.cosme-header__mega-triggers`, `.cosme-header__mega-panels`, `.cosme-header__mega-columns`, `.cosme-header__mega-editorial`, etc.
+- **Snippets used:** `cosme-icon`, `cosme-image`, `cosme-button` (optional).
+- **CSS variables (tokens):** All existing COSME design tokens (colors, spacing, typography, borders, radius, etc.).
+- **JavaScript:** Provides tab switching, accordion behaviour, keyboard navigation, and drawer open/close logic.
+
+---
+
+## Troubleshooting
+
+### The image does not appear in Mega Menu + Image mode
+
+1. Ensure you have added a **Mega menu image** block to the Header section.
+2. Verify that the **Menu item trigger** field **exactly matches** the title of the corresponding top‑level menu item (case‑sensitive).
+3. Check that an image is selected in the block.
+4. Make sure the menu item actually exists in the selected Shopify menu.
+
+### The drawer opens but shows no columns
+
+- Ensure a Shopify menu is selected in the **Menu** setting.
+- If the menu has no sub‑items, the Mega Menu will show a single link instead of columns.
+
+### The tabs do not switch
+
+- This may happen if the `data-mega-trigger` and `data-mega-panel` attributes are not correctly paired. Reload the theme and check the browser console for errors.
+
+---
+
+## Conclusion
+
+The Mega Menu transforms your store's navigation into a premium, editorial browsing experience. With three flexible modes, image blocks, and full colour scheme integration, you can create a navigation that feels curated and on‑brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

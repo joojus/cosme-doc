@@ -1,0 +1,209 @@
+---
+sidebarTitle: Sticky Add to Cart
+---
+
+# Sticky Add to Cart
+
+The **Sticky Add to Cart** is a premium UX feature that keeps the Add to Cart button accessible as the customer scrolls through the product page. It appears as a compact bar at the bottom of the viewport when the main Add to Cart button scrolls out of view, ensuring the customer can always add the product to their cart without scrolling back up.
+
+The sticky bar stays synchronised with the main product form – when the customer changes a variant or quantity in the main form, the sticky bar updates automatically, and vice versa.
+
+![Sticky Add to Cart in action](/img/sticky-atc.png)
+
+---
+
+## Overview
+
+The Sticky Add to Cart is a global snippet that is rendered as part of the Main Product section. It includes:
+
+- **Desktop bar** – a compact horizontal bar at the bottom of the viewport.
+- **Mobile bar** – a streamlined bottom bar optimised for touch interaction.
+- **Variant synchronisation** – changes made in the sticky bar update the main form, and vice versa.
+- **Smart visibility** – appears only when the main Add to Cart button has scrolled out of view.
+- **Product thumbnail** – displays a small product image (optional).
+- **Product title** – displays the product name (optional, hidden on mobile).
+- **Product price** – displays the current selected price (optional).
+- **Variant selector** – a compact dropdown for products with multiple variants (optional).
+- **Add to Cart button** – submits the main product form with the current variant and quantity.
+- **Loading state** – shows "Adding…" while the cart request is in progress.
+- **Success/Error feedback** – displays status messages via an accessible live region.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile with device‑specific settings.
+
+All settings are available directly in the Shopify Theme Editor under **Products → Default product → Main Product → Sticky Header**.
+
+---
+
+## How It Works
+
+### Visibility Trigger
+
+The sticky bar uses an **IntersectionObserver** to monitor the main Add to Cart button (the `data-product-atc-sentinel` element).
+
+- **When the main Add to Cart button is visible** – the sticky bar is hidden.
+- **When the main Add to Cart button scrolls out of view** – the sticky bar appears.
+- **When the user scrolls back up** – the sticky bar disappears.
+
+### Variant Synchronisation
+
+The sticky bar and the main product form share a single source of truth:
+
+1. **Changing a variant in the main form** – the sticky bar updates its price and variant selection automatically.
+2. **Changing a variant in the sticky bar** – the main form updates, and the page does **not** jump or scroll to the top.
+
+### Cart Submission
+
+The sticky bar's Add to Cart button uses the **same product form** as the main page:
+
+- It submits the form via `form="ProductForm-{section_id}"`.
+- It uses the same `/cart/add.js` endpoint.
+- It triggers the same cart drawer or page redirect as the main button.
+- It displays loading and success/error states via the shared status element.
+
+---
+
+## Section Settings
+
+The Sticky Add to Cart settings are located within the **Main Product** section settings.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable sticky Add to Cart** | Checkbox | `true` | Globally enables or disables the sticky purchase bar. |
+| **Sticky ATC — desktop** | Checkbox | `true` | Whether the bar appears on desktop (≥768px). |
+| **Sticky ATC — mobile** | Checkbox | `true` | Whether the bar appears on mobile (768px). |
+| **Show product image** | Checkbox | `true` | Displays the product thumbnail in the sticky bar. |
+| **Show product title** | Checkbox | `true` | Displays the product title (hidden on mobile). |
+| **Show price** | Checkbox | `true` | Displays the current selected price. |
+| **Show variant** | Checkbox | `true` | Displays a variant dropdown for products with multiple variants. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the sticky bar. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥768px)
+
+- The bar appears at the bottom of the viewport, within the page margins.
+- It displays:
+  - Product thumbnail (square, 2.75rem)
+  - Product title
+  - Variant dropdown (if multiple variants exist)
+  - Price
+  - Add to Cart button
+- The bar has a subtle border and rounded corners.
+- It appears with a smooth slide‑up animation.
+
+### Mobile (768px)
+
+- The bar appears at the bottom of the viewport, full width.
+- It displays:
+  - Product thumbnail (square, 2.5rem)
+  - Price
+  - Add to Cart button (compact)
+- The product title and variant dropdown are **hidden** to save space.
+- The bar has a compact height (3.25rem) and uses safe‑area padding for notched devices.
+- It appears with a smooth slide‑up animation.
+
+---
+
+## Behaviour States
+
+| State | Visual | Description |
+|-------|--------|-------------|
+| **Hidden** | Bar is invisible, no padding added to the page. | The main Add to Cart button is visible in the viewport. |
+| **Visible** | Bar slides up and is fully visible. | The main Add to Cart button has scrolled out of view. |
+| **Disabled** | Button is greyed out, not clickable. | The product is sold out or unavailable. |
+| **Loading** | Button text changes to "Adding…", button is disabled. | The cart request is in progress. |
+| **Success** | Status message appears, cart drawer opens. | The product has been successfully added to the cart. |
+| **Error** | Error message appears in the status region. | The cart request failed (e.g., inventory issue). |
+
+---
+
+## Accessibility
+
+The Sticky Add to Cart is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<aside>` with `aria-label` and `aria-hidden` for proper screen reader handling.
+- **Keyboard navigation** – all interactive elements (variant selector, Add to Cart button) are focusable and have visible `:focus-visible` rings.
+- **Focus management** – when the bar appears, it does not steal focus; when it hides, focus returns to the main button if it was inside the bar.
+- **ARIA live region** – status messages are announced via `aria-live="polite"`.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – all interactive elements are at least 44px for easy interaction on mobile.
+
+---
+
+## Performance
+
+- The sticky bar uses an **IntersectionObserver** – no expensive scroll listeners.
+- Variant synchronisation uses a single AJAX request to update the product section.
+- The bar is rendered server‑side with the product data – no additional client‑side fetching.
+- No third‑party libraries are used.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `snippets/cosme-sticky-atc.liquid`
+- **Dependencies:** `cosme-image`, `cosme-price`, `cosme-button`
+- **CSS classes:** `.cosme-sticky-atc`, `__bar`, `__product`, `__media`, `__placeholder`, `__image`, `__copy`, `__title`, `__variant`, `__purchase`, `__price`, `__submit`.
+- **CSS variables (tokens):**
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** Handles:
+  - Visibility detection via `IntersectionObserver` and a sentinel element.
+  - Variant synchronisation between the sticky bar and the main form.
+  - Setting a global flag to prevent page scroll when variants are changed from the sticky bar.
+  - Desktop/mobile behaviour switching via `matchMedia`.
+  - Cleanup on section unload.
+
+---
+
+## Customization Tips
+
+- **Hide the bar on specific devices** – uncheck **Sticky ATC — desktop** or **Sticky ATC — mobile** to disable the bar on that device.
+- **Simplify the bar** – uncheck **Show product image**, **Show product title**, **Show price**, or **Show variant** to remove elements you don't need.
+- **Change the colour scheme** – the sticky bar has its own colour scheme setting, independent of the main product section.
+- **Adjust the bar position** – the bar uses `bottom: var(--page-margin)` to sit above the page margin; this can be customised in the CSS.
+- **Adjust the bar width** – the bar uses `max-width: var(--page-width)` and `margin-inline: auto` to stay within the page width.
+
+---
+
+## Troubleshooting
+
+### The sticky bar does not appear
+- Ensure **Enable sticky Add to Cart** is checked.
+- Check that at least one of **Sticky ATC — desktop** or **Sticky ATC — mobile** is enabled.
+- The bar only appears when the main Add to Cart button has scrolled out of view.
+- Verify that the `data-product-atc-sentinel` element exists in the main product section.
+
+### The sticky bar shows the wrong variant
+- The bar reads the current variant from the main product form.
+- Try selecting a different variant in the main form – the bar should update automatically.
+- If the bar doesn't update, check for JavaScript errors in the browser console.
+
+### Changing a variant in the sticky bar scrolls the page
+- This was fixed by setting a global flag (`window._cosmeVariantFromSticky`) to prevent focus scrolling.
+- If the page still scrolls, check that the flag is being set correctly in the `syncVariantFromSticky` function.
+
+### The sticky bar overlaps the footer on some pages
+- The bar uses `position: fixed` and appears at the bottom of the viewport.
+- The `document.body.style.paddingBottom` is set when the bar is visible to prevent content from being hidden behind it.
+- If the bar still overlaps content, check that the padding is being applied correctly.
+
+### The sticky bar does not work on mobile
+- Ensure **Sticky ATC — mobile** is enabled.
+- The bar uses `env(safe-area-inset-bottom)` for notched devices – ensure your device supports this CSS feature.
+- Check that the bar is not being hidden by browser UI (e.g., Safari's bottom toolbar).
+
+---
+
+## Conclusion
+
+The Sticky Add to Cart is a polished, accessible, and performant feature that enhances the shopping experience by keeping the purchase action always within reach. With its smart visibility, variant synchronisation, and flexible settings, it provides a premium UX that fits naturally within the COSME theme.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,246 @@
+---
+sidebarTitle: Collection Grid
+---
+
+# Collection Grid
+
+The **Collection Grid** is the product listing component of the COSME collection page. It renders the products of a collection in a responsive grid, with configurable columns, image ratios, and loading behaviour — either traditional pagination or a progressive "Load more" button.
+
+The grid is designed to work seamlessly with the existing `cosme-product-card` component, ensuring a consistent product display across all collection pages.
+
+![Collection Grid example](/img/collections-editorial2.png)
+
+---
+
+## Overview
+
+The Collection Grid provides the following key elements:
+
+- **Product grid** – displays products from the current collection using the `cosme-product-card` component.
+- **Responsive columns** – configurable columns for desktop (3 or 4) and mobile (1 or 2).
+- **Product card settings** – toggle vendor, price, badges, secondary image, quick view, and add‑to‑cart button.
+- **Loading modes** – choose between **Pagination** (numbered page links) or **Load more** (progressive loading via AJAX).
+- **Products per page** – select from 8, 12, 16, 20, or 24 products per page.
+- **Empty state** – displays a friendly message when the collection has no products.
+- **Color scheme** – fully integrated with COSME’s three colour schemes.
+- **Accessibility** – proper heading hierarchy, live status announcements for load more, and keyboard‑navigable pagination.
+
+All settings are available in the Theme Editor under **Templates → Default collection** (or any collection template).
+
+---
+
+## Section Settings
+
+The Collection Grid provides a focused set of options, grouped by functionality.
+
+![Collection Grid settings](/img/collections-editorial-settings.png)
+
+### Layout & Grid Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop columns** | Select | `3`, `4` | `4` | Number of product columns on desktop (≥990px). |
+| **Mobile columns** | Select | `1`, `2` | `2` | Number of product columns on mobile (768px). |
+| **Image aspect ratio** | Select | `3/4`, `1/1`, `4/5` | `3/4` | The aspect ratio of product images. |
+| **Product loading** | Select | `Pagination`, `Load more` | `Pagination` | Controls how additional products are loaded. |
+| **Products per page** | Select | `8`, `12`, `16`, `20`, `24` | `12` | Number of products shown per page (or per load‑more batch). |
+
+### Product Card Display Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show vendor** | Checkbox | `false` | Whether to show the product vendor/brand below the title. |
+| **Show price** | Checkbox | `true` | Whether to display the product price. |
+| **Show badge** | Checkbox | `true` | Whether to show sale or sold‑out badges. |
+| **Show secondary image** | Checkbox | `true` | Whether to show the secondary image on hover. |
+| **Show quick view** | Checkbox | `true` | Whether to show the quick view button on hover. |
+| **Show add to cart** | Checkbox | `true` | Whether to show the add‑to‑cart button on hover. |
+
+### Color Scheme
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | `scheme-1` (Light) | The colour scheme for the grid background and text. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Grid**: 3 or 4 columns (depending on `Desktop columns`).
+- **Cards**: use the `cosme-product-card` with editorial layout.
+- **Pagination**: numbered page links, centred below the grid.
+- **Load more**: a single centred button that fetches the next batch of products.
+
+### Tablet (768–989px)
+
+- **Grid**: 3 columns (when desktop is set to 4) or 2 columns (when desktop is 3).
+- **Spacing**: reduced gap compared to desktop.
+- **Pagination / Load more**: same behaviour as desktop, scaled accordingly.
+
+### Mobile (768px)
+
+- **Grid**: 1 or 2 columns (configurable).
+- **Cards**: images and text scaled for small screens.
+- **Pagination**: links wrap to fit the viewport.
+- **Load more**: button full‑width.
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-collection-grid` | Main container with full width and colour scheme. |
+| Inner container | `.cosme-collection-grid__inner` | Constrained to `--page-width`. |
+| Visually hidden heading | `.cosme-visually-hidden` | A hidden `<h2>` for screen readers. |
+| Grid list | `.cosme-collection-grid__list` | The `<ul>` that wraps product cards. |
+| Grid item | `.cosme-collection-grid__item` | Each `<li>` contains a product card. |
+| Pagination nav | `.cosme-collection-grid__pagination` | Navigation block with page links. |
+| Pages list | `.cosme-collection-grid__pages` | Ordered list of page numbers/ellipses. |
+| Page link | `.cosme-collection-grid__page-link` | Link to a specific page. |
+| Current page | `.cosme-collection-grid__page-link--current` | The active page indicator. |
+| Load more wrap | `.cosme-collection-grid__more-wrap` | Wrapper for the load‑more button. |
+| Load more button | `.cosme-collection-grid__more` | The "Load more" link/button. |
+| Empty state | `.cosme-collection-grid__empty` | Shown when the collection has no products. |
+
+---
+
+## Product Loading Modes
+
+### Pagination (default)
+
+- Uses Shopify’s `paginate` object to render numbered page links.
+- Each page link is a standard `<a>` tag with the correct URL.
+- The current page is marked with `aria-current="page"`.
+- Previous/Next links are shown only when available.
+
+### Load More
+
+- A single "Load more" button appears below the grid when more products are available.
+- Clicking the button fetches the next page of products via AJAX (no page reload).
+- The fetched products are appended to the existing list.
+- Duplicate products are automatically skipped.
+- The button shows a loading state and is disabled during fetch.
+- After loading, the button either:
+  - Remains if more products are available (with a fresh `href`), or
+  - Is removed/hidden if no more products exist.
+- Focus is moved to the first new product after a successful load (or to the button if more remain).
+- Accessibility: a live region announces the number of newly loaded products.
+
+---
+
+## Accessibility
+
+The Collection Grid is built with accessibility as a priority:
+
+- **Heading hierarchy**: a visually hidden `<h2>` provides a descriptive heading for screen readers.
+- **Pagination**: uses `<nav>` with `aria-label`, page links have `aria-label` for page numbers, and the current page uses `aria-current="page"`.
+- **Load more**: the button has an accessible loading state (`aria-disabled`, `aria-busy` on the section), and a live region announces updates.
+- **Product cards**: rely on the `cosme-product-card` component for accessible markup (links, images, focus rings).
+- **Keyboard navigation**: all interactive elements (pagination links, load‑more button) are focusable and have visible focus indicators.
+- **Reduced motion**: loading states respect `prefers-reduced-motion` (opacity transitions are disabled).
+
+---
+
+## Performance
+
+- **Eager loading**: the first row of products on the first page uses `loading="eager"` and the first card has `fetchpriority="high"`.
+- **Lazy loading**: subsequent products use `loading="lazy"` to defer off‑screen images.
+- **Load more**: fetches only the next section’s HTML, parsing and appending only new product items.
+- **No external libraries**: all functionality is vanilla JavaScript.
+- **Responsive images**: the `sizes` attribute is calculated based on column settings.
+- **Event cleanup**: listeners are removed on section unload.
+
+---
+
+## Technical Details
+
+- **File:** `sections/collection.liquid`
+- **Snippets used:** `cosme-product-card`
+- **CSS classes:** `.cosme-collection-grid`, `__inner`, `__list`, `__item`, `__pagination`, `__pages`, `__page-item`, `__page-link`, `__page-ellipsis`, `__more-wrap`, `__more`, `__empty`
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-foreground`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** The load‑more logic handles:
+  - Fetching the next page via `fetch` with `section_id` query parameter.
+  - Parsing HTML and extracting new product items.
+  - Avoiding duplicates using product IDs.
+  - Updating the load‑more button `href` or hiding it when no more pages exist.
+  - Managing loading states and focus.
+  - Status announcements via a live region.
+
+---
+
+## Troubleshooting
+
+### The grid is not showing products
+- Ensure the collection contains at least one product.
+- Check that the collection is published and not empty.
+- Verify that `collection.products` is available (the section uses the standard Shopify collection object).
+
+### Products are not showing the correct image ratio
+- Adjust the **Image aspect ratio** setting to match your product images.
+- If using `3/4` and images are landscape, they will be cropped; choose `1/1` or `4/5` as needed.
+
+### Pagination links are broken
+- The pagination uses Shopify’s `paginate` object, which generates standard URLs.
+- If the store uses custom URL structures, ensure the `collection.url` is correctly set.
+
+### Load more does not work
+- Check that **Product loading** is set to `Load more`.
+- Ensure JavaScript is enabled and not blocked.
+- Inspect the browser console for errors.
+- The load‑more button relies on `section_id` – verify that the section has a valid `id`.
+
+### Duplicate products appear after Load more
+- The script uses product IDs to skip duplicates.
+- If duplicates still appear, check that the next page contains unique products.
+- This can happen if the collection has duplicate product handles (Shopify does not allow duplicate handles, so this is unlikely).
+
+### The load‑more button is not hidden when no more products exist
+- The button is hidden when the next page’s HTML contains no `[data-collection-load-more]` element with an `href`.
+- If the button persists, check the response HTML from the server.
+
+### The empty state is not showing when the collection is empty
+- The empty state is shown when `product_count == 0`.
+- Ensure the collection object is correctly passed to the section.
+
+### The product count on the toolbar does not update after Load more
+- The product count in the toolbar is handled separately; it does not update with AJAX.
+- The count reflects the total collection size, not the visible products.
+
+---
+
+## Usage Examples
+
+### Standard paginated grid
+- Leave **Product loading** as `Pagination`.
+- Set **Products per page** to `12` or `16`.
+- Configure **Desktop columns** to `4` for a dense grid or `3` for more breathing room.
+
+### Infinite‑like experience with Load more
+- Set **Product loading** to `Load more`.
+- Choose **Products per page** (`12` is a good balance).
+- This provides a progressive loading experience without full page reloads.
+
+### Minimal grid (no vendor, no badges)
+- Disable **Show vendor**, **Show badge**, **Show secondary image**, **Show quick view**, **Show add to cart**.
+- This leaves only the product image, title, and price – a clean, minimalist layout.
+
+### Mobile‑optimised grid
+- Set **Mobile columns** to `1` for a single‑column layout on small screens.
+- Products will stack vertically, giving each item more space.
+
+---
+
+## Conclusion
+
+The COSME Collection Grid is a flexible and performant product listing component that adapts to any collection page. With configurable columns, loading modes, and product card settings, it gives merchants full control over the product browsing experience while maintaining the brand’s editorial aesthetic. The integration with `cosme-product-card` ensures consistency across the theme.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

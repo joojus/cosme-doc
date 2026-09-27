@@ -1,0 +1,244 @@
+---
+sidebarTitle: Popular Products
+---
+
+import { Callout } from 'nextra/components'
+
+# Popular Products
+
+The **Popular Products** section displays a grid of products from a selected Shopify collection (or demo products) in an editorial layout. It’s designed for beauty and lifestyle brands to showcase best‑selling or curated items with a clean, minimal aesthetic.
+
+Each product card supports hover‑revealed secondary images, Quick View, and AJAX Add to Cart, and the grid can be paginated with Previous/Next buttons when there are more products than columns.
+
+![Popular Products in Theme Editor](/img/popular-products.png)
+
+---
+
+## Overview
+
+The Popular Products section is a full‑width, editorial‑style product grid that typically sits below the Hero or between other content sections. It includes:
+
+- **Product grid** – Responsive columns (3–5 on desktop, 1–2 on mobile) with flexible gap.
+- **Collection selection** – Choose any Shopify collection; falls back to demo products if none selected.
+- **Product cards** – Powered by the `cosme-product-card` snippet, with full support for:
+  - Secondary image on hover (cross‑fade)
+  - Quick View button (with global Quick View modal)
+  - AJAX Add to Cart (for single‑variant products)
+  - Product badges (Sale, Sold Out)
+  - Vendor, price, and title display
+- **Pagination** – Previous/Next navigation (when enabled) that pages through the product list, showing one “page” equal to the number of desktop columns.
+- **Demo data** – Pre‑populated with 8 realistic beauty products, so the section looks complete immediately after installation.
+- **Color Schemes** – Inherits from global Light / Dark / Light+Accent with a dedicated scheme picker.
+- **Flexible controls** – Toggle vendor, price, badges, secondary image, Quick View, Add to Cart, and navigation independently.
+- **Responsive** – Optimised for desktop, tablet, and mobile.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `SHOP` | Small text displayed above the heading. |
+| **Heading** | Text | `Popular` | Main section heading. |
+
+### Product Source
+
+| Setting | Type | Options / Range | Default | Description |
+|---------|------|-----------------|---------|-------------|
+| **Collection** | Collection picker | – | – | Select a Shopify collection. If empty or invalid, demo products are used. |
+| **Products to show** | Range (4–16, step 1) | – | `8` | Maximum number of products to display. |
+
+### Layout
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop columns** | Select | `3`, `4`, `5` | `4` | Number of columns on desktop (≥990px). |
+| **Mobile columns** | Select | `1`, `2` | `2` | Number of columns on mobile ( 768px). |
+| **Show navigation** | Checkbox | – | `true` | Shows Previous/Next pagination buttons when products exceed desktop columns. |
+
+### Product Card Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show vendor** | Checkbox | `true` | Displays the product vendor/brand. |
+| **Show price** | Checkbox | `true` | Displays the product price (with compare‑at price if on sale). |
+| **Show badge** | Checkbox | `true` | Shows “Sale” or “Sold out” badges on the product image. |
+| **Show secondary image** | Checkbox | `true` | Enables cross‑fade to the second product image on hover (desktop) and focus. |
+| **Show Quick View** | Checkbox | `true` | Shows the Quick View button (a `+` icon that opens the modal). |
+| **Show Add to Cart** | Checkbox | `true` | Shows an Add to Cart button for products with only one variant (adds via AJAX). |
+
+### Colors Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The color scheme for the section background and text. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Products are arranged in a grid with the chosen number of columns (3, 4, or 5).
+- The heading and optional eyebrow sit on the left; the navigation buttons (Previous/Next) sit on the right.
+- Product cards display the image, title, vendor (if enabled), and price.
+- Hover reveals secondary image (if available) and slides out action buttons (Quick View, Add to Cart) from the bottom‑right corner (on devices with fine pointer).
+
+### Tablet (768px – 989px)
+
+- The grid adapts to a maximum of 3 columns (even if desktop columns are set to 4 or 5).
+- Navigation buttons remain visible if there are more products than the current columns.
+
+### Mobile (768px)
+
+- The grid uses 1 or 2 columns (as set in `mobile_columns`).
+- The heading and navigation stack vertically, with navigation aligned to the right.
+- Action buttons are always visible (no hover‑reveal), and the secondary image cross‑fade is disabled on touch devices.
+
+---
+
+## Pagination Behaviour
+
+When **Show navigation** is enabled and the number of products exceeds the number of visible columns (on desktop), the section activates a pagination system:
+
+- **Pages** – Each page shows exactly the number of products that fit in one row (equal to `desktop_columns` or the current effective columns on tablet).
+- **Previous / Next buttons** – Clicking moves one page forward or backward.
+- **Disabled state** – Buttons are disabled when on the first or last page.
+- **Live region** – A hidden live region announces the current page number (e.g., “Page 1 of 3”) to screen readers.
+- **Responsive** – On resize, pagination recalculates; if the columns change, the current page resets to the first page to avoid empty states.
+- **No pagination** – When products fit in one row (or navigation is off), the buttons are hidden and all products are shown in a single grid.
+
+---
+
+## Demo Data
+
+If no collection is selected, the section falls back to a set of predefined demo products. These are intended to give merchants a realistic preview immediately after adding the section.
+
+The demo data includes 8 products with realistic beauty‑brand names, vendors, and placeholder images:
+
+| # | Demo Title | Vendor | Demo Price |
+|---|------------|--------|------------|
+| 1 | Blemish Control Primer | e.l.f | $155.00 |
+| 2 | Soothing Face Primer | e.l.f | $155.00 |
+| 3 | Poreless Face Primer | e.l.f | $155.00 |
+| 4 | Illuminating Face Primer | e.l.f | $155.00 |
+| 5 | Face Moisturizer | e.l.f | $155.00 |
+| 6 | Hydrating Eye Gel | Bliss | $155.00 |
+| 7 | Daily Hydration Moisturizer | e.l.f | $155.00 |
+| 8 | Miracle Leave‑in | its a 10 | $155.00 |
+
+Each demo card uses Shopify placeholder images (`product‑1` … `product‑6`) that rotate, ensuring a visually diverse grid. Merchants can replace the collection with a real one at any time.
+
+---
+
+## Color Scheme Integration
+
+The section uses the global color scheme system. The selected scheme affects:
+
+- **Section background** (uses `--color-background`).
+- **Text colours** – heading, body text, muted text (vendor, price) use the scheme’s `--color-foreground`, `--color-heading`, `--color-muted`.
+- **Badges and buttons** – inherit accent and border colours from the scheme.
+
+The scheme can be changed independently of other sections, giving you flexibility to create contrast or harmony across the page.
+
+---
+
+## Accessibility
+
+The Popular Products section is built with accessibility as a priority:
+
+- **Semantic HTML** – Uses `<section>`, `<article>` for each product card, proper heading hierarchy (`<h2>` for section heading).
+- **ARIA attributes** – The section has `aria-label` derived from translations; the navigation buttons have `aria-label` for Previous/Next; the live region announces page changes.
+- **Keyboard navigation** – All interactive elements (buttons, links, form submit) are focusable and have visible `:focus-visible` rings.
+- **Focus management** – Focus is properly handled; after Quick View or Add to Cart interactions, focus returns to the triggering element.
+- **Reduced motion** – All animations respect `prefers-reduced-motion`; transitions are disabled when reduced motion is preferred.
+- **Image alt text** – Product images use the product title as alt text; secondary images have empty alt (decorative).
+
+---
+
+## Example Use Cases
+
+- **Best‑sellers** – Showcase your top‑selling products in a clean grid, encouraging visitors to explore and purchase.
+- **New arrivals** – Display the latest products with a “New” badge (custom badge text can be added via the product card snippet, but not directly in section settings – you could modify the snippet for custom badges).
+- **Category highlights** – Feature products from a specific collection (e.g., “Skincare Essentials”) with a dedicated heading and eyebrow.
+- **Promotional campaigns** – Pair with a hero section and use the navigation to create a “scrollable” product showcase without overwhelming the page.
+
+---
+
+## Default Demo Data
+
+When you add the Popular Products section to a new COSME theme, it comes pre‑populated with 8 demo products (as listed above). The section uses `products_to_show = 8`, `desktop_columns = 4`, and all toggles enabled by default. This gives a rich, out‑of‑the‑box experience.
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-popular-products.liquid`
+- **Snippets used:** `cosme-product-card`, `cosme-price` (via card), `cosme-icon` (via card)
+- **CSS classes:** `.cosme-popular-products`, `.cosme-popular-products__inner`, `.cosme-popular-products__header`, `.cosme-popular-products__titles`, `.cosme-popular-products__heading`, `.cosme-popular-products__eyebrow`, `.cosme-popular-products__navigation`, `.cosme-popular-products__nav-button`, `.cosme-popular-products__nav-divider`, `.cosme-popular-products__grid`, `.cosme-popular-products--enhanced`, `.cosme-popular-products--paginated`.
+- **CSS variables (tokens):**
+  - `--popular-products-columns-desktop`, `--popular-products-columns-mobile` (set inline)
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-*`, `--line-height-*`, `--letter-spacing-*`
+  - `--radius-*`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** Provides pagination logic – calculates visible columns, pages products, updates buttons and live region, handles resize events, and cleans up on section unload.
+- **Lifecycle events:** Uses `shopify:section:load`, `shopify:section:unload`, `shopify:section:reorder` to properly initialise and clean up.
+
+---
+
+## Customization Tips
+
+- **Change product source** – Select a real collection in the Theme Editor; the demo data will be replaced automatically.
+- **Adjust columns** – Choose 3, 4, or 5 desktop columns; the grid will reflow and pagination recalculates.
+- **Toggle features** – Turn off vendor, price, badges, secondary image, Quick View, or Add to Cart to simplify the card.
+- **Hide navigation** – If you prefer a static grid without pagination, turn off `Show navigation` – all products will be shown in one long grid.
+- **Customise the heading** – The `Heading` and `Eyebrow` are fully editable. Use them to match your brand voice (e.g., “Bestsellers”, “New Arrivals”).
+- **Override colours** – The section uses the selected color scheme; you can change it per section to create visual separation.
+
+---
+
+## Troubleshooting
+
+### Products are not showing
+
+- Ensure you have selected a collection that contains products.
+- If no collection is selected, demo products will appear – check that `products_to_show` is set to a value > 0.
+- Verify that the products are published and available in your store.
+
+### Navigation buttons do not appear
+
+- Check that `Show navigation` is enabled.
+- Navigation only appears when the number of products exceeds the visible columns (e.g., 8 products with 4 columns = 2 pages, so buttons show).
+- On tablet, columns are capped at 3; if products ≤ 3, navigation is hidden.
+
+### Secondary image does not show on hover
+
+- Ensure `Show secondary image` is enabled.
+- The product must have at least two images in its media (the second image is used).
+- On touch devices (mobile/tablet), hover effects are disabled; secondary image will not show.
+
+### Quick View or Add to Cart buttons are missing
+
+- Check that the corresponding toggles are enabled in section settings.
+- For Add to Cart: it only appears for products with exactly one variant (i.e., `has_only_default_variant`). Products with multiple variants will not show the Add to Cart button (they should use Quick View instead).
+
+### Pagination does not update after resizing
+
+- The section listens to `resize` events and recalculates. If you experience issues, ensure you are using the latest version of the JavaScript.
+- If the browser window is resized, the current page resets to the first page.
+
+---
+
+## Conclusion
+
+The Popular Products section offers a flexible, editorial product grid that adapts to your store’s needs. With real collection integration, rich product cards, and smart pagination, it’s an ideal way to showcase your products in a clean, brand‑aligned layout.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

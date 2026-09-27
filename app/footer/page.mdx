@@ -1,0 +1,441 @@
+---
+sidebarTitle: Footer
+---
+
+import { Callout } from 'nextra/components'
+
+# Footer
+
+The **Footer** is the final element of the COSME theme, serving as a comprehensive navigation and conversion hub at the bottom of every page. It combines editorial branding, structured navigation, a native Shopify newsletter form, social links, payment icons, and legal policies in a refined, minimal layout.
+
+The Footer is designed to feel like a natural conclusion to the premium editorial experience — calm, spacious, and typography‑led. It adapts intelligently to the number of active menu columns, supports desktop and mobile with accordion menus, and integrates seamlessly with the global colour scheme system.
+
+![Footer in action](/img/footer-main.png)
+
+---
+
+## Overview
+
+The Footer is a full‑width section that appears at the bottom of every template. It includes:
+
+- **Brand column** – logo (reusing the global `settings.logo`), brand description.
+- **Two menu columns** – independent Shopify menus (Shop and Customer Care) with editable headings.
+- **Newsletter column** – native Shopify customer form with email consent, accessible error/success states.
+- **Social links** – uses the existing global social settings (Instagram, Facebook, TikTok, YouTube, Pinterest).
+- **Bottom bar** – copyright, policy links (Privacy, Terms, Refund, Shipping), and Shopify payment icons.
+- **Adaptive columns** – automatically adjusts from 1 to 4 columns on desktop based on which menu/newsletter blocks are active.
+- **Mobile accordion** – menus collapse into accessible `<details>`/`<summary>` accordions on mobile.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Responsive** – adapts to desktop, tablet, and mobile with intelligent reflow.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The Footer provides a curated set of options, grouped into logical categories.
+
+### General Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Enable footer** | Checkbox | – | `true` | Globally enable or disable the Footer. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the Footer background and text. |
+| **Density** | Select | `Compact`, `Default`, `Spacious` | `Default` | Controls vertical padding of the Footer. |
+
+### Brand Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Brand description** | Textarea | `Quiet formulas and considered rituals for skin that prefers less, done well.` | The brand descriptor displayed below the logo. |
+
+### Menu Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Shop menu heading** | Text | `Shop` | Heading for the first menu column. |
+| **Shop menu** | Link list picker | `main-menu` | Select a Shopify menu for the Shop column. |
+| **Customer care heading** | Text | `Customer care` | Heading for the second menu column. |
+| **Customer care menu** | Link list picker | `footer` | Select a Shopify menu for the Customer Care column. |
+
+### Newsletter Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable newsletter** | Checkbox | `true` | Show or hide the newsletter column. |
+| **Newsletter heading** | Text | `Stay in the ritual` | Heading for the newsletter section. |
+| **Newsletter description** | Textarea | `New arrivals, editorial notes, and considered offers — never noise.` | Supporting text below the heading. |
+| **Newsletter placeholder** | Text | `Email address` | Placeholder text for the email input. |
+| **Newsletter button label** | Text | `Subscribe` | Label for the submit button. |
+
+### Social Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show social links** | Checkbox | `true` | Show or hide the social icons/labels. |
+| **Social links style** | Select | `Icons`, `Labels` | `Icons` | Display as icon-only or with text labels. |
+
+### Bottom Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show copyright** | Checkbox | `true` | Show the dynamic copyright line (year + shop name). |
+| **Show policy links** | Checkbox | `true` | Show policy links (Privacy, Terms, Refund, Shipping) when they exist in Shopify. |
+| **Show payment icons** | Checkbox | `true` | Show Shopify payment method icons. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Four‑column layout: **Brand | Shop | Customer Care | Newsletter**.
+- Columns are proportionally weighted (Brand and Newsletter are wider, menus are narrower).
+- If a column is inactive (e.g., Newsletter disabled, empty menu), the grid automatically adjusts to 3, 2, or 1 column.
+- Menu links are displayed as clean editorial lists without borders.
+- The newsletter input and submit button sit side‑by‑side.
+- Social icons are horizontally aligned.
+- Bottom bar: copyright (left) | policies (center) | payment icons (right).
+
+### Tablet (768–989px)
+
+- Two‑column layout: Brand column with social links, Newsletter, menus on the next row.
+- Menus are no longer accordion; they appear as static lists.
+- Newsletter form remains side‑by‑side.
+- Bottom bar: copyright + policies (left) | payment icons (right).
+
+### Mobile (768px)
+
+- Single‑column layout with clear hierarchy:
+  1. Brand (logo + description)
+  2. Newsletter (full‑width, input above button)
+  3. Shop menu (accordion, `<details>`/`<summary>`)
+  4. Customer Care menu (accordion)
+  5. Social links (icons/labels)
+  6. Payment icons
+  7. Copyright and policy links
+- Accordion menus use a subtle chevron rotation and touch‑friendly targets (minimum 44px).
+- Dividers between accordion items are clean and minimal.
+
+---
+
+## Adaptive Columns
+
+The Footer automatically adjusts the number of desktop columns based on which menu/newsletter blocks are active:
+
+| Active Columns | Layout |
+|----------------|--------|
+| Brand only | 1 column |
+| Brand + Shop | 2 columns |
+| Brand + Customer Care | 2 columns |
+| Brand + Newsletter | 2 columns |
+| Brand + Shop + Customer Care | 3 columns |
+| Brand + Shop + Newsletter | 3 columns |
+| Brand + Customer Care + Newsletter | 3 columns |
+| Brand + Shop + Customer Care + Newsletter | 4 columns |
+
+This ensures there is never an empty column when you disable a menu or newsletter.
+
+---
+
+## Newsletter Functionality
+
+The newsletter form is a **native Shopify customer form** (`{% form 'customer' %}`). It is not a fake JavaScript simulation.
+
+- **Email input** – uses `type="email"` and `required` with proper `autocomplete` and ID for accessibility.
+- **Hidden fields** – `contact[tags]="newsletter"` and `customer[accepts_marketing]="true"` for proper marketing consent.
+- **Validation** – HTML5 validation for empty/invalid email; Shopify will also validate on submission.
+- **Success state** – when `form.posted_successfully?` is true, a success message is displayed with `role="status"` and `aria-live="polite"`.
+- **Error state** – when `form.errors` is present, an error message is displayed via `cosme-form-field` with accessible error feedback.
+- **No external APIs** – relies on Shopify's native customer list and marketing consent, so it works immediately after theme installation.
+
+---
+
+## Social Links
+
+Social links are **not configured in the Footer settings** – they reuse the **existing global social settings** from Theme Settings:
+
+- `settings.social_instagram`
+- `settings.social_facebook`
+- `settings.social_tiktok`
+- `settings.social_youtube`
+- `settings.social_pinterest`
+
+Only active URLs (not blank) are rendered. Each social link has an accessible `aria-label` and opens in a new tab with `rel="noopener noreferrer"`.
+
+The **Social links style** setting allows you to choose between icon‑only (using `cosme-icon`) or text labels.
+
+---
+
+## Policies and Payment Icons
+
+### Policy Links
+- The Footer checks for **Privacy policy**, **Terms of service**, **Refund policy**, and **Shipping policy** in the Shopify admin.
+- Only policies that exist (have a URL) are displayed.
+- Policies are rendered as a horizontal list; empty policies are skipped.
+
+### Payment Icons
+- Uses Shopify's native `payment_type_svg_tag` to render the store's enabled payment methods.
+- Icons are automatically updated when the merchant changes payment settings.
+- No manual SVG management is required.
+
+---
+
+## Accessibility
+
+The Footer is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<footer>`, `<nav>` with `aria-labelledby`, `<ul>`, `<details>`/`<summary>`.
+- **Logo link** – `aria-label` defaults to shop name when no logo is present.
+- **Menu headings** – each menu column has an accessible heading (`<h2>`) with a unique `id` for `aria-labelledby`.
+- **Accordion menus** – native `<details>`/`<summary>` provides built‑in keyboard accessibility and state management.
+- **Newsletter form** – labels are visually hidden but associated with inputs; success/error messages are announced via `aria-live`.
+- **Social links** – each social icon has a descriptive `aria-label` (e.g., “Instagram”) and a visually hidden text for redundancy.
+- **Focus states** – uses the global `--color-accent` and `--focus-ring-width` tokens for visible keyboard focus.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – all interactive elements (links, accordion summaries, buttons) have a minimum 44px touch target on mobile.
+
+---
+
+## Performance
+
+- No JavaScript is used for the Footer – all interactivity (accordion, newsletter, links) relies on native HTML/CSS.
+- The newsletter form uses Shopify's built‑in form handling and does not add any client‑side validation overhead.
+- CSS is scoped to the Footer using BEM‑style classes and `{% stylesheet %}`.
+- Images (logo, payment icons) are optimised with `loading="lazy"` and responsive `srcset`.
+- The Footer uses existing COSME variables and components (`cosme-icon`, `cosme-form-field`, `cosme-button`), avoiding duplication.
+
+---
+
+## Technical Details
+
+- **File:** `sections/footer.liquid`
+- **Dependencies:** `cosme-icon`, `cosme-form-field`, `cosme-button`, `payment_type_svg_tag`
+- **CSS classes:** `.cosme-footer`, `__inner`, `__grid`, `__brand-group`, `__brand`, `__logo`, `__logo-image`, `__logo-text`, `__brand-text`, `__social`, `__social-list`, `__social-link`, `__menu`, `__accordion`, `__accordion-summary`, `__accordion-icon`, `__menu-list`, `__menu-link`, `__newsletter`, `__newsletter-form`, `__newsletter-field`, `__newsletter-submit`, `__newsletter-status`, `__bottom`, `__copyright`, `__policies`, `__policies-list`, `__policy-link`, `__payment`, `__payment-list`, `__payment-item`, `__payment-icon`.
+- **CSS variables (tokens):**
+  - `--cosme-footer-logo-width`, `--benefits-delay` (if animated)
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-input-border`, `--color-input-border-hover`, `--color-error`, `--color-success`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--font-body--weight`, `--line-height-body`
+  - `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** None – the Footer is completely static (CSS‑only transitions and native `<details>` behaviour).
+
+---
+
+## Customization Tips
+
+- **Reorder columns** – the Footer grid automatically adapts, but you can change the order of menu columns by adjusting the `order` CSS properties if needed.
+- **Change logo width** – use the global **Logo width** setting (in Theme Settings → Brand) to control the logo size in the Footer as well.
+- **Add more menus** – the Footer supports exactly two menus (Shop and Customer Care). For additional menus, consider using a different section or editing the code.
+- **Adjust newsletter button style** – the button uses the `outline` style; you can change it to `primary`, `secondary`, or `tertiary` in the `{% render 'cosme-button' %}` call.
+- **Hide specific policy links** – if you don't want a particular policy to appear, simply unpublish it in the Shopify admin; the Footer will skip it automatically.
+- **Use social labels** – switch **Social links style** to `Labels` for a text‑based social section, which can be useful for accessibility or brand tone.
+- **Change density** – choose `Compact`, `Default`, or `Spacious` to match the spacing of other sections.
+
+---
+
+## Demo Data
+
+The Footer comes pre‑populated with sensible defaults when the theme is first installed:
+
+| Setting | Default Value |
+|---------|---------------|
+| Brand description | `Quiet formulas and considered rituals for skin that prefers less, done well.` |
+| Shop menu heading | `Shop` |
+| Shop menu | `main-menu` (if it exists; otherwise empty) |
+| Customer Care heading | `Customer care` |
+| Customer Care menu | `footer` (if it exists; otherwise empty) |
+| Enable newsletter | `true` |
+| Newsletter heading | `Stay in the ritual` |
+| Newsletter description | `New arrivals, editorial notes, and considered offers — never noise.` |
+| Newsletter placeholder | `Email address` |
+| Newsletter button label | `Subscribe` |
+| Show social links | `true` |
+| Social links style | `Icons` |
+| Show copyright | `true` |
+| Show policy links | `true` |
+| Show payment icons | `true` |
+
+The Footer uses the store's actual logo and social URLs from the global settings, so it reflects the brand immediately.
+
+---
+
+
+
+## Country / Region Selector
+
+The **Country/Region Selector** is a native Shopify Markets feature integrated into the COSME Footer. It allows customers to switch between available countries or regions, automatically updating the store currency and localized experience based on the merchant's Shopify Markets configuration.
+
+The selector uses Shopify’s native `{% form 'localization' %}` and dynamically reflects the markets enabled in the store’s Shopify admin — no hard‑coded country lists or manual currency setup required.
+
+![Country Selector example](/img/country-selector.png)
+
+---
+
+## How to Use
+
+### Prerequisites
+
+To sell in multiple currencies, you need to:
+
+1. **Use Shopify Payments** in your online store.
+2. **Activate Shopify Markets** in your Shopify admin.
+
+With Shopify Markets, you can offer a localized experience to international customers by displaying prices in their local currency.
+
+### Step 1: Add Markets in Shopify Admin
+
+1. In the Shopify Admin, navigate to **Settings**.
+2. Select **Markets** → **Add Market**.
+3. Browse the list or use the search bar to locate and select countries/regions.
+4. Click **Add market** when finished.
+
+### Step 2: Enable the Country Selector in the Theme
+
+1. From the Shopify admin, go to **Online Store → Themes → Customize**.
+2. In the Theme Editor, select the **Footer** section (or the page where the Footer is rendered).
+3. Find the **Country / Region** setting group.
+4. Enable **Enable country/region selector**.
+5. Save the change.
+
+The selector will now appear in the first Footer column, below the brand description and social icons.
+
+---
+
+## Theme Editor Setting
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable country/region selector** | Checkbox | `true` | Toggles the visibility of the Country/Region selector in the Footer. When disabled, the selector is not rendered. |
+
+---
+
+## Visual Design
+
+The Country/Region selector is designed to feel like a natural, premium part of the COSME Footer.
+
+### Closed state
+
+- Displays the **current market** (flag + country name + currency).
+- Uses a subtle border and existing Cosme typography.
+- Includes a chevron icon (chevron-down) from the Cosme icon system.
+
+### Open state (dropdown)
+
+- Shows **all available markets** from `localization.available_countries`.
+- Each option displays:
+  - Country flag (via Shopify’s `country | image_url`)
+  - Country name
+  - Currency code and symbol (e.g., `United States (USD $)`)
+- The current selection is highlighted.
+- The list is scrollable when many markets are configured.
+- Dropdown opens **upward** by default to stay within the viewport.
+
+### Interaction
+
+- Clicking the control opens the dropdown.
+- Selecting a country submits the native `{% form 'localization' %}` with the selected `country_code` (and `language_code` if a language is present).
+- The page refreshes to apply the new localization and currency.
+
+---
+
+## Technical Details
+
+- **File:** `snippets/cosme-country-selector.liquid` (rendered inside `sections/footer.liquid`)
+- **Data source:** `localization.available_countries` and `localization.country`
+- **Form:** native `{% form 'localization' %}`
+- **Flags:** Shopify’s built-in flag assets (`country | image_url`); missing flags are hidden to avoid broken images.
+- **Icons:** uses `cosme-icon` for the chevron indicator.
+- **Accessibility:** uses `<button>` with `aria-haspopup="listbox"`, keyboard navigation (arrows, Enter, Space, Escape), and click-outside to close.
+- **Color schemes:** inherits Light, Dark, and Light+Accent via existing Cosme tokens.
+
+---
+
+## Accessibility
+
+- **Real button** with accessible label (e.g., “Select country”).
+- **Keyboard support**: Enter/Space opens/closes the dropdown; arrow keys navigate options; Escape closes.
+- **Focus management**: focus remains within the control; visible focus states are applied.
+- **Screen readers**: current selection is identifiable; options are announced with country name and currency.
+- **Touch targets**: minimum 44px for comfortable interaction on mobile.
+
+---
+
+## Troubleshooting
+
+### The selector does not appear
+- Ensure **Enable country/region selector** is checked in the Footer settings.
+- Verify that at least two markets are active in **Settings → Markets**.
+- If only one market is active, the selector is hidden automatically.
+
+### The flag is missing
+- Flags are sourced from Shopify’s built-in flag assets. If a flag is not available for a specific country, it is hidden gracefully.
+- This is a Shopify limitation and does not affect functionality.
+
+### Changing the country does not update the currency
+- Currency switching requires **Shopify Payments** and **Shopify Markets** to be enabled.
+- If currency does not update, check that the market is correctly configured with a currency in Shopify admin.
+
+### The dropdown is cut off at the bottom of the viewport
+- The dropdown uses a flip‑up positioning strategy (`bottom: 100%`) to stay within the viewport.
+- If the Footer is very close to the bottom, the dropdown may still be partially hidden; ensure adequate safe‑area margins.
+
+### The selector is not working on mobile
+- Touch targets are at least 44px. The dropdown is scrollable and positioned correctly for mobile viewports.
+- Test on an actual device or use the mobile preview in Chrome DevTools.
+
+---
+
+## Related Documentation
+
+- [Shopify Markets](https://help.shopify.com/en/manual/markets)
+- [Shopify Localization](https://help.shopify.com/en/themes/development/localization)
+- [Footer Section](/docs/footer)
+
+## Troubleshooting
+
+### Logo does not appear
+- Ensure a logo is uploaded in **Theme Settings → Brand → Logo**.
+- If no logo is uploaded, the shop name appears as a text fallback.
+
+### A menu column is empty
+- Check that the selected **Shop menu** or **Customer Care menu** actually contains links.
+- If a menu is empty or not selected, the column will not render.
+
+### Newsletter does not work
+- The newsletter form uses Shopify's native customer form. It will work only if the store has customer accounts enabled (it works with the default Shopify setup).
+- After submission, the user is added to the email list; success/error messages are displayed.
+- Ensure the email input is valid and not empty.
+
+### Social links missing
+- Social links are only rendered when the corresponding global social URL is not blank.
+- Check **Theme Settings → Social media** to add URLs.
+
+### Payment icons do not appear
+- The store must have at least one payment method enabled in the Shopify admin.
+- Icons are generated automatically and reflect the active payment gateways.
+
+### Mobile accordions are not working
+- The accordion uses native `<details>`/`<summary>` – it works in all modern browsers.
+- If it does not open, check for CSS that may be overriding `display` or `pointer-events`.
+- Ensure `details` and `summary` are not disabled in your browser.
+
+### Columns are not adapting when a menu is disabled
+- The column count is computed based on `show_shop_menu`, `show_care_menu`, and `enable_newsletter`.
+- If a menu is empty but still selected, it will be counted as inactive (because `links.size > 0` is checked).
+- If you have a menu with no links, the column will be hidden.
+
+### Borders or dividers appear unexpectedly
+- The Footer uses a top border and minimal dividers; these are controlled by the `--color-border` variable and `border-width`.
+- To remove the top border, modify the CSS rule for `.cosme-footer` (remove or comment out `border-top`).
+
+---
+
+## Conclusion
+
+The COSME Footer is a polished, accessible, and flexible end‑of‑page component that ties together brand identity, navigation, and conversion with minimal visual noise. Its adaptive columns, native Shopify newsletter, and seamless integration with global settings make it a powerful and easy‑to‑manage footer for any premium Shopify store.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

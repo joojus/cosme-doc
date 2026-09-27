@@ -1,0 +1,313 @@
+---
+sidebarTitle: Cart Page
+---
+
+import { Callout } from 'nextra/components'
+
+# Cart Page
+
+The **Cart Page** is the final step before checkout in the COSME shopping experience. It presents a clean, editorial overview of the customer's selected items, allowing them to review, adjust quantities, apply discount codes, and proceed to checkout — all within a premium, visually restrained interface that continues the brand language of the Home Page.
+
+The page is built as a single, cohesive section with real‑time AJAX updates, a progressive free shipping indicator, and a manually curated recommendation block to encourage additional purchases.
+
+![Cart Page in action](/img/page-cart.png)
+
+---
+
+## Overview
+
+The Cart Page is a full‑width, editorial‑style page that typically follows a product addition or navigation to `/cart`. It includes:
+
+- **Cart Header** – page heading with a live item count.
+- **Two‑column layout** – cart items on the left, order summary on the right (desktop).
+- **Cart Items** – product images, titles, variants, vendor, pricing, quantity controls, and removal.
+- **Order Summary** – subtotal, discount row, total, checkout button, continue shopping link.
+- **Free Shipping** – dynamic progress bar and message with merchant‑configurable threshold.
+- **Discount Code** – input and apply functionality (redirects to Shopify checkout with the code applied).
+- **Payment Methods** – Shopify’s native payment icons.
+- **Trust Message** – merchant‑editable trust line below checkout.
+- **Cart Recommendations** – manually selected product suggestions ("You may also like") below the cart.
+- **Empty Cart State** – premium empty state with a continue shopping call‑to‑action.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile.
+
+All settings are available directly in the Shopify Theme Editor under **Templates → Cart** – no code required.
+
+---
+
+## Section Settings
+
+The Cart Page is a single section (`sections/cart.liquid`) with a curated set of options, grouped into logical categories.
+
+![Cart Page in action](/img/page-cart-settings.png)
+
+### General Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the Cart Page background and text. |
+| **Heading** | Text | `Your cart` | The main page heading displayed at the top of the cart. |
+
+### Product Display Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show vendor** | Checkbox | `true` | Whether to display the product vendor/brand below the product title. |
+| **Show compare‑at price** | Checkbox | `true` | Whether to display the original price alongside the sale price when a product is on sale. |
+
+### Free Shipping Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show free shipping message** | Checkbox | `true` | Enables or disables the entire free shipping block (message + progress bar). |
+| **Show free shipping progress bar** | Checkbox | `true` | Shows or hides the progress bar below the free shipping message. The message remains visible even when the bar is hidden. |
+| **Free shipping threshold** | Number | `100` | The order total (in the store’s currency) required to qualify for free shipping. For example, `100` equals `$100.00`. |
+
+<Callout type="info">
+  The free shipping threshold is entered in the store’s normal currency (not subunits). The theme automatically converts it to cents for comparison with Shopify’s cart total.
+</Callout>
+
+### Discount Code Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show discount code** | Checkbox | `true` | Whether to show the discount code input and apply button. When disabled, the discount row is also hidden. |
+
+### Payment & Trust Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show payment methods** | Checkbox | `true` | Displays Shopify’s native payment method icons (Visa, Mastercard, PayPal, etc.) below the checkout button. |
+| **Show trust message** | Checkbox | `true` | Enables or disables the trust message line. |
+| **Trust message** | Text | `Secure checkout · Fast delivery · Easy returns` | The trust message displayed below the payment icons. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- The cart content is organised in a **two‑column grid**:
+  - **Left column**: cart items list with product images, details, quantity controls, and line totals.
+  - **Right column**: order summary with subtotal, discount, total, checkout button, free shipping, discount input, payment icons, and trust message.
+- The summary is **sticky** — it remains visible as the customer scrolls through the cart items.
+- The summary has a maximum width of `22rem` and is visually separated by a subtle border and background.
+
+### Tablet (768–989px)
+
+- The two‑column grid is maintained with adjusted spacing.
+- The summary remains sticky but with reduced width.
+- Product images and typography scale proportionally.
+
+### Mobile (768px)
+
+- The layout stacks vertically: cart items first, then the order summary below.
+- Product images are smaller (`4.75rem`), and the quantity controls are compact.
+- The summary is full‑width and no longer sticky.
+- The checkout button is full‑width for easy touch interaction.
+
+---
+
+## Cart Items & Quantity Controls
+
+Each cart line item displays the following information:
+
+| Element | Description |
+|---------|-------------|
+| **Product image** | Rendered via `cosme-image` with `lazy` loading (except the first item, which is `eager`). Clicking the image navigates to the product page. |
+| **Product title** | Linked to the product page. |
+| **Vendor** | Displayed when `Show vendor` is enabled (uppercase, muted). |
+| **Variant title** | Shown when the product has more than one variant. |
+| **Selling plan** | Displayed when the item is part of a subscription or selling plan. |
+| **Line properties** | Public custom properties (keys not starting with `_`) are displayed below the variant. |
+| **Unit price** | Displayed via `cosme-price` with unit price support. |
+| **Compare‑at price** | Shown when `Show compare‑at price` is enabled and the item is on sale. |
+| **Sale badge** | A small `Sale` badge appears on the product image when the item is discounted. |
+| **Quantity controls** | `−`, number input, `+` with AJAX updates. |
+| **Remove** | A close icon with a muted "Remove" label, using AJAX to remove the item. |
+| **Line total** | The total price for that line item (`quantity × unit price`). |
+
+### AJAX Behaviour
+
+- **Quantity changes** – using `/cart/change.js` with the line item key.
+- **Loading state** – the line item is dimmed and `aria-busy="true"` while an update is in progress.
+- **Error handling** – if an update fails, the quantity is restored and an accessible error message is displayed.
+- **Empty state** – when the last item is removed, the empty cart state appears without a page reload.
+
+---
+
+## Order Summary
+
+The order summary is the primary conversion area of the Cart Page.
+
+### Summary Components
+
+| Element | Description |
+|---------|-------------|
+| **Order Summary heading** | A clean editorial heading (`<h2>`) for the summary block. |
+| **Subtotal** | The sum of all line item prices (`cart.items_subtotal_price`). |
+| **Discount** | Displayed only when `cart.total_discount > 0` and `Show discount code` is enabled. |
+| **Total** | The final cart total (`cart.total_price`) displayed with currency. |
+| **Checkout button** | A full‑width primary button that submits the cart to Shopify checkout (`/checkout`). |
+| **Continue Shopping** | A tertiary link to the main collections page (`routes.all_products_collection_url`). |
+
+### Free Shipping
+
+The free shipping block includes:
+
+- **Message** – dynamically displays either:
+  - `You're $X away from free shipping.` (when the threshold has not been met)
+  - `You're eligible for free shipping.` (when the threshold is met or exceeded)
+- **Progress bar** – visual indicator of progress toward the threshold (optional, configurable).
+- **Colour** – when the threshold is met, the progress bar fill turns `--color-success`.
+
+The free shipping message updates in real time as cart items are added, removed, or quantities are changed.
+
+### Discount Code
+
+The discount code input and apply button follow Shopify’s standard discount application flow:
+
+- Enter a discount code and click **Apply** (or press Enter).
+- The page redirects to the checkout URL with the discount code applied as a query parameter.
+- **No fake AJAX discount application** — the discount is applied by Shopify during the checkout redirection.
+- When `Show discount code` is disabled, the discount row (`- $0.00`) is hidden entirely.
+
+---
+
+## Cart Recommendations
+
+The **Cart Recommendations** section (`sections/cart-recommendations.liquid`) appears below the cart items and summary. It allows merchants to manually select up to 4 products to suggest to customers.
+
+### Section Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Heading** | Text | – | `You may also like` | The heading of the recommendation block. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the recommendation section. |
+| **Products per row (desktop)** | Select | `3`, `4` | `3` | The number of products displayed in a row on desktop. |
+| **Show vendor** | Checkbox | – | `false` | Whether to show the product vendor in recommendation cards. |
+| **Show secondary image** | Checkbox | – | `true` | Whether to show the secondary image on hover. |
+| **Image aspect ratio** | Select | `3/4`, `1/1`, `4/5` | `3/4` | The aspect ratio of the product images. |
+| **Show badges** | Checkbox | – | `true` | Whether to display product badges (Sale, Sold out). |
+
+### Blocks
+
+| Block | Settings | Description |
+|-------|----------|-------------|
+| **Recommendation product** | `product` (product picker) | Each block represents one manually selected product. |
+
+### Visual Behaviour
+
+- **Desktop**: products are displayed in a grid (3 or 4 columns) spanning the full page width.
+- **Tablet**: 2 columns.
+- **Mobile**: horizontal scrolling with snap (`scroll-snap-type: x mandatory`), showing approximately 1–2 products at a time.
+- **Empty state**: if no products are selected, the section is hidden entirely.
+- **Demo state**: in Theme Editor, a placeholder message prompts the merchant to select products.
+
+### Product Cards
+
+The recommendations use the existing `cosme-product-card` component, respecting its API and styling:
+
+- Product image
+- Title
+- Vendor (optional)
+- Price
+- Badges (optional)
+- Secondary image on hover (optional)
+- Clicking a recommendation navigates to the product page
+
+---
+
+## Accessibility
+
+The Cart Page is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h1>`, `<h2>`, `<ul>`, `<dl>`, `<form>` appropriately.
+- **Heading hierarchy** – the page heading is an `<h1>`; the summary heading is an `<h2>`.
+- **Keyboard navigation** – all interactive elements (buttons, inputs, links) are focusable and have visible `:focus-visible` rings.
+- **ARIA live regions** – status messages for cart updates, quantity changes, and removals are announced via `aria-live="polite"`.
+- **Error messages** – use `role="alert"` for accessible error feedback.
+- **Quantity controls** – each button has a descriptive `aria-label` (e.g., "Decrease quantity of [product name]").
+- **Remove action** – `aria-label` includes the product name for context.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – all interactive elements are at least 44px for easy touch interaction.
+
+---
+
+## Performance
+
+- **AJAX updates** – use the lightweight `/cart/change.js` endpoint; only the affected line and summary are updated.
+- **Lazy loading** – product images (except the first) use `loading="lazy"`.
+- **No external libraries** – all functionality is vanilla JavaScript.
+- **One in‑flight request** – prevents duplicate requests during AJAX updates.
+- **Event delegation** – uses event delegation for click and change handlers.
+- **Cleanup** – events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `sections/cart.liquid`
+- **Snippets used:** `cosme-image`, `cosme-price`, `cosme-product-badge`, `cosme-icon`, `cosme-button`
+- **Dependencies:** Shopify’s native cart AJAX endpoints (`/cart/change.js`, `/cart.js`, `/discount/…`)
+- **CSS classes:** `.cosme-cart`, `__inner`, `__header`, `__heading`, `__count`, `__error`, `__empty`, `__form`, `__layout`, `__items-column`, `__items`, `__item`, `__item-media`, `__item-info`, `__item-controls`, `__quantity`, `__remove`, `__item-total`, `__summary`, `__summary-heading`, `__totals`, `__total-row`, `__checkout`, `__continue`, `__shipping`, `__shipping-message`, `__shipping-bar`, `__shipping-fill`, `__discount`, `__payments`, `__trust`.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-success`, `--color-error`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--radius-button`, `--radius-input`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** All logic is self‑contained inside the section. It handles:
+  - AJAX quantity updates (`/cart/change.js`) with loading and error states.
+  - AJAX removal with smooth fade‑out transition.
+  - Free shipping message and progress bar updates.
+  - Discount code application (redirect to Shopify checkout).
+  - Empty cart state transition.
+  - Live region announcements for screen readers.
+  - Cleanup on section unload.
+
+---
+
+## Troubleshooting
+
+### AJAX quantity updates are not working
+- Check that the line item key is correctly set on `[data-line-key]`.
+- Verify that `/cart/change.js` is accessible and returns a valid response.
+- Look for JavaScript errors in the browser console.
+
+### The free shipping message does not update
+- Ensure **Show free shipping message** is enabled.
+- Check that the **Free shipping threshold** is set correctly (in normal currency, not subunits).
+- The message updates only when the cart total changes via AJAX or page reload.
+
+### The discount code does not apply
+- The discount code input redirects to `/discount/{code}?redirect=/checkout`. This is Shopify’s native discount flow.
+- If the code is invalid, Shopify will show an error on the checkout page.
+- The theme does not apply discounts directly in the cart via AJAX (this is not supported by Shopify’s API).
+
+### The cart recommendations section is empty
+- Ensure at least one product block is added in Theme Editor.
+- If no products are selected, the section is hidden.
+- Products must be published and available to appear in the storefront.
+
+### The empty cart state is shown even with items in the cart
+- This was fixed by ensuring the empty cart markup is rendered only when `cart.item_count == 0`.
+- If the issue persists, check that the `hidden` attribute is correctly removed when items are added.
+
+### The summary is not sticky on desktop
+- The summary uses `position: sticky` with `top: calc(var(--header-sticky-offset, 0px) + var(--spacing-lg))`.
+- Ensure the header sticky offset is correctly set in the theme’s CSS variables.
+- On very short screens, the sticky behaviour may not apply.
+
+### Payment icons are not showing
+- Ensure **Show payment methods** is enabled.
+- The store must have at least one enabled payment type in Shopify admin.
+
+---
+
+## Conclusion
+
+The COSME Cart Page is a polished, accessible, and performant checkout hub that balances editorial design with practical functionality. With AJAX updates, a dynamic free shipping indicator, manual recommendations, and full colour‑scheme support, it provides a premium experience that feels native to the brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

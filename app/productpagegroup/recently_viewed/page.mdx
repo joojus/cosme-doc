@@ -1,0 +1,221 @@
+---
+sidebarTitle: Recently Viewed
+---
+
+import { Callout } from 'nextra/components'
+
+# Recently Viewed
+
+The **Recently Viewed** section displays products that a customer has previously viewed on the store. It is designed to help customers quickly return to products they have shown interest in, encouraging re‑engagement and increasing the likelihood of a purchase.
+
+The section works entirely client‑side using the browser's `localStorage` – no server‑side database is required. It automatically updates as the customer browses product pages, and it gracefully hides when no viewed products are available.
+
+![Recently Viewed in action](/img/recently-viewed.png)
+
+---
+
+## Overview
+
+The Recently Viewed section is a full‑width, editorial‑style product grid that typically sits near the bottom of the Product Page, after recommendations. It includes:
+
+- **Client‑side storage** – uses `localStorage` to remember product handles across sessions.
+- **Automatic tracking** – records each product page visit and stores it in the history.
+- **Self‑excluding** – the current product never appears in its own Recently Viewed list.
+- **Maximum capacity** – stores up to 8 products (configurable), with the newest viewed product always first.
+- **Responsive grid** – configurable columns (3–5 on desktop, 2 on mobile).
+- **Editorial product cards** – reuses the same `cosme-product-card` component as Popular Products.
+- **Pagination** – Previous/Next navigation when products exceed the visible area.
+- **Touch support** – swipe to navigate on mobile devices.
+- **Demo content** – shows placeholder products in the Theme Editor to demonstrate the layout.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable** | Checkbox | `true` | Globally enables or disables the Recently Viewed section. |
+| **Heading** | Text | `Recently viewed` | The main heading of the section. If left blank, a default is used. |
+| **Products to show** | Range (2–8, step 1) | `8` | The maximum number of viewed products to display (and store in the browser). |
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop columns** | Select | `3`, `4`, `5` | `4` | The number of product columns on desktop (≥990px). |
+| **Show navigation** | Checkbox | – | `true` | Whether to show Previous/Next pagination buttons. |
+
+### Colour Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+---
+
+## How It Works
+
+The Recently Viewed section uses a simple, privacy‑first approach to remember products:
+
+### 1. Storing Product History
+
+Each time a customer visits a product page, the product’s **handle** is stored in the browser’s `localStorage` under a unique key for the store (`cosme-recently-viewed-{shop-id}`).
+
+- The product is added to the **front** of the list.
+- If the product is already in the list, it is moved to the front (duplicates are removed).
+- The list is capped at the **Products to show** value (default: 8).
+
+### 2. Displaying the List
+
+When the product page loads, the section:
+
+1. Reads the stored list from `localStorage`.
+2. Excludes the **current product** from the list.
+3. Requests product cards for the remaining handles via a server‑side search query (`/search?q=handle1,handle2&type=product&section_id=recently-viewed-cards`).
+4. Renders the product cards using the `cosme-product-card` component.
+
+### 3. Empty State
+
+- If no products are stored, the section **hides** on the storefront.
+- If there are fewer than 2 products (or fewer than the number of columns), the section still displays them without pagination.
+
+### 4. Theme Editor Preview
+
+- In the Theme Editor (design mode), the section displays **demo placeholder products** so merchants can see the layout and settings without having to browse the store.
+- These demo products are clearly marked as placeholders and do not appear on the live storefront.
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Products are displayed in a grid with the chosen number of columns (3, 4, or 5).
+- The heading sits on the left; navigation buttons appear on the right.
+- Each product card shows the image, title, vendor, price, and badges.
+- If navigation is enabled, Previous/Next buttons appear when products exceed the visible columns.
+
+### Tablet (768–989px)
+
+- The grid adapts to a maximum of 3 columns (even if desktop columns are set to 4 or 5).
+- Navigation buttons remain visible if there are more products than the current columns.
+
+### Mobile (768px)
+
+- The grid uses 2 columns by default.
+- The heading and navigation stack vertically, with navigation aligned to the right.
+- Touch swipe navigation works natively.
+
+---
+
+## Pagination Behaviour
+
+When **Show navigation** is enabled and the number of products exceeds the number of visible columns, the section activates a pagination system:
+
+- **Pages** – Each page shows exactly the number of products that fit in one row (equal to desktop columns or the current effective columns on tablet).
+- **Previous / Next buttons** – Clicking moves one page forward or backward.
+- **Disabled state** – Buttons are disabled when on the first or last page.
+- **Live region** – A hidden live region announces the current page number (e.g., "Page 1 of 3") to screen readers.
+- **Responsive** – On resize, pagination recalculates; if the columns change, the current page resets.
+- **No pagination** – When products fit in one row (or navigation is off), the buttons are hidden and all products are shown.
+
+---
+
+## Accessibility
+
+The Recently Viewed section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<nav>`, `<ul>`, `<li>` appropriately.
+- **ARIA attributes** – the section has `aria-label`; navigation buttons have `aria-label` for Previous/Next; the live region announces page changes.
+- **Keyboard navigation** – all interactive elements (buttons) are focusable and have visible `:focus-visible` rings.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – navigation buttons are at least 44px for easy interaction on mobile.
+
+---
+
+## Performance
+
+- The section uses `localStorage` for client‑side storage – no additional server calls beyond the initial fetch.
+- Product cards are loaded lazily when the section enters the viewport (via `IntersectionObserver`).
+- The product data is fetched via a single AJAX request (using the `/search` endpoint with product handles).
+- Images use appropriate lazy loading; the first row of products is loaded with `eager` priority.
+- No third‑party libraries are used.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **Files:**
+  - `sections/recently-viewed.liquid` – the main section file.
+  - `sections/recently-viewed-cards.liquid` – the card‑rendering snippet used for AJAX requests.
+- **Dependencies:** `cosme-product-card`
+- **CSS classes:** `.cosme-recently-viewed`, `__inner`, `__header`, `__titles`, `__heading`, `__navigation`, `__nav-button`, `__nav-divider`, `__grid`.
+- **CSS variables (tokens):**
+  - `--recently-viewed-columns-desktop`, `--recently-viewed-columns-mobile`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** All logic is self‑contained inside the section. It handles:
+  - Reading and writing to `localStorage`.
+  - Fetching product cards via AJAX using the `/search` endpoint.
+  - Pagination and navigation with page‑based product grouping.
+  - Touch swipe support on mobile.
+  - Responsive recalculation on resize.
+  - Cleanup on section unload.
+  - Demonstration mode in the Theme Editor.
+
+---
+
+## Customization Tips
+
+- **Adjust the maximum** – change **Products to show** to limit how many viewed products are stored and displayed.
+- **Change columns** – choose 3, 4, or 5 desktop columns to control grid density.
+- **Hide navigation** – if you prefer a static grid without pagination, turn off **Show navigation**.
+- **Customise the heading** – the heading can be overridden; if left blank, it uses a default.
+- **Preview in Theme Editor** – the section shows demo products in design mode, making it easy to see the layout without real browsing data.
+
+---
+
+## Troubleshooting
+
+### The section is hidden on the storefront
+- Ensure **Enable** is checked in the section settings.
+- The section only appears after the customer has viewed at least one other product (not the current one).
+- If no products are stored in `localStorage`, the section is hidden.
+
+### Products are not showing
+- The section uses `localStorage`. If the customer has cleared their browser storage or is in private/incognito mode, no data will be available.
+- The current product is excluded from the list.
+- Check that the products are still published and available.
+
+### Navigation buttons do not appear
+- Check that **Show navigation** is enabled.
+- Navigation only appears when the number of products exceeds the visible columns.
+- On tablet, columns are capped at 3; if products ≤ 3, navigation is hidden.
+
+### The section shows different products in the Theme Editor
+- In the Theme Editor, the section displays **demo placeholder products** to help merchants visualise the layout. These are not real products and do not appear on the live storefront.
+
+### Products are not updating after viewing a new product
+- The section only updates when the page loads. After viewing a new product, navigate to another product page to see the updated list.
+- `localStorage` is persistent across sessions; products will remain until the customer clears their browsing data.
+
+---
+
+## Conclusion
+
+The Recently Viewed section is a lightweight, client‑side feature that improves the shopping experience by helping customers quickly return to products they have seen. With its clean editorial design, flexible grid, and automatic tracking, it adds a polished, functional touch to the COSME Product Page.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

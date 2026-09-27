@@ -1,0 +1,232 @@
+---
+sidebarTitle: Collection Header
+---
+
+# Collection Header
+
+The **Collection Header** is the editorial introduction to a collection page in the COSME theme. It sets the visual tone for the shopping experience — combining a large, prominent title with optional descriptive text, a product count, and a featured image in a refined, premium layout.
+
+The header is designed to be flexible: it can be used as a simple text-only header or as a visually rich editorial hero with an image, adapting seamlessly to desktop, tablet, and mobile devices.
+
+![Collection Header example](/img/collection-header-settings.png)
+
+---
+
+## Overview
+
+The Collection Header is a standalone section rendered at the top of the collection template (`templates/collection.json`). It pulls data directly from the Shopify collection object and provides the following key elements:
+
+- **Collection title** – displayed as an `<h1>` with large, editorial typography.
+- **Product count** – the total number of products in the collection.
+- **Collection description** – rich text description, displayed only when present.
+- **Collection image** – optional featured image, configurable via Theme Editor.
+- **Three spacing presets** – Compact, Standard, and Spacious.
+- **Two alignment options** – Left-aligned (default) or Center-aligned.
+- **Three color schemes** – Light, Dark, and Light + Accent.
+- **Image fit** – Choose between `Cover` (fills the container) or `Contain` (fits within the container).
+
+All settings are available directly in the Shopify Theme Editor under **Templates → Default collection** or any collection template.
+
+---
+
+## Section Settings
+
+The Collection Header section provides a carefully curated set of options, grouped into logical categories.
+
+![Collection Header settings](/img/collection-header.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Heading alignment** | Select | `Left`, `Center` | `Left` | Controls the alignment of the title, description, and product count. |
+| **Show description** | Checkbox | `true` | Whether to display the collection description. If the description is empty, this setting has no effect. |
+| **Show product count** | Checkbox | `true` | Whether to display the product count next to the title (or under the image if an image is present). |
+| **Show collection image** | Checkbox | `false` | Whether to display the collection's featured image. |
+| **Image fit** | Select | `Cover`, `Contain` | `Cover` | Controls how the collection image fits within its container. `Cover` fills the container (cropping may occur); `Contain` ensures the entire image is visible. |
+| **Header spacing** | Select | `Compact`, `Standard`, `Spacious` | `Standard` | Controls the vertical padding of the header section. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The color scheme for the header background and text. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+The header uses a two-column grid when an image is present:
+
+- **Left column**: collection title, description, and product count.
+- **Right column**: collection image with optional product count underneath.
+- The image uses `object-fit: cover` by default, with `contain` available via settings.
+
+When no image is present, the content spans the full width of the page.
+
+### Tablet (768–989px)
+
+- The two-column grid is maintained with adjusted spacing.
+- The image height is reduced to `16rem` (vs `18rem` on desktop).
+- Product count remains visible.
+
+### Mobile (768px)
+
+- The layout stacks vertically: content first, then image (if present).
+- The product count appears next to the title (not under the image) on mobile, ensuring readability on small screens.
+- Typography scales down using `clamp(2.25rem, 7vw, 4.5rem)`.
+
+---
+
+## Component Structure
+
+The Collection Header is built from the following semantic elements:
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-collection-header` | Main container with full width and color scheme. |
+| Inner container | `.cosme-collection-header__inner` | Constrained to `--page-width` with margin/padding. |
+| Layout grid | `.cosme-collection-header__layout` | Two-column grid (desktop) or single column (mobile). |
+| Content | `.cosme-collection-header__content` | Left column containing title, description. |
+| Intro | `.cosme-collection-header__intro` | Flex container for title + product count. |
+| Title | `.cosme-collection-header__title` | `<h1>` with editorial font size. |
+| Count | `.cosme-collection-header__count` | Product count text. |
+| Description | `.cosme-collection-header__description` | Rich text description (max-width: `36rem`). |
+| Media column | `.cosme-collection-header__media-column` | Wrapper for image and count. |
+| Media | `.cosme-collection-header__media` | Image container with border-radius and overflow. |
+| Image | `.cosme-collection-header__image` | Rendered via `cosme-image` snippet. |
+| Count under image | `.cosme-collection-header__count--under-image` | Count positioned below the image. |
+
+---
+
+## Conditional Rendering
+
+The Collection Header intelligently hides empty elements:
+
+- **Description**: hidden if empty or `Show description` is disabled.
+- **Product count**: hidden if `Show product count` is disabled.
+- **Collection image**: hidden if `Show collection image` is disabled or `collection.featured_image` is empty.
+
+When no image is present, the product count appears inline with the title. When an image is present, the count moves underneath the image (desktop) or remains inline (mobile).
+
+---
+
+## Color Schemes
+
+The header fully supports the three COSME color schemes:
+
+| Scheme | Background | Text | Accent |
+|--------|------------|------|--------|
+| **Light** (scheme-1) | `var(--color-background)` | `var(--color-foreground)` | `var(--color-accent)` |
+| **Dark** (scheme-2) | Dark background | Light text | Accent color |
+| **Light + Accent** (scheme-3) | Light background | Accent foreground | Accent color |
+
+The color scheme is applied via the `color-{{ section.settings.color_scheme }}` class, which sets the appropriate CSS variables.
+
+---
+
+## Responsive Behavior
+
+| Breakpoint | Layout | Image Height | Count Position |
+|------------|--------|--------------|----------------|
+| Desktop (≥990px) | Two-column grid | `18rem` | Under image (right column) |
+| Tablet (768–989px) | Two-column grid | `16rem` | Under image (right column) |
+| Mobile (768px) | Single column | `12rem` | Inline with title |
+
+---
+
+## Accessibility
+
+The Collection Header is built with accessibility as a priority:
+
+- **Heading hierarchy** – the collection title is an `<h1>` with a unique `id` for `aria-labelledby`.
+- **Image alt text** – uses `collection.featured_image.alt` if available; falls back to `collection.title`.
+- **Semantic HTML** – uses `<section>`, `<header>`, `<h1>`, `<p>` appropriately.
+- **Readable contrast** – all text meets WCAG contrast requirements across all color schemes.
+- **Reduced motion** – respects `prefers-reduced-motion` (no motion effects in this section).
+- **Overflow handling** – `overflow-x: clip` prevents horizontal scroll; text wraps with `overflow-wrap: anywhere`.
+
+---
+
+## Performance
+
+- **Image loading** – the collection image uses `loading="eager"` and `fetchpriority="high"` since it appears above the fold.
+- **Responsive images** – uses Shopify's `image_url` with responsive `sizes` attributes.
+- **No JavaScript** – the header is pure HTML + CSS, with no client-side JavaScript.
+- **CSS variables** – all styling uses theme tokens, ensuring consistency and easy customization.
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-collection-banner.liquid`
+- **Snippets used:** `cosme-image`
+- **CSS classes:** `.cosme-collection-header`, `__inner`, `__layout`, `__content`, `__intro`, `__title`, `__count`, `__description`, `__media-column`, `__media`, `__image`
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+
+---
+
+## Troubleshooting
+
+### The collection image is not displaying
+- Ensure **Show collection image** is enabled in Theme Editor.
+- Verify that the collection has a featured image set in Shopify admin.
+- Check that the image is published and accessible.
+
+### The product count appears in the wrong position
+- The count position is controlled automatically:
+  - **No image**: inline with the title.
+  - **Image present (desktop)**: under the image.
+  - **Image present (mobile)**: inline with the title.
+- If you want to adjust this behavior, modify the Liquid condition (`{% unless show_image %}`) in the section file.
+
+### The image is cropped incorrectly
+- Adjust the **Image fit** setting: `Cover` may crop; `Contain` shows the full image.
+- For `Cover`, you can also adjust the focal point in Shopify admin (if supported by your media settings).
+
+### The header is too tall or too short
+- Adjust the **Header spacing** setting:
+  - `Compact` – reduces vertical padding.
+  - `Standard` – balanced padding (default).
+  - `Spacious` – generous padding for a more editorial look.
+
+### Text is overflowing on mobile
+- The title uses `overflow-wrap: anywhere` to break long words.
+- The description has `overflow-wrap: anywhere` with a `max-width: 36rem`.
+- If text still overflows, check your page width and margin settings.
+
+### The description is not showing
+- Ensure **Show description** is enabled.
+- Verify that the collection has a description in Shopify admin.
+- If the description contains only HTML tags (e.g., `<p></p>`), it will be considered empty and hidden.
+
+---
+
+## Usage Examples
+
+### Minimal header (text only)
+
+Disable **Show collection image** — the header will display only the title, description, and product count in a clean, typographic layout.
+
+### Editorial header (with image)
+
+Enable **Show collection image** and set **Image fit** to `Cover` for a full-width, cinematic header. Use **Spacious** spacing for a premium editorial feel.
+
+### Centered header
+
+Set **Heading alignment** to `Center` — the title, description, and count will be centered. If an image is present, it will also be centered.
+
+### Light + Accent scheme
+
+Select the **Light + Accent** color scheme for a header that uses the accent color for headings and key elements.
+
+---
+
+## Conclusion
+
+The COSME Collection Header is a versatile, accessible, and performant introduction to your collection pages. It adapts to your content — from minimal text-only headers to rich editorial layouts with imagery — while maintaining a consistent brand experience across all devices and color schemes.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

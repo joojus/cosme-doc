@@ -1,0 +1,335 @@
+---
+sidebarTitle: Contact Page
+---
+
+# Contact Page
+
+The **Contact Page** is a premium editorial contact experience for the COSME theme. It combines a native Shopify contact form with curated contact information, a compact FAQ preview, and a closing call‑to‑action — all within the brand's luxury beauty aesthetic. Merchants can manage all content through the Theme Editor without touching code.
+
+The page is built as a custom section (`main-contact.liquid`) with a dedicated template (`page.contact.json`). It uses Shopify's native `{% form 'contact' %}` for submissions, so no third‑party apps or external services are required.
+
+![Contact Page example](/img/contact.png)
+
+---
+
+## Overview
+
+The Contact Page provides the following key features:
+
+- **Editorial hero** – configurable eyebrow, heading, description, alignment, and spacing.
+- **Two‑column layout** – contact details (left) and the contact form (right) on desktop; stacks on mobile.
+- **Contact information** – editable email, business hours, and optional phone with proper `mailto:` / `tel:` links.
+- **Native Shopify contact form** – fields for Name, Email, optional Phone, and Message with success/error states.
+- **Quick Answers** – optional FAQ preview with a compact accordion (up to 8 items), reusable from the Contact section blocks.
+- **“View all FAQs” link** – configurable link to the full FAQ page.
+- **Final editorial CTA** – optional closing section with eyebrow, heading, description, and a button (can link to the form itself or an external page).
+- **Color schemes** – each main section (hero, FAQ, CTA) can have its own colour scheme.
+- **Accessibility** – proper heading hierarchy, form labels, focus states, error/success announcements, reduced‑motion support.
+- **Responsive** – adapts from desktop to tablet to mobile with touch‑friendly targets.
+
+---
+
+## How to Use
+
+1. In Shopify Admin, go to **Online Store → Pages**.
+2. Create a new page (e.g., `Contact`).
+3. In the **Theme template** dropdown, select **`contact`**.
+4. Save the page.
+5. Go to **Online Store → Themes → Customize**.
+6. Select the **Contact** page from the dropdown at the top.
+7. Configure all content, form settings, FAQ blocks, and CTA via the Theme Editor.
+
+---
+
+## Section Settings
+
+The Contact section provides a comprehensive set of settings, grouped into logical categories.
+
+![Contact Page settings](/img/contact-settings.png)
+
+### Hero Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show eyebrow** | Checkbox | `true` | Toggles the eyebrow text above the heading. |
+| **Eyebrow** | Text | `GET IN TOUCH` | Small uppercase text. |
+| **Heading** | Text | `We'd love to hear from you.` | Main page heading. |
+| **Description** | Textarea | `Have a question about an order, our products or anything else? Send us a message and our team will get back to you.` | Supporting text below the heading. |
+| **Hero alignment** | Select | `Left`, `Center` | `Left` | Alignment of the hero text. |
+| **Heading size** | Select | `Small`, `Medium`, `Large` | `Large` | Size of the main heading. |
+| **Hero max width** | Select | `Narrow`, `Medium`, `Wide` | `Narrow` | Maximum width of the hero text block. |
+| **Hero spacing top** | Select | `Small`, `Medium`, `Large` | `Large` | Top padding of the hero section. |
+| **Hero spacing bottom** | Select | `Small`, `Medium`, `Large` | `Medium` | Bottom padding of the hero section. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Main colour scheme for the page. |
+
+### Contact Information Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show contact information** | Checkbox | `true` | Enables the left‑column contact details block. |
+| **Contact eyebrow** | Text | `CONTACT` | Small label above the contact heading. |
+| **Contact heading** | Text | `Customer Care` | Heading for the contact block. |
+| **Email** | Text | `hello@example.com` | Email address displayed. |
+| **Email link** | URL | – | Custom link for the email (e.g., `mailto:...`). If empty, a `mailto:` link is generated from the email. |
+| **Business hours title** | Text | `BUSINESS HOURS` | Label for the hours section. |
+| **Business hours text** | Textarea | `Monday – Friday\n9:00 – 18:00` | The hours text (supports newlines). |
+| **Phone** | Text | – | Phone number (optional). If filled, a `tel:` link is generated automatically. |
+| **Phone link** | URL | – | Custom link for the phone (e.g., `tel:...`). Overrides the generated link. |
+| **Phone label** | Text | `PHONE` | Label for the phone section (only shown if phone is filled). |
+
+### Form Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Form heading** | Text | `Send us a message` | Heading above the form. |
+| **Form description** | Textarea | `We'll get back to you as soon as possible.` | Description below the heading. |
+| **Submit label** | Text | `SEND MESSAGE` | Button label. |
+| **Success message** | Textarea | `Thank you for your message. We'll be in touch soon.` | Message shown after successful submission. |
+| **Show phone field** | Checkbox | `true` | Shows or hides the Phone field in the form. |
+| **Phone required** | Checkbox | `false` | If enabled, the Phone field becomes required (HTML5 validation). |
+
+### Quick Answers (FAQ Preview) Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable Quick Answers** | Checkbox | `true` | Enables the FAQ preview section. |
+| **FAQ eyebrow** | Text | `QUICK ANSWERS` | Small label above the FAQ heading. |
+| **FAQ heading** | Text | `Looking for an answer?` | Main heading for the FAQ preview. |
+| **FAQ description** | Textarea | `You may find what you're looking for in our frequently asked questions.` | Supporting text. |
+| **FAQ alignment** | Select | `Left`, `Center` | `Center` | Alignment of the FAQ header. |
+| **FAQ max width** | Select | `Narrow`, `Medium`, `Wide` | `Medium` | Maximum width of the FAQ container. |
+| **Show FAQ link** | Checkbox | `true` | Shows the “View all FAQs” link. |
+| **FAQ link label** | Text | `View all FAQs` | Label for the link. |
+| **FAQ link** | URL | `/pages/faq` | Destination for the link (defaults to `/pages/faq`). |
+| **FAQ color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Colour scheme for the FAQ preview (can differ from the main scheme). |
+| **FAQ spacing top** | Select | `Small`, `Medium`, `Large` | `Medium` | Top padding of the FAQ section. |
+| **FAQ spacing bottom** | Select | `Small`, `Medium`, `Large` | `Large` | Bottom padding of the FAQ section. |
+
+### Final CTA Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show final CTA** | Checkbox | `true` | Enables the closing editorial CTA. |
+| **CTA eyebrow** | Text | `WE'RE HERE FOR YOU` | Small label above the CTA heading. |
+| **CTA heading** | Text | `Questions, ideas or just want to say hello?` | Main heading of the CTA. |
+| **CTA description** | Textarea | `Our team is always happy to hear from you.` | Supporting text. |
+| **CTA button label** | Text | `CONTACT US` | Label for the button. |
+| **CTA button link** | URL | – | Link for the button. If empty or pointing to the current Contact page, the button scrolls to the contact form. |
+| **CTA color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-3` (Light+Accent) | Colour scheme for the CTA. |
+| **CTA spacing top** | Select | `Small`, `Medium`, `Large` | `Medium` | Top padding of the CTA. |
+| **CTA spacing bottom** | Select | `Small`, `Medium`, `Large` | `Medium` | Bottom padding of the CTA. |
+
+### Layout Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Section spacing bottom** | Select | `Small`, `Medium`, `Large` | `Large` | Bottom padding of the main contact area (hero + layout) after the hero. |
+
+---
+
+## Blocks
+
+The Contact section uses a single block type for the Quick Answers FAQ preview.
+
+### FAQ Item Block
+
+Each block represents one question and answer pair.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Question** | Text | `How long does shipping take?` | The question text. |
+| **Answer** | Richtext | `<p>Standard shipping typically arrives in 3–6 business days after dispatch.</p>` | The answer content. |
+| **Open by default** | Checkbox | `false` | If enabled, this item is open on page load. |
+
+Merchants can add up to 8 blocks, remove, and reorder them freely.
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Hero**: centred or left‑aligned with generous spacing.
+- **Two‑column layout** (when contact info is shown):
+  - **Left column (~38%)**: contact details with editorial spacing.
+  - **Right column (~62%)**: form with labels, inputs, and submit button.
+- **Quick Answers**: below the layout, centred or left‑aligned, with a compact accordion and “View all FAQs” link.
+- **Final CTA**: full‑width, centred, with a button.
+
+### Tablet (750–989px)
+
+- The two‑column layout collapses to a single column (info first, form second).
+- Spacing reduces appropriately.
+- Submit button is full‑width.
+
+### Mobile (750px)
+
+- **Stacked**: hero → info → form → Quick Answers → CTA.
+- **Form fields**: full‑width, touch‑friendly.
+- **Accordion**: comfortable tap targets.
+- **CTA button**: full‑width (up to `20rem`).
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-contact` | Full‑width container with main color scheme. |
+| Inner container | `.cosme-contact__inner` | Constrained to `--page-width`. |
+| Hero | `.cosme-contact__hero` | Header area with eyebrow, heading, description. |
+| Layout | `.cosme-contact__layout` | Two‑column grid for info + form. |
+| Info aside | `.cosme-contact__info` | Contact details block. |
+| Form panel | `.cosme-contact__form-panel` | Wrapper for the form. |
+| Form | `.cosme-contact__form` | Native `{% form 'contact' %}`. |
+| Status | `.cosme-contact__status` | Success/error messages. |
+| FAQ block | `.cosme-contact__faq` | Optional Quick Answers section. |
+| FAQ accordion | `.cosme-contact__faq-item` | Each `<details>` item. |
+| CTA block | `.cosme-contact__cta` | Final editorial CTA. |
+
+---
+
+## Native Shopify Contact Form
+
+The form is built with Shopify's native `{% form 'contact' %}`:
+
+```liquid
+{% form 'contact', id: form_id %}
+  <!-- fields -->
+{% endform %}
+
+```
+### Fields:
+
+contact[name] – required
+
+contact[email] – required, type="email"
+
+contact[phone] – optional, configurable required
+
+contact[body] – required, textarea
+
+Success: when form.posted_successfully? is true, a success message appears (with role="status", tabindex="-1", autofocus).
+
+Errors: if form.errors exists, an error block appears with links to each field (#ContactForm-...-field). Individual field errors are passed to cosme-form-field.
+
+Validation: HTML5 validation is used (required, type="email"). Phone required is controlled by the phone_required setting.
+
+The form submission is handled entirely by Shopify — no custom backend or third‑party service is involved.
+
+
+---
+
+## Quick Answers Accordion
+
+- Uses native `<details>` / `<summary>` elements for accessibility and zero JavaScript dependency.
+- Styled with plus/minus icons from the existing Cosme icon system.
+- Each item displays an editorial number (`01`, `02`, …) if enabled.
+- Items can be set to open by default via block setting.
+- The section can be disabled entirely via Theme Editor.
+
+---
+
+## Accessibility
+
+- **Heading hierarchy**: one `<h1>` for the hero; contact, form, FAQ, and CTA use `<h2>`.
+- **Form labels**: all fields have explicit `<label>` elements with `for` attributes.
+- **Error messages**: the error block uses `role="alert"` and `tabindex="-1"` with focus on render; field errors are displayed below each field.
+- **Success message**: uses `role="status"` and `aria-live="polite"`.
+- **Accordion**: keyboard‑accessible natively via `<details>`; focus rings visible.
+- **Links**: `mailto:` and `tel:` are properly formed; custom links can override.
+- **Focus states**: visible focus rings using `--color-accent`.
+- **Reduced motion**: all transitions respect `prefers-reduced-motion`.
+
+---
+
+## Performance
+
+- **No external libraries**: everything is vanilla Liquid, CSS, and minimal JavaScript (only for copy functionality in Gift Card, not on Contact).
+- **Lightweight**: no images or heavy assets.
+- **CSS**: scoped to the section; uses existing Cosme tokens.
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-contact.liquid`
+- **Template:** `templates/page.contact.json`
+- **Snippets used:** `cosme-form-field`, `cosme-button`, `cosme-icon`
+- **CSS classes:** `.cosme-contact`, `__inner`, `__hero`, `__hero-copy`, `__eyebrow`, `__heading`, `__description`, `__layout`, `__info`, `__info-eyebrow`, `__info-heading`, `__detail`, `__link`, `__group`, `__label`, `__text`, `__form-panel`, `__form-heading`, `__form-description`, `__form`, `__status`, `__submit`, `__faq`, `__faq-inner`, `__faq-header`, `__faq-eyebrow`, `__faq-heading`, `__faq-description`, `__faq-list`, `__faq-item`, `__faq-summary`, `__faq-number`, `__faq-question`, `__faq-icon`, `__faq-panel`, `__faq-answer`, `__faq-cta`, `__faq-link`, `__cta`, `__cta-inner`, etc.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-error`, `--color-success`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-input`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** none on the Contact page (form submission is native, accordion is HTML).
+
+---
+
+## Troubleshooting
+
+### The contact form does not send messages
+- Ensure the store has a valid email address configured in Shopify admin (**Settings → Store details → Contact email**).
+- The form uses `{% form 'contact' %}` – it will not work if the store's email is not set.
+- Check the network tab for any errors; the form submission is handled by Shopify.
+
+### The success message does not appear after submission
+- The success message appears only when `form.posted_successfully?` is true. After a successful submission, Shopify redirects to the same page with a `?contact_posted` parameter. The theme does not handle the redirect; it relies on Shopify's native behaviour.
+- Ensure the `success_message` is set and the `<p>` with `role="status"` is correctly rendered.
+
+### The error messages are not showing
+- Errors are shown when `form.errors` is not empty. Each field error is passed to `cosme-form-field`. The error block also appears with a list of errors.
+- If errors are not appearing, check that the `form.errors` object is correctly accessed.
+
+### The Quick Answers accordion does not open
+- The accordion uses native `<details>`/`<summary>`, so it works without JavaScript.
+- If items do not open, ensure the markup is valid and no custom CSS is hiding the contents.
+- The `open_by_default` setting opens the item via the `open` attribute.
+
+### The “View all FAQs” link does not work
+- The link defaults to `/pages/faq`. Ensure that the FAQ page exists and uses the `faq` template.
+- You can change the link in Theme Editor (FAQ link setting).
+
+### The final CTA button does nothing
+- If the CTA link is empty or points to the current Contact page, the button scrolls to the contact form (via `#ContactForm-...`).
+- If you want a different behaviour, set a custom URL in the CTA link setting.
+
+### The phone field is required but not validating
+- The phone field uses `required` only if `phone_required` is enabled. This is HTML5 validation; if you need server-side validation, Shopify's contact form does not support it for the phone field.
+- Ensure the `phone_required` checkbox is checked.
+
+### The layout is broken on mobile
+- The section uses CSS Grid with `grid-template-columns: 1fr` on mobile and `1fr 1fr` on desktop. Check that no custom CSS overrides these rules.
+- Make sure the `page-margin` variable is set correctly.
+
+---
+
+## Usage Examples
+
+### Full featured Contact page (default)
+- Enable all settings.
+- Use the default hero, contact info, form, Quick Answers, and CTA.
+- Set **FAQ color scheme** to `Light+Accent` for visual contrast.
+
+### Minimal Contact page (no FAQ, no CTA)
+- Disable **Enable Quick Answers** and **Show final CTA**.
+- The page will show only the hero, contact info, and form.
+
+### Business‑focused Contact page (with phone, hours)
+- Fill in the **Phone** and **Phone label** fields.
+- Set **Phone required** to `true` if needed.
+- Adjust the business hours text.
+
+### Dark scheme with accent CTA
+- Set the main **Color scheme** to `Dark`.
+- Set **CTA color scheme** to `Light+Accent` for a contrasting closing block.
+
+---
+
+## Conclusion
+
+The COSME Contact Page is a premium, fully configurable customer contact hub that combines editorial design with Shopify's native contact form functionality. With flexible content blocks, a built‑in FAQ preview, and a closing CTA, it provides a complete solution that merchants can tailor to their brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

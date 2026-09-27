@@ -1,0 +1,187 @@
+---
+sidebarTitle: Quick View
+---
+
+import { Callout } from 'nextra/components'
+
+# Quick View
+
+The **Quick View** component provides a global modal dialog that lets customers preview product details and add items to their cart without leaving the current page. It is triggered from product cards (via the `[data-quick-view]` attribute) and loads product data on‑demand using Shopify’s AJAX API.
+
+Designed for a premium editorial experience, the Quick View modal includes:
+
+- **Product image carousel** – with arrows, dots, and optional autoplay.
+- **Variant selector** – dynamic options that update the price, badge, and image.
+- **Quantity picker** – with plus/minus controls.
+- **Add to Cart** – AJAX add with cart count update and drawer/page redirection.
+- **Buy Now** – direct checkout button (optional).
+- **Full responsiveness** – slides in from the right on desktop, slides up on mobile.
+- **Global settings** – all controls are managed via Theme Settings, not per section.
+
+![Quick View in action](/img/quick-view.png)
+
+---
+
+## Overview
+
+The Quick View modal is a **global snippet** rendered once in the theme layout (usually in `layout/theme.liquid`). It listens for clicks on any element with `data-quick-view` (typically placed on product cards). When triggered, it:
+
+1. Fetches the product data from `/products/{handle}.js`.
+2. Renders the product’s images, title, vendor, price, variants, description, and actions.
+3. Initialises a carousel for multiple images (with controls and autoplay).
+4. Handles variant selection, quantity changes, and cart interactions.
+
+All visual and behavioural aspects are controlled through **Theme Settings** – no per‑section configuration is needed, ensuring consistency across your store.
+
+---
+
+## Theme Settings
+
+The Quick View settings are located in the **Theme Settings** panel under the *Quick View* section. They apply globally to the entire store.
+
+![Quick View Theme Settings](/img/quick-view-settings.png)
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable Quick View** | Checkbox | `true` | Globally enables or disables the Quick View modal. When disabled, clicking the trigger button redirects to the product page instead. |
+| **Autoplay** | Checkbox | `true` | Automatically advances the image carousel. Disabled when there is only one image, when `prefers-reduced-motion` is active, or when global animations are off. |
+| **Autoplay delay** | Range (2000–8000 ms, step 500) | `4000` | How long each slide is displayed before moving to the next (only when autoplay is enabled). |
+| **Show arrows** | Checkbox | `true` | Shows left/right chevron buttons on the carousel (only when more than one image exists). |
+| **Show dots** | Checkbox | `true` | Shows pagination dots below the carousel (only when more than one image exists). |
+| **Show description** | Checkbox | `true` | Shows a short excerpt (max 160 characters) of the product description inside the modal. |
+| **Show Buy Now** | Checkbox | `true` | Displays a “Buy Now” button next to the quantity selector. Clicking it adds the item to the cart and proceeds directly to checkout. |
+
+<Callout type="info">
+  All settings use the translation keys defined in <code>locales/</code> – you can customise the labels from the Theme Editor without editing code.
+</Callout>
+
+---
+
+## Visual Layout
+
+### Desktop (≥768px)
+
+- The modal appears as a **centered dialog** with a semi‑transparent overlay.
+- The panel slides in from the **right‑bottom** corner with a smooth animation (duration ~0.8s).
+- The layout is split into two columns: **media (left)** and **details (right)**.
+- The media column contains the image slider with controls below (arrows and dots).
+- The details column shows the product title, vendor, price, badges, variant selector, quantity picker, and action buttons.
+
+### Mobile (768px)
+
+- The modal takes the **full viewport** (100vw × 100vh) with no border radius.
+- It slides up from the bottom (instead of from the right).
+- The layout becomes a single column: media on top, details below.
+- Arrows and dots are smaller to accommodate touch targets.
+- Quantity row stacks vertically (quantity controls on top, Buy Now below).
+
+### Animations
+
+- **Opening:** slides from the right (desktop) or from the bottom (mobile) with a cubic‑bezier easing, accompanied by a fade‑in of the backdrop.
+- **Closing:** reverse animation slides out to the same direction.
+- **Reduced motion:** when `prefers-reduced-motion` is enabled, all animations are disabled (the modal simply appears/disappears).
+- All transitions respect the global `enable_animations` setting.
+
+---
+
+## Carousel Behaviour
+
+The image carousel is displayed when a product has **more than one image**. Its behaviour is fully controlled by the Theme Settings:
+
+- **Autoplay:** when enabled, slides advance automatically at the set delay. Autoplay pauses when the user hovers over the slider (desktop) or touches it (mobile) and resumes when the interaction ends.
+- **Arrows:** clicking the left/right chevrons moves the slider one slide at a time; they are hidden if disabled or if only one image exists.
+- **Dots:** clicking a dot jumps directly to that slide; the active dot is highlighted.
+- **Variant‑image sync:** when a variant with a specific featured image is selected, the carousel automatically jumps to that image (if it exists in the product’s image list).
+
+The carousel also supports **keyboard navigation** (ArrowLeft / ArrowRight) when focus is inside the modal, and it is fully accessible with proper ARIA roles.
+
+---
+
+## Accessibility
+
+The Quick View modal is built with accessibility as a core principle:
+
+- **Semantic HTML** – uses the native `<dialog>` element with `aria-labelledby` pointing to the heading.
+- **Focus management** – when opened, focus moves to the first interactive element (or the close button as fallback); when closed, focus returns to the trigger element.
+- **ARIA live region** – a hidden `aria-live="polite"` region announces loading states, errors, and add‑to‑cart success messages.
+- **Keyboard support** – the modal can be closed with the `Escape` key; all controls (buttons, selects, inputs) are fully keyboard‑navigable and have visible `:focus-visible` rings.
+- **Reduced motion** – animations are disabled when `prefers-reduced-motion` is set.
+- **Screen reader labels** – buttons have descriptive `aria-label` attributes; variant selectors are properly labelled; quantity controls have labelled groups.
+
+---
+
+## Technical Details
+
+- **File:** `snippets/cosme-quick-view.liquid`
+- **Rendered in:** `layout/theme.liquid` (or wherever you place the `{% render 'cosme-quick-view' %}` tag)
+- **Dependencies:** `cosme-icon` (for close, plus, minus, chevron‑down, chevron‑left, chevron‑right), `cosme-price` (used indirectly via rendered HTML)
+- **CSS classes:** `.cosme-quick-view`, `.cosme-quick-view__panel`, `.cosme-quick-view__header`, `.cosme-quick-view__close`, `.cosme-quick-view__body`, `.cosme-quick-view__layout`, `.cosme-quick-view__media`, `.cosme-quick-view__slider`, `.cosme-quick-view__slide`, `.cosme-quick-view__controls`, `.cosme-quick-view__slider-prev`, `.cosme-quick-view__slider-next`, `.cosme-quick-view__dots`, `.cosme-quick-view__dot`, `.cosme-quick-view__details`, `.cosme-quick-view__badges`, `.cosme-quick-view__product-title`, `.cosme-quick-view__vendor`, `.cosme-quick-view__price`, `.cosme-quick-view__description`, `.cosme-quick-view__form`, `.cosme-quick-view__options`, `.cosme-quick-view__option`, `.cosme-quick-view__option-select`, `.cosme-quick-view__quantity-row`, `.cosme-quick-view__quantity`, `.cosme-quick-view__quantity-controls`, `.cosme-quick-view__quantity-btn`, `.cosme-quick-view__quantity-input`, `.cosme-quick-view__buy-now`, `.cosme-quick-view__actions`, `.cosme-quick-view__add-button`, `.cosme-quick-view__view-link`.
+- **CSS variables (tokens):**
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-overlay`, `--overlay-opacity`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`, `--letter-spacing-body`
+  - `--radius-card`, `--radius-input`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** All logic is self‑contained inside the snippet. It handles:
+  - Opening/closing the dialog with animation.
+  - Fetching product data via AJAX.
+  - Rendering the product layout (including images, options, price, badges).
+  - Carousel initialisation and control (arrows, dots, autoplay, variant‑image sync).
+  - Variant selection and availability validation.
+  - Quantity management.
+  - Add to Cart (AJAX) and Buy Now (direct checkout) with cart count update.
+  - Event cleanup on section unload (using `shopify:section:unload` when the snippet is inside a section, though it's typically global).
+- **Configuration:** The snippet reads all settings from `data-*` attributes set on the `<dialog>` element (populated from Theme Settings). It also uses a JSON config script for localisation strings.
+
+---
+
+## Customization Tips
+
+- **Disable Quick View globally** – toggle the “Enable Quick View” setting; this is useful if you want to force customers to view products on their dedicated page.
+- **Adjust autoplay speed** – change the delay in Theme Settings to match your brand’s pacing.
+- **Hide controls** – turn off arrows, dots, description, or Buy Now to simplify the modal.
+- **Customise colours** – the modal inherits the active color scheme (set in Theme Settings). You can change the scheme to achieve different backgrounds and text colours.
+- **Modify the animation** – adjust the `--transition-duration` and `--transition-easing` CSS variables at the root level (or in the modal’s styles) to change speed and easing.
+- **Add custom badges** – the modal automatically shows “Sale” or “Sold out” badges; you can extend the `renderBadgeContent` function to support additional badge types.
+- **Change excerpt length** – the `excerpt` function truncates to 160 characters by default; you can change this value inside the JavaScript.
+
+---
+
+## Troubleshooting
+
+### Quick View does not open
+
+- Ensure the “Enable Quick View” setting is checked.
+- Check that the trigger element has `data-product-handle` and `data-product-url` attributes.
+- Verify that the product handle is correct and the product exists.
+- Look for JavaScript errors in the browser console (e.g., network errors, missing icons).
+
+### Images do not appear in the carousel
+
+- The product must have at least one image. If images are missing, the carousel will be empty.
+- Check that the image URLs are correctly formatted (use the `src` from the product object).
+- If variant images are not syncing, ensure your product has a `featured_image` assigned to each variant.
+
+### Autoplay does not work
+
+- Autoplay requires more than one image, the “Autoplay” setting to be true, and no `prefers-reduced-motion` preference.
+- Autoplay also respects the global `enable_animations` setting – if animations are off, autoplay is disabled.
+
+### Add to Cart button is disabled
+
+- The button is disabled when no variant is selected, the variant is unavailable, or the quantity is zero.
+- Check that the variant ID is correctly populated (the `data-variant-id` attribute on the button).
+
+### Currency displays incorrectly
+
+- The modal uses `Intl.NumberFormat` with the currency code from `shop.currency` (or the `data-currency` attribute). Ensure your store’s currency is correctly set.
+- You can also override formatting by using `Shopify.formatMoney` if available (the modal attempts this first).
+
+---
+
+## Conclusion
+
+The Quick View component is a powerful, accessible, and fully customizable modal that enhances the shopping experience by allowing customers to preview products and add them to their cart without leaving the collection page. With its comprehensive Theme Settings, you can tailor its behaviour and appearance to perfectly match your brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

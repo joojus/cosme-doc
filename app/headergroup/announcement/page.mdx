@@ -1,0 +1,187 @@
+---
+sidebarTitle: Announcement bar
+---
+
+import { Callout } from 'nextra/components'
+
+# Announcement bar
+
+The **Announcement Bar** is a full-width promotional strip positioned at the very top of your store. It's perfect for sharing important messages, sales, free shipping offers, or any short call-to-action.
+
+You can choose between a **static message** or a **ticker** (marquee) that automatically scrolls to attract attention. The bar inherits your store's active color scheme but also allows custom colors for a unique look.
+
+![Announcement Bar Settings in Theme Editor](/img/announcement.png)
+
+---
+
+## Overview
+
+The Announcement Bar is part of the **header group** and appears above the main header on all pages. It includes:
+
+- **Message** – Rich text with optional formatting (bold, italic, links).
+- **Icon** – Choose from 17 built‑in icons (including gift, star, shipping, discount).
+- **Ticker mode** – Turn your message into a continuous scrolling marquee.
+- **Height control** – Separate values for desktop and mobile.
+- **Typography** – Adjust font size, weight, style, and text transform.
+- **Color Scheme** – Use the global Light / Dark / Light+Accent schemes or override with custom colors.
+- **Borders** – Enable/disable top and bottom borders with custom color.
+- **Custom CSS** – Add your own styles for further flexibility.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The Announcement Bar provides a comprehensive set of options grouped into logical sections.
+
+### General Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show announcement** | Checkbox | `true` | Toggles the entire bar on/off. |
+| **Message** | Richtext | `<p>Here can be a short promotional message</p>` | The main text; supports basic HTML formatting. |
+| **Link** | URL | – | Optional link wrapped around the message (applies the whole bar). |
+| **Link label** | Text | – | Accessible label for the link (for screen readers). |
+| **Icon** | Select | `none` | Display an icon next to the text. Available icons: cart, search, account, menu, close, chevron‑down/up/left/right, plus, minus, arrow‑right, external‑link, gift, star, shipping, discount. |
+
+### Appearance Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Alignment** | Select | `center` | Text alignment: left, center, right. |
+| **Height (desktop)** | Range (20–80 px, step 2) | `48` | Height of the bar on desktop screens. |
+| **Height (mobile)** | Range (20–80 px, step 2) | `40` | Height on mobile devices. |
+| **Enable ticker** | Checkbox | `false` | When enabled, the message scrolls continuously (marquee). |
+| **Speed** | Range (10–70 s, step 1) | `30` | Duration of one full scroll cycle (higher = slower). |
+
+### Typography Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Text size** | Select | `0.875rem` | Small, Medium, or Large. |
+| **Text transform** | Select | `none` | None, UPPERCASE, lowercase, Capitalize. |
+| **Font style** | Select | `normal` | Normal or Italic. |
+| **Font weight** | Select | `400` | 300, 400 (normal), 500, 700 (bold). |
+
+### Colors Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | `scheme-1` (Light) | Choose from the global COSME schemes: Light, Dark, Light+Accent. |
+| **Use custom colors** | Checkbox | `false` | Override the selected scheme with manual colors below. |
+| **Background color** | Color | `#1A1A1A` | (Visible only when `Use custom colors` is checked) |
+| **Text color** | Color | `#FFFFFF` | (Visible only when `Use custom colors` is checked) |
+
+<Callout type="info">
+  The built‑in Color Schemes ensure consistency with your store's global theme. Use custom colors only when you need the announcement bar to stand out independently.
+</Callout>
+
+### Borders Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable top border** | Checkbox | `false` | Adds a border line at the top of the bar. |
+| **Enable bottom border** | Checkbox | `true` | Adds a border line at the bottom. |
+| **Border color** | Color | `#E5E5E5` | Color of the border (applies to both top and bottom). |
+
+### Custom CSS
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Custom CSS** | Textarea | – | Additional CSS rules that will be applied to this section only. Use with caution. |
+
+---
+
+## How It Works
+
+### Static vs Ticker Mode
+
+- **Static mode** – The message is displayed as a single line (or wrapped) and stays still. If a link is set, the entire bar becomes clickable.
+- **Ticker mode** – The text is duplicated and animated to scroll horizontally. The speed setting controls how fast it moves. Hovering over the ticker pauses the animation for better readability.
+
+### Icon Placement
+
+When an icon is selected, it appears directly before the text, aligned vertically. In ticker mode, the icon scrolls along with the text.
+
+### Responsive Behavior
+
+- On **desktop**, the bar uses the `height_desktop` value.
+- On **mobile**, it switches to `height_mobile` for a more compact appearance.
+- The text alignment and typography settings are applied uniformly across all devices.
+
+### Color Scheme Integration
+
+The Announcement Bar uses the same Color Scheme system as the rest of the COSME theme. By default, it respects the selected scheme's background and text colors. If you enable `Use custom colors`, you can bypass the scheme and set your own background and text colors. This is useful for highlighting seasonal promotions or urgent messages.
+
+---
+
+## Accessibility
+
+The Announcement Bar is built with accessibility in mind:
+
+- **Semantic HTML** – Uses `<aside>` for landmark role.
+- **Keyboard navigation** – If the bar contains a link, it is focusable and displays a `:focus-visible` ring.
+- **Screen readers** – The optional `Link label` provides an accessible name for the link.
+- **Reduced motion** – The ticker animation respects `prefers-reduced-motion` and the global `enable_animations` setting (if animations are disabled, the ticker stops).
+- **Contrast** – Colors are derived from your chosen scheme or custom picker; ensure sufficient contrast for readability.
+
+---
+
+## Example Use Cases
+
+- **Free shipping announcement** – “Free shipping on orders over $50” with a truck icon.
+- **Limited‑time discount** – “Use code SUMMER20 for 20% off” with a discount tag.
+- **New collection teaser** – “Discover our new spring collection” linked to the collection page.
+- **Storewide sale** – A ticker scrolling “Up to 40% off | Ends soon | Shop now” to create urgency.
+
+---
+
+## Technical Details
+
+- **File:** `sections/announcement-bar.liquid`
+- **CSS classes:** `.cosme-announcement-bar`, `.cosme-announcement-bar__inner`, `.cosme-announcement-bar__message`, `.cosme-announcement-bar__ticker`, `.cosme-announcement-bar__ticker-track`
+- **Snippets used:** `cosme-icon`, `cosme-form-field` (not used in this section)
+- **CSS variables (tokens):**
+  - `--color-background`, `--color-foreground`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--border-width`, `--radius-*`
+  - `--transition-duration`, `--transition-easing`
+  - And all typography tokens (`--font-*`, `--line-height-*`, `--letter-spacing-*`)
+- **Animations:** Uses CSS `@keyframes` for the ticker; respects `prefers-reduced-motion` and the global animation setting.
+
+---
+
+## Customization Tips
+
+- **Add new icons** – Extend the `icon` select list in the schema and add the corresponding SVG file to `assets/icon-{name}.svg`.
+- **Change ticker speed** – Adjust the `speed` range (min/max) in the schema to allow faster or slower scrolling.
+- **Override spacing** – Use the **Custom CSS** field to fine‑tune padding or margins without touching the theme code.
+
+---
+
+## Troubleshooting
+
+### The ticker is not moving
+
+- Ensure `Enable ticker` is checked.
+- Check that `Speed` is not set too high (high values slow down the animation).
+- If `enable_animations` is off globally or `prefers-reduced-motion` is active, the ticker will be disabled.
+
+### The icon is not showing
+
+- Confirm that you selected an icon from the dropdown.
+- Verify that the corresponding SVG file exists in `assets/` (e.g., `icon-gift.svg`).
+
+### The bar does not appear
+
+- Make sure `Show announcement` is checked and the `Message` field is not empty.
+- The bar is part of the header group; ensure it is added to the `header-group` in your theme's section groups.
+
+---
+
+## Conclusion
+
+The Announcement Bar is a simple yet powerful tool for engaging customers with timely messages. Its flexible settings let you tailor it to your brand's voice while maintaining a cohesive design through COSME's Color Scheme system.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

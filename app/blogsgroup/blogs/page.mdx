@@ -1,0 +1,272 @@
+---
+sidebarTitle: Blog Index
+---
+
+# Blog Index
+
+The **Blog Index** (`/blogs/[...]`) is the editorial hub of the COSME Journal — a premium, magazine‑style landing page for all blog articles. It transforms the standard Shopify blog into a curated editorial experience, featuring a large featured story, a grid of latest articles, and sophisticated typography that aligns with the Cosme beauty aesthetic.
+
+The page is built as a single section (`blog.liquid`) that integrates with Shopify's native blog and article objects. It reuses the `cosme-article-card` snippet for consistent article cards across the entire theme.
+
+![Blog Index example](/img/blog.png)
+
+---
+
+## Overview
+
+The Blog Index provides the following key features:
+
+- **Editorial intro** – configurable eyebrow, heading, and description with alignment options.
+- **Featured article** – a visually prominent hero story that can be manually selected or automatically uses the first article.
+- **Latest stories grid** – a responsive grid of remaining articles, with configurable columns (2, 3, or 4).
+- **Article cards** – reusable `cosme-article-card` with image, category, title, excerpt, metadata, and CTA.
+- **Editorial numbering** – optional `01, 02, 03…` index for a magazine feel.
+- **Pagination** – native Shopify pagination with elegant styling.
+- **Empty state** – clean message when no articles exist.
+- **Color schemes** – fully supports Light, Dark, and Light+Accent.
+- **Theme Editor settings** – comprehensive control over content, featured article, grid, and card display.
+
+All settings are available in the Theme Editor under **Templates → Blog**.
+
+---
+
+## Section Settings
+
+The Blog Index section provides a curated set of options, grouped by functionality.
+
+![Blog Index settings](/img/blog-settings.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `The journal` | Small uppercase text above the heading. |
+| **Show eyebrow** | Checkbox | `true` | Toggles the eyebrow visibility. |
+| **Heading** | Text | `Beauty, thoughtfully curated.` | The main page heading. |
+| **Description** | Textarea | `Stories, rituals and insights for a more considered approach to beauty.` | Introductory paragraph. |
+| **Show description** | Checkbox | `true` | Toggles the description visibility. |
+| **Text alignment** | Select | `Left`, `Center` | `Left` | Alignment of the intro text block. |
+
+### Featured Article Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show featured article** | Checkbox | `true` | Enables or disables the featured article area. |
+| **Featured article** | Article picker | – | Manually select an article to feature. If empty, the first article on page 1 is used. |
+| **Featured image ratio** | Select | `Landscape`, `Wide`, `Portrait`, `Square` | `Landscape` | Aspect ratio of the featured article image. |
+| **Show featured excerpt** | Checkbox | `true` | Shows the excerpt in the featured article. |
+
+### Grid & Card Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Desktop columns** | Select | `2`, `3`, `4` | `3` | Number of article columns on desktop. |
+| **Image ratio** | Select | `Portrait`, `Square`, `Landscape`, `Wide` | `Portrait` | Aspect ratio of article images in the grid. |
+| **Show category** | Checkbox | `true` | Shows the blog/category label on each card. |
+| **Show excerpt** | Checkbox | `false` | Shows the article excerpt on grid cards. |
+| **Show date** | Checkbox | `true` | Shows the publication date. |
+| **Show reading time** | Checkbox | `false` | Shows estimated reading time (calculated from content). |
+| **Show index** | Checkbox | `true` | Shows editorial numbering (`01`, `02`, …) on cards. |
+| **Show CTA** | Checkbox | `true` | Shows the “Read article” link with arrow. |
+
+### Color Scheme & Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+| **Section spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the section. |
+
+---
+
+## Blog Card (Snippet)
+
+The `cosme-article-card` snippet is used in both the Blog Index and the Article page. It provides a consistent, editorial card design across all blog listings.
+
+### Snippet Parameters (used in Blog Index)
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `article` | Object | The Shopify article object. |
+| `aspect_ratio` | String | CSS aspect ratio (e.g., `4/5`). |
+| `image_width` | Number | Maximum image width in pixels. |
+| `image_height` | Number | Cropped image height in pixels. |
+| `sizes` | String | Responsive `sizes` attribute. |
+| `heading_tag` | String | HTML heading tag (e.g., `h2`, `h3`). |
+| `loading` | String | `lazy` or `eager`. |
+| `fetchpriority` | String | `high`, `low`, or `auto`. |
+| `featured` | Boolean | Whether the card is the featured article (affects font size). |
+| `show_excerpt` | Boolean | Whether to show the excerpt. |
+| `show_date` | Boolean | Whether to show the publication date. |
+| `show_reading_time` | Boolean | Whether to show reading time. |
+| `show_category` | Boolean | Whether to show the category label. |
+| `show_cta` | Boolean | Whether to show the “Read article” CTA. |
+| `show_index` | Boolean | Whether to show the editorial index. |
+| `card_index` | Number | The 1‑based index for numbering. |
+| `category_label` | String | The category label (usually the blog title). |
+| `placeholder_name` | String | Shopify placeholder SVG name. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Intro**: left‑ or center‑aligned, with generous whitespace.
+- **Featured article**: full‑width hero with large image and text; image can be landscape, wide, portrait, or square.
+- **Grid**: 2, 3, or 4 columns (depending on setting).
+- **Cards**: portrait image ratio by default, with editorial numbering and metadata.
+- **Pagination**: centred, with page links and prev/next.
+
+### Tablet (768–989px)
+
+- **Grid**: automatically adjusts to 2 columns (if desktop is 3 or 4) or 1 column (if desktop is 2).
+- **Featured article**: retains its visual hierarchy with reduced spacing.
+- **Intro**: scales typography accordingly.
+
+### Mobile (768px)
+
+- **Grid**: single column (full width).
+- **Cards**: stack vertically with large images and readable typography.
+- **Featured article**: image first, text below; excerpt and metadata remain visible.
+- **Intro**: text aligns as per setting; wraps naturally.
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-journal` | Main container with full width and color scheme. |
+| Inner container | `.cosme-journal__inner` | Constrained to `--page-width` with `--page-margin`. |
+| Intro header | `.cosme-journal__intro` | Wraps eyebrow, heading, description. |
+| Eyebrow | `.cosme-journal__eyebrow` | Small uppercase text. |
+| Heading | `.cosme-journal__heading` | Main `<h1>` of the page. |
+| Description | `.cosme-journal__description` | Introductory paragraph. |
+| Featured article | `.cosme-journal__featured` | Wrapper for the featured article. |
+| Stories section | `.cosme-journal__stories` | Latest stories heading and grid. |
+| Stories heading | `.cosme-journal__stories-heading` | `Latest Stories` label. |
+| Grid | `.cosme-journal__grid` | CSS Grid container for articles. |
+| Grid item | `.cosme-journal__item` | Each article card wrapper (an `<li>`). |
+| Link | `.cosme-journal__link` | Full‑card link to `article.url`. |
+| Card | `.cosme-article-card` | Snippet container. |
+| Card media | `.cosme-article-card__media` | Image/placeholder wrapper. |
+| Card content | `.cosme-article-card__content` | Text block below image. |
+| Card index | `.cosme-article-card__index` | Editorial number (e.g., `01`). |
+| Card title | `.cosme-article-card__title` | Article title (`<h2>` or `<h3>`). |
+| Card excerpt | `.cosme-article-card__excerpt` | Truncated article excerpt. |
+| Card meta | `.cosme-article-card__meta` | Date / reading time. |
+| Card CTA | `.cosme-article-card__cta` | “Read article” + arrow. |
+| Pagination | `.cosme-journal__pagination` | Numbered pagination. |
+
+---
+
+## Accessibility
+
+The Blog Index is built with accessibility as a priority:
+
+- **Heading hierarchy** – one primary `<h1>` for the page; featured article uses `<h2>`, grid cards use `<h3>`.
+- **Semantic HTML** – uses `<section>`, `<header>`, `<h1>`, `<h2>`, `<h3>`, `<ul>`, `<li>`, `<nav>` appropriately.
+- **Image alt text** – uses `article.image.alt` or falls back to `article.title`.
+- **Keyboard navigation** – all cards are a single link; focus‑visible triggers outlines.
+- **Focus indicators** – outline with `--color-accent` and `--focus-ring-width`.
+- **Decorative elements** – index and CTA text are hidden from screen readers (`aria-hidden="true"`), but the link itself is fully accessible.
+- **Live regions** – not used on this page (no dynamic updates).
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Contrast** – text colours meet WCAG requirements in all three color schemes.
+
+---
+
+## Performance
+
+- **Eager loading** – the featured article and first few grid cards use `loading="eager"` and `fetchpriority="high"`; subsequent cards are lazy‑loaded.
+- **Responsive images** – uses Shopify's `image_url` with appropriate `sizes` calculated from column settings.
+- **No JavaScript** – the Blog Index is pure Liquid + CSS; pagination is native Shopify links.
+- **CSS Grid** – efficient layout without complex calculations.
+- **No external dependencies** – uses existing Cosme snippets and tokens.
+
+---
+
+## Technical Details
+
+- **File:** `sections/blog.liquid`
+- **Snippet:** `snippets/cosme-article-card.liquid`
+- **Template:** `templates/blog.json` (uses the section)
+- **Snippets used:** `cosme-article-card`, `cosme-icon`
+- **CSS classes:** as listed above.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **Pagination:** uses Shopify's `paginate` object, limiting to 12 articles per page.
+
+---
+
+## Troubleshooting
+
+### The featured article does not appear
+- Ensure **Show featured article** is enabled.
+- If a specific article is selected, verify it belongs to the current blog.
+- If no article is selected, the page uses the first article on page 1.
+
+### The grid shows the featured article again
+- The featured article is excluded from the grid by `article.id`. If it still appears, check that the exclusion logic is working correctly.
+
+### No articles are displayed
+- Ensure the blog has at least one published article.
+- If the blog is empty, the empty state message appears.
+
+### The card image is cropped incorrectly
+- Adjust the **Image ratio** setting.
+- For portraits, use `4/5`; for landscapes, use `3/2` or `16/9`; for square, use `1/1`.
+
+### Pagination does not appear
+- Pagination appears only when there are more than 12 articles (the default `paginate` limit).
+- If you have fewer than 12, no pagination appears.
+
+### The excerpt is not showing
+- Enable **Show excerpt** in Theme Editor.
+- The excerpt is only displayed if `article.excerpt` exists; it does not fall back to `article.content`.
+
+### Reading time is not displayed
+- Enable **Show reading time**.
+- Reading time is calculated from `article.content` after stripping HTML; if the article has no content, reading time is hidden.
+
+### The page does not respect the Page width setting
+- The section uses `--page-width` and `--page-margin`. Ensure these are set in the theme’s global CSS.
+
+---
+
+## Usage Examples
+
+### Full editorial journal (featured + grid)
+- Enable **Show featured article**.
+- Set **Desktop columns** to `3`.
+- Choose **Image ratio**: `Portrait` (4/5) for a premium beauty magazine look.
+- Enable **Show index**, **Show category**, **Show date**, and **Show CTA**.
+- Disable **Show excerpt** on grid cards to keep them clean.
+
+### Minimal blog (no featured, no index)
+- Disable **Show featured article**.
+- Set **Desktop columns** to `4`.
+- Disable **Show index**, **Show category**.
+- Only titles, dates, and images remain.
+
+### Dark scheme with wide images
+- Choose **Color scheme**: `Dark` (scheme-2).
+- Set **Image ratio** to `Wide` (16/9) for a cinematic look.
+
+### Center‑aligned journal
+- Set **Text alignment** to `Center`.
+- The intro and grid headings become centred.
+- The featured article and card text remain left‑aligned (for readability).
+
+---
+
+## Conclusion
+
+The COSME Blog Index is a sophisticated, editorial landing page that transforms the standard Shopify blog into a premium Journal experience. With flexible settings, a reusable article card, and full support for the Cosme design system, it provides merchants with a powerful and maintainable blogging solution.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

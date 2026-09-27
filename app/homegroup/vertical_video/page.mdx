@@ -1,0 +1,280 @@
+---
+sidebarTitle: Vertical Video
+---
+
+import { Callout } from 'nextra/components'
+
+# Vertical Video / Shop the Look
+
+The **Vertical Video / Shop the Look** section presents shoppable portrait‑format videos in a premium, editorial carousel. It is designed for beauty and lifestyle brands that want to combine immersive video content with product discovery.
+
+The section features a dominant‑centre carousel with infinite looping, where the active video is visually larger and side videos are partially visible. Each video can be linked to a product, displaying a compact overlay with product image, title, price, and a Quick View button. Category navigation (collections) can optionally appear above the carousel.
+
+![Vertical Video in action](/img/vertical-video-settings.png)
+
+---
+
+## Overview
+
+The Vertical Video section is a full‑width, editorial‑style carousel that typically sits between the Hero and other content. It includes:
+
+- **Vertical video cards** – portrait‑format videos (9:16 or 4:5) with autoplay on visibility.
+- **Dominant‑centre carousel** – the active card is scaled up, side cards are smaller and peek partially to indicate more content.
+- **Infinite loop** – the carousel seamlessly wraps around; arrows never become disabled.
+- **Category navigation** – optional horizontal scrollable collection links with custom images and fit control (cover/contain).
+- **Product overlay** – on each video, a compact overlay shows the product image, title, price, and a Quick View button (`+`).
+- **Video controls** – play/pause and mute/unmute buttons (appear on hover/focus).
+- **Autoplay** – videos autoplay when visible (viewport‑based or all videos), with support for reduced motion.
+- **Carousel autoplay** – optional auto‑scroll of the carousel with adjustable delay.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile with native touch scrolling.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `DISCOVER` | Small text displayed above the heading. |
+| **Heading** | Text | `Beauty in Motion` | Main section heading. |
+
+![Vertical Video in action](/img/vertical-video.png)
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Layout** | Select | `Video + collections`, `Video only` | `Video + collections` | Whether to show the category navigation above the carousel. |
+| **Heading alignment** | Select | `Left`, `Center` | `Left` | Alignment of the heading and eyebrow. |
+| **Desktop cards** | Select | `4`, `5`, `6` | `5` | Number of cards visible on desktop (affects carousel span and scaling). |
+| **Mobile cards** | Select | `1`, `1.5`, `2` | `1.5` | Number of cards visible on mobile (1.5 shows a peek of the next card). |
+| **Video aspect ratio** | Select | `9:16`, `4:5` | `9:16` | The portrait aspect ratio of the video cards. |
+| **Show category navigation** | Checkbox | `true` | Shows the horizontal collection links (only in Video + collections layout). |
+
+### Carousel Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show arrows** | Checkbox | `true` | Displays left/right chevron buttons on the carousel. |
+| **Auto‑scroll carousel** | Checkbox | `false` | Automatically advances the carousel every X milliseconds. |
+| **Auto‑scroll delay** | Range (3000–8000 ms, step 500) | `5000` | How long each card group is shown before the carousel auto‑scrolls. |
+
+### Product Overlay Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show product** | Checkbox | `true` | Globally enables/disables product overlays on videos (can be overridden per block). |
+| **Show product image** | Checkbox | `true` | Shows the product thumbnail in the overlay. |
+
+### Video Playback Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Autoplay** | Checkbox | – | `true` | Enables automatic video playback when visible. |
+| **Autoplay behavior** | Select | `Videos in view`, `All videos` | `Videos in view` | `– **Videos in view:** only the active (center) video plays; others pause.<br>– **All videos:** any sufficiently visible video plays.` |
+
+### Colour Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+---
+
+## Blocks
+
+The section uses two block types: **Collection Link** (for category navigation) and **Video** (for each video card).
+
+### Collection Link Block
+
+Each category link appears as a small circular card with an image and label. When a collection is selected, it becomes a clickable link.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Label** | Text | `Bestsellers` | The displayed name of the category. |
+| **Collection** | Collection picker | – | The Shopify collection to link to. If empty, the category is shown as static text. |
+| **Image** | Image picker | – | Custom image for the category (overrides the collection’s featured image). |
+| **Image fit** | Select | `Cover`, `Contain` | `Cover` | How the image fills the square card: `Cover` crops to fill; `Contain` shows the whole image with possible empty space. |
+
+### Video Block
+
+Each video block represents one slide in the carousel.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Video** | Video picker | – | The Shopify-hosted video asset (MP4). |
+| **Poster** | Image picker | – | A static image shown before the video loads or when paused. |
+| **Product** | Product picker | – | The product to link to this video. If selected, the overlay shows product details and a Quick View button. |
+| **Product position** | Select | `Bottom-left`, `Bottom-center` | `Bottom-left` | Where the product overlay appears on the video. |
+| **Show product** | Checkbox | `true` | Overrides the global “Show product” setting for this specific video. |
+| **Caption** | Text | – | An optional text caption overlaid on the video (e.g., a short tagline). |
+| **Link** | URL | – | Fallback URL when no product is selected (e.g., a blog post or collection). |
+| **Video alt text** | Text | – | Alternative text for the video for accessibility. |
+| **Muted** | Checkbox | `true` | Whether the video starts muted (recommended for autoplay). |
+
+---
+
+## Visual Layout
+
+### Desktop (≥1024px)
+
+- The heading and optional eyebrow sit at the top, aligned left or center.
+- Category navigation (if enabled) appears as a horizontally scrollable row of small square cards.
+- The video carousel shows the number of cards set in **Desktop cards**.
+- The **active (centre) card** is scaled to 100% (full size); side cards are scaled down (~88%) and partially visible (about 50% of their width).
+- The carousel loops infinitely; arrow buttons always work (never disabled).
+- Video controls (play/pause, mute/unmute) appear on hover or when the card is active.
+
+### Tablet (768–1023px)
+
+- The carousel shows 3 cards (fixed).
+- Category navigation remains horizontally scrollable.
+
+### Mobile (768px)
+
+- The carousel shows 1 or 1.5 cards (as set in **Mobile cards**).
+- The next card is partially visible to indicate scrolling.
+- Touch scrolling works natively; video controls are always visible (no hover).
+- Category navigation scrolls horizontally with touch.
+
+---
+
+## Carousel & Video Behaviour
+
+### Dominant‑Centre Carousel
+
+- The active card is centred and scaled to 1; side cards are scaled to 0.88.
+- The transition between cards is smooth and respects the global animation setting.
+- The carousel is **infinite**: when you reach the last card and click “Next”, it seamlessly jumps to the first card.
+
+### Auto‑Scroll Carousel
+
+- When **Auto‑scroll carousel** is enabled, the carousel advances by one “card group” (the number of visible cards) at the set delay.
+- Auto‑scroll pauses when the user hovers over the carousel (desktop) or touches it (mobile) and resumes after interaction stops.
+- Clicking an arrow resets the auto‑scroll timer.
+
+### Video Autoplay
+
+- Videos are **lazy‑loaded** – they start loading only when they approach the viewport.
+- **Autoplay** is controlled by the **Autoplay** setting and respects `prefers-reduced-motion` and the global `enable_animations` setting.
+- **Autoplay behaviour:**
+  - **Videos in view:** only the active (centre) video plays; all other videos are paused. When the carousel moves, the previous video pauses and the new active video starts playing.
+  - **All videos:** any video that is sufficiently visible (intersection ratio ≥ 35% or 55% depending on behaviour) plays; videos that are not visible are paused.
+- Videos are **muted by default**; users can unmute them individually via the mute/unmute button.
+- When the browser tab becomes hidden, all videos pause; they resume when the tab becomes visible (if autoplay is allowed).
+
+### Video Controls
+
+- **Play/Pause** button – toggles playback; visible on hover/focus (or always on touch devices).
+- **Mute/Unmute** button – toggles audio; also visible on hover/focus.
+
+---
+
+## Accessibility
+
+The Vertical Video section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<article>`, `<nav>`, `<ul>`, `<li>` appropriately.
+- **ARIA attributes** – the section has `aria-label`; the carousel uses `aria-hidden` and `inert` on cloned slides; buttons have `aria-label` and `aria-pressed` states.
+- **Keyboard navigation** – all interactive elements (arrows, video controls, product links, category links) are focusable and have visible `:focus-visible` rings.
+- **Focus order** – category links → carousel arrows → video controls → product links.
+- **Reduced motion** – all animations respect `prefers-reduced-motion`; autoplay (both video and carousel) is disabled when reduced motion is active.
+- **Video accessibility** – each video has `aria-label` and `poster` for visual reference; controls are clearly labelled.
+- **Touch targets** – all buttons are at least 44px (2.75rem) for easy interaction on mobile.
+
+---
+
+## Performance
+
+- Videos use `preload="none"` by default; they start loading only when they approach the viewport (via `IntersectionObserver` with a 200px root margin).
+- Only videos that are sufficiently visible (or active in “Videos in view” mode) actually play; others remain paused.
+- The carousel uses native scrolling with `scroll-snap-type: x proximity` for smooth touch interaction.
+- No third‑party libraries are used – the carousel, autoplay, and video controls are all vanilla JavaScript.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `sections/vertical-video.liquid`
+- **Dependencies:** `cosme-icon`, `cosme-image`, `cosme-price`
+- **CSS classes:** `.cosme-vertical-video`, `__inner`, `__header`, `__eyebrow`, `__heading`, `__categories`, `__category-track`, `__category-item`, `__category`, `__category-media`, `__category-image`, `__category-placeholder`, `__category-label`, `__carousel`, `__viewport`, `__track`, `__slide`, `__card`, `__media`, `__video`, `__fallback`, `__controls`, `__control`, `__caption`, `__product`, `__product-link`, `__product-image`, `__product-copy`, `__product-title`, `__product-price`, `__product-add`, `__arrow`, `__arrow--prev`, `__arrow--next`, and more.
+- **CSS variables (tokens):**
+  - `--vertical-video-ratio`, `--vertical-video-desktop-cards`, `--vertical-video-mobile-cards`, `--vertical-video-gap`, `--vertical-video-visible`, `--vertical-video-span`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-accent-contrast`, `--color-overlay`, `--color-border`, `--color-slider-arrows`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`, `--letter-spacing-body`
+  - `--radius-card`, `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** All logic is self‑contained inside the section. It handles:
+  - Carousel initialisation and infinite loop (via cloning).
+  - Dominant‑centre scaling and `is-active` class management.
+  - Arrow controls and auto‑scroll with pause on hover/touch.
+  - Video lazy loading and autoplay via `IntersectionObserver`.
+  - Play/pause and mute/unmute controls.
+  - Behaviour modes: “Videos in view” (only active video plays) and “All videos” (all visible videos play).
+  - Reduced motion and visibility change handling.
+  - Cleanup on section unload (using `shopify:section:unload`).
+
+---
+
+## Customization Tips
+
+- **Adjust card count** – change **Desktop cards** and **Mobile cards** to control how many videos are visible at once.
+- **Change aspect ratio** – use `4:5` for slightly wider portrait videos.
+- **Disable autoplay** – if you prefer users to click play manually, turn off **Autoplay**.
+- **Use “Videos in view”** – for a focused experience where only the centre video plays; this reduces distraction.
+- **Add custom category images** – upload your own images in each Collection Link block and choose `Cover` or `Contain` to control how they fill the square.
+- **Hide arrows** – turn off **Show arrows** for a cleaner, minimal look.
+- **Enable carousel auto‑scroll** – to create a continuously moving editorial showcase.
+- **Override product overlay per video** – use the block‑level **Show product** toggle to hide the overlay on selected videos.
+
+---
+
+## Troubleshooting
+
+### Videos do not autoplay
+
+- Ensure **Autoplay** is enabled in the section settings.
+- Check that the video file is uploaded and correctly selected.
+- If `prefers-reduced-motion` is active in the user’s system, autoplay will be disabled (this is intentional).
+- Verify that the global `enable_animations` setting is `true`.
+
+### Only the centre video plays, but I want all visible videos to play
+
+- Change **Autoplay behavior** from `Videos in view` to `All videos`.
+
+### The carousel does not loop infinitely
+
+- The carousel automatically loops when there are 2 or more videos. If you have only 1 video, looping does not apply.
+- If arrows are disabled (`Show arrows` off), the carousel still loops via touch scrolling.
+
+### Product overlay does not appear
+
+- Ensure **Show product** is enabled at both the section level and the block level.
+- Verify that a product is selected in the Video block.
+- If the product is not in stock or is unpublished, the overlay may not render.
+
+### Category images are cropped incorrectly
+
+- In the Collection Link block, adjust the **Image fit** setting to `Contain` to see the entire image, or `Cover` to fill the square with cropping.
+- You can also upload a different image that better fits the square format.
+
+### Videos pause unexpectedly on mobile
+
+- Mobile browsers often throttle background media; this is normal. The section attempts to resume playback when the video becomes visible again.
+
+---
+
+## Conclusion
+
+The Vertical Video / Shop the Look section is a powerful way to combine cinematic video content with product discovery. With its dominant‑centre carousel, infinite looping, flexible autoplay options, and integrated Quick View, it delivers a premium, editorial shopping experience that feels native to beauty and lifestyle brands.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

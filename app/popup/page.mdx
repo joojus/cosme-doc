@@ -1,0 +1,298 @@
+---
+sidebarTitle: Popup
+---
+
+# Popup
+
+The **Popup** is a global overlay for the COSME theme, designed to capture email subscribers, promote offers, or deliver editorial messages without interrupting the shopping experience. It appears as a refined, elongated editorial dialog — not a generic modal — and is fully configurable through the Theme Editor.
+
+The Popup lives in the **Overlay group** (alongside the Cart drawer) and is rendered on every page of the storefront. Merchants can control when it appears, how often, and what content it displays, using native Shopify blocks and settings.
+
+![Popup example](/img/popup.png)
+
+---
+
+## Overview
+
+The Popup provides the following key features:
+
+- **Global overlay** – renders across all pages (or only the homepage), above the main content.
+- **Block‑based content** – add, remove, and reorder Image, Heading, Text, Newsletter form, and Social links blocks.
+- **Native Shopify newsletter form** – uses `{% form 'customer' %}` with email and marketing consent.
+- **Flexible layout** – image can be placed at the top or on the left (desktop); stacks on mobile.
+- **Automatic triggers** – open immediately, after a delay, or when the user scrolls a configurable percentage.
+- **Repeat control** – respects a configurable interval (from “No repeat” to “Every month”) using browser‑side `localStorage`.
+- **Teaser button** – a floating pill or vertical tab that allows manual opening; positionable left or right.
+- **Accessibility** – keyboard‑friendly, focus management, Escape to close, reduced‑motion support.
+- **Three colour schemes** – supports Light, Dark, and Light+Accent.
+- **Lightweight** – no external libraries; vanilla JavaScript and CSS.
+
+All settings are available in the Theme Editor under **Overlay → Popup**.
+
+---
+
+## How to Use
+
+1. In the Shopify Admin, go to **Online Store → Themes → Customize**.
+2. In the Theme Editor, select **Overlay** (or navigate to **Footer → Overlay group**) from the dropdown.
+3. You will see the **Popup** section inside the **Overlay group**.
+4. Enable the Popup, configure its appearance, triggers, and content blocks.
+5. The Popup will appear on the storefront according to your settings.
+
+---
+
+## Section Settings
+
+The Popup section provides a comprehensive set of options, grouped into logical categories.
+
+![Popup settings](/img/popup-settings.png)
+
+### Popup Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable** | Checkbox | `true` | Turns the Popup on or off. When disabled, it is not rendered on the storefront (but remains editable in the Theme Editor). |
+| **Show on home page only** | Checkbox | `false` | If enabled, the Popup only appears on the storefront homepage. If disabled, it appears on all pages. |
+| **Show for visitors only** | Checkbox | `false` | If enabled, the Popup only appears for visitors who are not logged in (i.e., not a customer). |
+| **Text alignment** | Select | `Left`, `Center` | `Center` | Alignment of the heading, text, form, and social links inside the Popup. |
+| **Container width** | Range (560–880px) | `680px` | Maximum width of the Popup panel. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme applied to the Popup background and text. |
+
+### Automatic Trigger Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Trigger open automatically** | Checkbox | `true` | Enables automatic opening of the Popup. |
+| **Trigger type** | Select | `Immediate`, `Delay`, `Scroll` | `Delay` | How the Popup is triggered: immediately, after a delay, or when the user scrolls. |
+| **Delay** | Range (1–20 s) | `5s` | The delay (in seconds) before the Popup appears (only when `Trigger type` is `Delay`). |
+| **Scroll percentage** | Range (10–90%) | `50%` | The scroll percentage required to trigger the Popup (only when `Trigger type` is `Scroll`). |
+
+### Repeat Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Repeat open automatically** | Select | `No repeat`, `30 minutes`, `1 hour`, `6 hours`, `12 hours`, `1 day`, `3 days`, `7 days`, `14 days`, `30 days` | `1 day` | How often the Popup should automatically re‑appear to the same visitor (respecting `localStorage`). |
+
+### Teaser Button Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show teaser button** | Checkbox | `true` | Displays a floating button that manually opens the Popup. |
+| **Button label** | Text | `GET 10% OFF` | Label shown on the teaser button. |
+| **Teaser position** | Select | `Left`, `Right` | `Right` | Side of the screen where the teaser button appears (desktop: vertical; mobile: horizontal). |
+
+---
+
+## Blocks
+
+The Popup uses five block types, which can be added, removed, and reordered freely.
+
+### Image Block
+
+Adds an editorial image to the Popup.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Image** | Image picker | – | The main image for the Popup. |
+| **Image position** | Select | `Top`, `Left` | `Top` | Placement of the image within the Popup (desktop). On mobile, the image always appears above the content. |
+| **Image alt** | Text | – | Alternative text for the image. If empty, the image is considered decorative. |
+
+### Heading Block
+
+Adds a heading to the Popup.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Heading** | Text | `A considered welcome` | The heading text. |
+| **Heading size** | Select | Predefined sizes from `Heading XS` to `Display 2XL` | `Heading XL` | The typographic scale of the heading. |
+| **Heading tag** | Select | `H1` – `H6` | `H2` | The semantic HTML tag for the heading. |
+
+### Text Block
+
+Adds a rich text description.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Text** | Richtext | `<p>Join our list and receive 10% off your first order.</p>` | The textual content, supporting basic formatting. |
+| **Text size** | Select | `Small`, `Base`, `Large`, `Inherit` | `Base` | Relative font size. |
+
+### Newsletter Form Block
+
+Adds a native Shopify newsletter sign‑up form.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Button label** | Text | `GET 10% OFF` | Label for the submit button. |
+| **Button design** | Select | `Design 1` (Primary), `Design 2` (Outline) | `Design 1` | Visual style of the submit button. |
+
+The form uses `{% form 'customer' %}` with hidden fields for `contact[tags] = "newsletter"` and `customer[accepts_marketing] = "true"`. After successful submission, the form is replaced with a success message and automatic repeat is disabled for the visitor.
+
+### Social Links Block
+
+Displays social network icons linked to the global social URLs (set in Theme Settings → Social media).
+
+No settings are required — the block uses the store’s configured social accounts. Supported networks: Facebook, Instagram, TikTok, X (Twitter), YouTube, Pinterest.
+
+---
+
+## Visual Layout
+
+### Desktop (≥768px)
+
+- **Popup panel**: centred, with `max-width` determined by the `Container width` setting.
+- **Image position**:
+  - **Top**: image spans the full width above the content.
+  - **Left**: image occupies approximately 40–50% of the panel, with content beside it.
+- **Content**: heading, text, form, and social links are aligned according to the `Text alignment` setting.
+- **Teaser**: vertical tab on the selected side (right or left).
+
+### Mobile (768px)
+
+- **Popup**: fills most of the viewport with safe‑area margins; image (if present) appears above all content.
+- **Teaser**: compact horizontal pill, positioned near the bottom of the screen, above the safe area.
+
+---
+
+## Trigger & Display Logic
+
+### Automatic Triggers
+
+- **Immediate**: opens the Popup as soon as the page loads.
+- **Delay**: opens after the configured number of seconds (1–20).
+- **Scroll**: opens when the user has scrolled a specified percentage of the page (10–90%).
+
+### Repeat Control
+
+The Popup uses `localStorage` to store two values:
+- `openedAt` – timestamp of the last automatic open.
+- `done` – boolean indicating that the visitor has successfully subscribed.
+
+The automatic trigger will only fire if:
+- The configured repeat interval has elapsed since the last open (or `No repeat` is set and the popup has never opened automatically).
+- The visitor has not already subscribed.
+
+### Manual Open (Teaser)
+
+Clicking the teaser button opens the Popup immediately, ignoring any automatic delay/scroll/interval logic. It does not reset the repeat timer.
+
+### Theme Editor Preview
+
+In the Theme Editor, the Popup opens automatically to allow styling and block configuration; `localStorage` is ignored in preview mode.
+
+---
+
+## Accessibility
+
+- **Role & semantics**: the Popup uses `<dialog role="dialog" aria-modal="true">` with an appropriate `aria-label` or `aria-labelledby`.
+- **Focus management**: when opened, focus moves to the close button; when closed, focus returns to the previously focused element (or the teaser).
+- **Keyboard support**: Escape closes the Popup; all interactive elements (close, teaser, form inputs, buttons) are keyboard‑accessible and have visible focus states.
+- **Reduced motion**: animations respect `prefers-reduced-motion`.
+- **Form labels**: all form fields have visible `<label>` elements and proper `for`/`id` associations.
+- **Status messages**: success/error states are announced via `role="status"` and `aria-live="polite"`.
+
+---
+
+## Performance
+
+- **No external libraries**: all logic is vanilla JavaScript and CSS.
+- **Efficient triggers**: scroll listener is passive; no polling or intervals.
+- **Lightweight**: minimal DOM; images are lazy‑loaded.
+- **LocalStorage**: only stores minimal state (timestamps and a boolean); no personal data.
+
+---
+
+## Technical Details
+
+- **File:** `sections/popup.liquid`
+- **Overlay group:** `sections/overlay-group.json` (includes the Popup and Cart drawer)
+- **Snippets used:** `cosme-image`, `cosme-icon`, `cosme-form-field`, `cosme-button`
+- **CSS classes:** `.cosme-popup`, `__panel`, `__close`, `__layout`, `__media`, `__image`, `__heading`, `__text`, `__form`, `__form-fields`, `__submit`, `__status`, `__social`, `__social-list`, `__social-link`, `__teaser`, etc.
+- **CSS variables (tokens):**
+  - `--popup-width` (set via `container_width` setting)
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-overlay`, `--overlay-opacity`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+  - `--spacing-*`
+- **JavaScript:** Handles:
+  - Automatic triggers (immediate, delay, scroll)
+  - Repeat interval management via `localStorage`
+  - Manual open via teaser
+  - Native newsletter form submission (AJAX) with success/error handling
+  - Focus management and Escape key
+  - Theme Editor preview behaviour
+  - Cleanup on section unload
+
+---
+
+## Troubleshooting
+
+### The Popup does not appear on the storefront
+- Ensure **Enable** is checked.
+- If **Show on home page only** is enabled, the Popup will only appear on the homepage.
+- If **Show for visitors only** is enabled, logged‑in customers will not see it.
+- Check the **Automatic trigger** settings; if none are configured, the Popup may not open automatically.
+
+### The teaser button is not visible
+- Ensure **Show teaser button** is enabled.
+- Check that the Popup itself is enabled.
+- On mobile, the teaser may be placed at the bottom; ensure it is not hidden by other UI.
+
+### The Popup keeps re‑appearing too often
+- Adjust the **Repeat open automatically** interval to a longer period (e.g., `3 days` or `7 days`).
+- If the visitor has not subscribed, the Popup will re‑appear according to the interval.
+
+### The newsletter form does not submit
+- Ensure the store has a valid customer contact email configured in Shopify settings.
+- The form uses `{% form 'customer' %}` and requires customer accounts to be enabled.
+- Check the browser console for errors.
+
+### The Popup does not respect the colour scheme
+- Verify that the **Color scheme** setting is correctly selected.
+- The Popup uses the selected scheme for background, text, borders, and accent colours.
+
+### The Popup is too wide or too narrow
+- Adjust the **Container width** setting (560–880px).
+- The Popup also respects `max-width: calc(100vw - 2rem)` and `max-width: 55rem` (approx 880px) for safe display.
+
+### The image is not appearing
+- Ensure an image is selected in the Image block.
+- If the image block is empty, no image area is displayed.
+
+### The Popup is not accessible via keyboard
+- The `<dialog>` element and all interactive controls are keyboard‑friendly. If you experience issues, check that no custom CSS or JavaScript is interfering.
+
+---
+
+## Usage Examples
+
+### Promotional Popup (discount offer)
+- Use the default Image, Heading, Text, and Newsletter blocks.
+- Set the heading to `“Welcome gift”` and text to `“Get 10% off your first order.”`
+- Configure the teaser label to `“GET 10% OFF”`.
+- Set trigger to `Delay` (5 seconds) and repeat to `1 day`.
+
+### Brand Editorial Popup (no image)
+- Remove the Image block.
+- Use only Heading, Text, and Social links.
+- Set alignment to `Center` and colour scheme to `Light+Accent` for a refined look.
+- Disable the newsletter if not needed.
+
+### Membership‑only Popup
+- Enable **Show for visitors only** so logged‑in customers are not interrupted.
+- Use a heading like `“Join our community”` and a newsletter form.
+- Set the teaser to `Left`.
+
+### Minimal Popup (no teaser)
+- Disable **Show teaser button**.
+- Use a scroll trigger (e.g., `50%`) to open the Popup.
+- This provides a subtle, non‑intrusive experience.
+
+---
+
+## Conclusion
+
+The COSME Popup is a powerful, flexible overlay that blends editorial design with native Shopify functionality. Its block‑based architecture, configurable triggers, and accessibility‑first approach make it an essential tool for merchants to engage visitors and grow their email list.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

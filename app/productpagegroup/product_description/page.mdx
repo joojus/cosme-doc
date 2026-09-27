@@ -1,0 +1,255 @@
+---
+sidebarTitle: Product Description & Reviews
+---
+
+import { Callout } from 'nextra/components'
+
+# Product Description & Reviews
+
+The **Product Description & Reviews** section is a tabbed information block that appears below the main product purchase area on the Product Page. It provides two essential content areas: the full product description and customer reviews.
+
+This section is designed to keep the page clean and editorial, allowing users to switch between the full description and reviews without excessive scrolling.
+
+![Product Description & Reviews in action](/img/product-tabs.png)
+
+---
+
+## Overview
+
+The Product Description & Reviews section is a full‑width, tabbed content block that typically sits below the main product area. It includes:
+
+- **Description tab** – the full product description from Shopify (`product.description`).
+- **Reviews tab** – customer reviews, rating summary, and distribution, powered by metafields and/or review app blocks.
+- **App compatibility** – supports any Shopify review app via the `@app` block type.
+- **Rating summary** – overall score, star rating, and review count.
+- **Rating distribution** – visual breakdown of ratings by star level (5★, 4★, 3★, 2★, 1★).
+- **Review list** – individual reviews with author, date, rating, and optional images.
+- **Sorting** – newest, highest rating, lowest rating.
+- **Pagination** – load more or page‑based navigation.
+- **Write a review** – trigger that links to the review app's form (when available).
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+| **Enable reviews** | Checkbox | `true` | Globally enables or disables the Reviews tab. If disabled, only the Description tab is shown. |
+
+### Review Display Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show rating summary** | Checkbox | `true` | Displays the overall rating score and star rating at the top of the Reviews tab. |
+| **Show rating distribution** | Checkbox | `true` | Displays the breakdown of ratings by star level (5★, 4★, 3★, 2★, 1★). |
+| **Show review count** | Checkbox | `true` | Displays the total number of reviews. |
+| **Show verified badge** | Checkbox | `true` | Shows a "Verified" badge on reviews marked as verified purchases. |
+| **Show review dates** | Checkbox | `true` | Displays the date of each review. |
+| **Show review images** | Checkbox | `true` | Displays images attached to reviews (if supported by the review provider). |
+
+### Review Controls
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Show sorting** | Checkbox | – | `true` | Shows a dropdown to sort reviews by newest, highest rating, or lowest rating. |
+| **Show pagination** | Checkbox | – | `true` | Enables pagination or "Load more" functionality. |
+| **Pagination mode** | Select | `Load more`, `Pages` | `Load more` | How additional reviews are loaded: "Load more" adds a button, "Pages" shows numbered page navigation. |
+| **Reviews per page** | Range (2–12, step 1) | `6` | The number of reviews displayed per page or load batch. |
+| **Show write review** | Checkbox | `true` | Shows a "Write a review" trigger button when a review app block is present. |
+
+### Data Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Reviews namespace** | Text | `reviews` | The metafield namespace where review data is stored. Default is `reviews`. |
+| **Reviews list key** | Text | – | The metafield key where the review list is stored (e.g., `reviews`, `list`). |
+
+---
+
+## Blocks
+
+The section uses one block type: `@app`. This is a special Shopify block type that allows third‑party review apps to inject their own content.
+
+### App Block (`@app`)
+
+Any Shopify review app that supports Theme Editor app blocks can be added to this section. The app's content will appear inside the Reviews tab, typically below the built‑in rating summary and distribution.
+
+**Supported review apps include:**
+- Judge.me
+- Loox
+- Okendo
+- Yotpo
+- Stamped
+- AfterShip Reviews
+- Fera Reviews
+- And any other app that supports app blocks
+
+<Callout type="info">
+  When a review app is added via the `@app` block, its content will automatically appear in the Reviews tab. The built‑in rating summary and distribution will still appear above the app content.
+</Callout>
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Two tabs: **Description** and **Reviews**.
+- The active tab is highlighted with an underline.
+- **Description tab**: full product description with clean typography.
+- **Reviews tab**: two‑column layout:
+  - **Left column**: rating score, stars, and review count.
+  - **Right column**: rating distribution, sorting controls, and "Write a review" button.
+- Below the summary: the review list with author, rating, date, and body.
+- Pagination or load more appears at the bottom.
+
+### Tablet (750–989px)
+
+- Same two‑column layout with slightly reduced spacing.
+- Typography scales proportionally.
+
+### Mobile (750px)
+
+- Tabs remain side‑by‑side (wrapped if needed).
+- Reviews summary stacks vertically: rating score on top, distribution and controls below.
+- Review list items are full‑width with comfortable touch targets.
+- All buttons are at least 44px for touch interaction.
+
+---
+
+## Rating Data Sources
+
+The section reads review data from **Shopify metafields** on the product. This allows compatibility with multiple review providers without locking the merchant into one app.
+
+### Rating Metafields
+
+| Metafield | Description |
+|-----------|-------------|
+| `reviews.rating` | The average rating (e.g., `4.8`). Can be a number or an object with `rating` and `scale_max`. |
+| `reviews.rating_count` | The total number of reviews. |
+| `reviews.rating_count_1` | Number of 1★ reviews. |
+| `reviews.rating_count_2` | Number of 2★ reviews. |
+| `reviews.rating_count_3` | Number of 3★ reviews. |
+| `reviews.rating_count_4` | Number of 4★ reviews. |
+| `reviews.rating_count_5` | Number of 5★ reviews. |
+| `reviews.rating_distribution` | An object containing the distribution (alternative to individual rating_count_* fields). |
+| `reviews.[list_key]` | A list of review objects (configurable via the **Reviews list key** setting). |
+
+### Review Object Structure
+
+Each review object in the list should support the following fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `author` | String | The reviewer's name. |
+| `rating` | Number | The rating (1–5). |
+| `date` | String | The review date (ISO format or any string). |
+| `title` | String | The review title (optional). |
+| `body` | String | The full review text. |
+| `verified` | Boolean | Whether the purchase is verified. |
+| `images` | Array | List of image URLs (optional). |
+
+---
+
+## Using Reviews with Judge.me
+
+[Judge.me](https://judge.me) is a popular review app for Shopify that works seamlessly with the COSME Product Page.
+
+### Setting Up Judge.me
+
+1. **Install Judge.me** from the Shopify App Store.
+2. **Configure Judge.me** settings (auto‑sync reviews, email requests, etc.).
+3. **Add Judge.me metafields** – Judge.me will automatically populate the `reviews.rating`, `reviews.rating_count`, and distribution metafields.
+
+### Adding Judge.me to the Reviews Tab
+
+1. In the Shopify Theme Editor, open **Products → Default product**.
+2. Find the **Product Description & Reviews** section.
+3. Click **Add block → Apps → Judge.me** (or your review app's block).
+4. The app's content will appear in the Reviews tab below the built‑in summary.
+
+---
+
+## Accessibility
+
+The Product Description & Reviews section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<h3>`, `<ul>`, `<li>`, `<button>`, `<select>` appropriately.
+- **ARIA roles** – tabs use `role="tablist"`, `role="tab"`, and `role="tabpanel"` with proper `aria-selected`, `aria-controls`, and `aria-labelledby`.
+- **Keyboard navigation** – tabs can be navigated with ArrowLeft/ArrowRight/Home/End keys.
+- **Focus management** – all interactive elements have visible `:focus-visible` rings.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Screen reader feedback** – the review count, range, and pagination are announced with `aria-live`.
+
+---
+
+## Performance
+
+- No third‑party libraries are used for the tab or review functionality.
+- Reviews are rendered server‑side with the product data.
+- JavaScript is lightweight and only handles tab switching, sorting, and pagination.
+- Images (review photos, avatars) use `loading="lazy"`.
+- Events are cleaned up when the section is removed (`shopify:section:unload`).
+
+---
+
+## Technical Details
+
+- **File:** `sections/product-description-reviews.liquid`
+- **Dependencies:** `cosme-product-reviews-content`, `cosme-review-stars`, `cosme-button`
+- **CSS classes:** `.cosme-product-tabs`, `__inner`, `__list`, `__tab`, `__panel`, `__rte`, `__empty`
+- **CSS variables (tokens):**
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+
+---
+
+## Troubleshooting
+
+### Reviews tab does not appear
+- Ensure **Enable reviews** is checked in the section settings.
+- If no review data exists and no app block is added, the Reviews tab will not appear.
+
+### Rating summary is empty
+- Check that the product has review data in the metafields (`reviews.rating`, `reviews.rating_count`).
+- If using a review app, ensure it is properly configured to populate metafields.
+
+### Review list is empty
+- Ensure the **Reviews list key** is set correctly (e.g., `reviews`, `list`, or the key used by your review app).
+- Check that the metafield contains a valid list of review objects.
+
+### Sorting does not work
+- Sorting only works when there are review items in the list metafield.
+- If reviews are provided by an app block, sorting may be handled by the app itself.
+
+### "Write a review" button does nothing
+- The button is a trigger that links to `#ProductReviewsApps`. It expects a review app block to be present in that area.
+- Add an app block (e.g., Judge.me) to the section for the button to work.
+
+### Lightbox or modal from review app does not open
+- Review apps often handle their own modals. Ensure the app's block is added and the app is properly configured.
+
+### The rating link in the main product section does not scroll to reviews
+- Ensure the **Reviews link** in the Main Product section is set to `#ProductReviews` (or the ID of your reviews tab).
+- The main product section includes a script that handles smooth scrolling to the reviews tab when the rating link is clicked.
+
+---
+
+## Conclusion
+
+The Product Description & Reviews section provides a clean, editorial way to display full product information and customer reviews. With native Shopify metafield support and compatibility with popular review apps like Judge.me, it offers flexibility without sacrificing design quality.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

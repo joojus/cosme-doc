@@ -1,0 +1,235 @@
+---
+sidebarTitle: Default Page
+---
+
+# Default Page
+
+The **Default Page** is the universal template for all standard Shopify pages in the COSME theme — About, Contact, Shipping, Returns, FAQ, Privacy, Terms, and any custom page created by the merchant. It provides a clean, editorial presentation that transforms simple page content into a premium brand experience.
+
+The page is built as a single section (`page.liquid`) that uses Shopify's native `page` object. All content comes from the merchant's actual page content (`page.content`), with Theme Editor controls for layout, typography, and appearance.
+
+![Default Page example](/img/default-page.png)
+
+---
+
+## Overview
+
+The Default Page provides the following key features:
+
+- **Editorial header** – optional eyebrow, large page title (`page.title`), and generous whitespace.
+- **Flexible content width** – choose between **Narrow** (max-width: 42rem) or **Wide** (full width) for the content area.
+- **Content alignment** – position the content block to the **Left** or **Center** of the page.
+- **Merchant content** – renders `{{ page.content }}` with comprehensive styling for headings, paragraphs, lists, quotes, images, tables, and embedded media.
+- **Color schemes** – fully supports Light, Dark, and Light+Accent.
+- **Section spacing** – control vertical padding with Small, Medium, or Large presets.
+- **Responsive** – adapts seamlessly to desktop, tablet, and mobile.
+- **Universal** – works for any Shopify Page without additional configuration.
+
+All settings are available in the Theme Editor under **Templates → Pages**.
+
+---
+
+## Section Settings
+
+The Default Page section provides a focused set of options, grouped by functionality.
+
+
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show eyebrow** | Checkbox | `true` | Toggles the small uppercase text above the page title. |
+| **Eyebrow** | Text | `THE COSME STORY` | The eyebrow text displayed above the title. Only visible when `Show eyebrow` is enabled. |
+
+### Layout Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Content alignment** | Select | `Left`, `Center` | `Left` | Controls the horizontal position of the content block. `Left` aligns the content to the left edge; `Center` centres it on the page. |
+| **Content width** | Select | `Narrow`, `Wide` | `Narrow` | Controls the width of the content area. `Narrow` limits the text to a comfortable reading width (42rem); `Wide` allows it to span the full page width. |
+
+### Color Scheme & Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the page background and text. |
+| **Section spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the page section. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Header**: centered (when `Center` alignment is selected) or left-aligned, with generous spacing.
+- **Content**: narrow or wide, with `text-align: left` for readability.
+- **Alignment**: if `Center` is selected, the entire content block (header + content) is centred within the page.
+- **Spacing**: `Medium` spacing provides balanced vertical padding; `Large` offers a more editorial, spacious feel.
+
+### Tablet (768–989px)
+
+- **Header**: scales typography and spacing proportionally.
+- **Content**: maintains the selected width setting (Narrow or Wide).
+- **Alignment**: respects the chosen alignment.
+
+### Mobile (768px)
+
+- **Header**: title scales down using `clamp(2rem, 6vw, 3.25rem)` for readability.
+- **Content**: full-width with comfortable padding; no horizontal overflow.
+- **Tables and preformatted blocks**: scroll horizontally to maintain layout integrity.
+- **Links and touch targets**: larger for easy interaction.
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Main wrapper | `.cosme-page` | Main container with full width and color scheme. |
+| Inner container | `.cosme-page__inner` | Constrained to `--page-width` with `--page-margin`. |
+| Header | `.cosme-page__header` | Wraps the eyebrow and page title. |
+| Eyebrow | `.cosme-page__eyebrow` | Small uppercase text above the title. |
+| Title | `.cosme-page__title` | Page title `<h1>` from `page.title`. |
+| Content | `.cosme-page__content` | Renders `{{ page.content }}` with full styling. |
+
+### Modifier Classes
+
+| Class | Effect |
+|-------|--------|
+| `cosme-page--align-left` | Content block aligned to the left. |
+| `cosme-page--align-center` | Content block centred. |
+| `cosme-page--width-narrow` | Content limited to `max-width: 42rem`. |
+| `cosme-page--width-wide` | Content spans full width. |
+| `cosme-page--spacing-small` | Reduced vertical padding. |
+| `cosme-page--spacing-medium` | Standard vertical padding. |
+| `cosme-page--spacing-large` | Generous vertical padding. |
+
+---
+
+## Content Styling
+
+The section applies comprehensive styling to all content types rendered from `page.content`:
+
+| Element | Styling |
+|---------|---------|
+| **Paragraphs** | `margin-block: 0 var(--spacing-md); font-size: 1.0625rem; line-height: 1.75;` |
+| **H2** | `font-size: clamp(1.5rem, 3vw, 1.875rem); margin-block: var(--spacing-2xl) var(--spacing-md);` |
+| **H3** | `font-size: clamp(1.25rem, 2.4vw, 1.5rem); margin-block: var(--spacing-xl) var(--spacing-sm);` |
+| **H4** | `font-size: 1.125rem; margin-block: var(--spacing-lg) var(--spacing-sm);` |
+| **Links** | Underlined with `text-underline-offset: 0.18em`; hover/focus changes to accent colour. |
+| **Lists** | `padding-inline-start: 1.25rem; margin-block: 0 var(--spacing-md);` |
+| **Blockquotes** | Left border in accent colour; editorial font size. |
+| **Images** | `max-width: 100%; height: auto; display: block;` |
+| **Tables** | `width: max-content; min-width: 100%; border-collapse: collapse;` |
+| **Pre/Code** | `overflow-x: auto; background: var(--color-background-2);` |
+
+---
+
+## Accessibility
+
+The Default Page is built with accessibility as a priority:
+
+- **Heading hierarchy** – exactly one `<h1>` for the page title; headings inside content (`h2`–`h6`) follow a logical hierarchy.
+- **Semantic HTML** – uses `<main>`, `<header>`, `<h1>`, and `<div>` appropriately.
+- **Image alt text** – relies on the merchant’s alt attributes in `page.content`.
+- **Keyboard navigation** – all links and interactive elements are focusable with visible focus rings.
+- **Focus indicators** – uses `--color-accent` with `--focus-ring-width` for consistent focus states.
+- **Contrast** – all text meets WCAG contrast requirements in all three color schemes.
+- **Reduced motion** – no motion effects in this section; respects `prefers-reduced-motion`.
+- **Overflow handling** – `overflow-x: auto` for tables and pre blocks; `overflow-wrap: anywhere` for long words.
+
+---
+
+## Performance
+
+- **No JavaScript** – the Default Page is pure Liquid + CSS, with zero client-side JavaScript.
+- **Responsive images** – images inside `page.content` use `max-width: 100%; height: auto;` for responsive behaviour.
+- **CSS variables** – uses existing Cosme tokens for consistent styling.
+- **No external dependencies** – only uses Shopify’s native page object.
+
+---
+
+## Technical Details
+
+- **File:** `sections/page.liquid`
+- **Template:** `templates/page.json` (or `page.liquid`)
+- **Snippets used:** none (the section is self‑contained)
+- **CSS classes:** `.cosme-page`, `__inner`, `__header`, `__eyebrow`, `__title`, `__content`, plus modifier classes for alignment, width, and spacing.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--border-width`, `--focus-ring-width`
+- **JavaScript:** none.
+
+---
+
+## Troubleshooting
+
+### The page content is not showing
+- Ensure the page has content in Shopify admin.
+- The content is rendered via `{{ page.content }}`. If it's empty, the content block is hidden.
+- Check that the page uses the correct template (Page / Default page).
+
+### The page is not centred
+- Set **Content alignment** to `Center` in Theme Editor.
+- If the page still appears left-aligned, ensure `cosme-page--align-center` is applied to the `<main>` element.
+- Check that no global CSS overrides the `margin-inline: auto` rule.
+
+### The content is too wide
+- Set **Content width** to `Narrow` in Theme Editor.
+- This applies `max-width: 42rem` to the content area.
+- If you want to adjust the narrow width, modify the `42rem` value in the CSS.
+
+### The title is overflowing on mobile
+- The title uses `clamp(2rem, 6vw, 3.25rem)` for responsive sizing.
+- If a title is extremely long, it will wrap using `overflow-wrap: anywhere`.
+
+### Tables are breaking the layout
+- Tables use `width: max-content; min-width: 100%; max-width: none;` to preserve column structure.
+- On mobile, tables become horizontally scrollable via `overflow-x: auto`.
+- If a table contains very wide content, it will scroll without breaking the page.
+
+### The eyebrow is not showing
+- Ensure **Show eyebrow** is enabled.
+- Check that the **Eyebrow** text field is not empty.
+- The eyebrow only appears if both conditions are met.
+
+### Custom CSS is not applying
+- Use the **Custom CSS** field in Theme Editor (if available) or add styles to `assets/critical.css` or `assets/theme.css`.
+- Use specific selectors to avoid conflicts (e.g., `.cosme-page__content a`).
+
+---
+
+## Usage Examples
+
+### About page (editorial, centred)
+- Set **Content alignment** to `Center`.
+- Set **Content width** to `Narrow`.
+- Enable **Show eyebrow** and set eyebrow to `ABOUT`.
+- The page will display a centred, readable story.
+
+### FAQ page (left-aligned, wide)
+- Set **Content alignment** to `Left`.
+- Set **Content width** to `Wide`.
+- The page will display full-width content with left‑aligned text, suitable for lists and structured content.
+
+### Contact page (minimal, centred)
+- Set **Content alignment** to `Center`.
+- Set **Content width** to `Narrow`.
+- Disable **Show eyebrow** for a clean, minimal header.
+
+### Terms and Conditions (left-aligned, narrow)
+- Set **Content alignment** to `Left`.
+- Set **Content width** to `Narrow`.
+- This provides a legal‑document‑friendly reading experience.
+
+---
+
+## Conclusion
+
+The COSME Default Page is a versatile, accessible, and performant template for all standard Shopify pages. With flexible alignment, width controls, and comprehensive content styling, it allows merchants to create beautiful editorial pages without touching code. It integrates seamlessly with the Cosme design system and provides a consistent brand experience across all pages.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

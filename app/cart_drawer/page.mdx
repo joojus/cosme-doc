@@ -1,0 +1,426 @@
+---
+sidebarTitle: Cart Drawer
+---
+import { Callout } from 'nextra/components'
+
+# Cart Drawer
+
+The **Cart Drawer** is the primary AJAX-powered cart experience for the COSME theme. It slides in from the right side of the viewport when the customer clicks the header cart icon, and provides a complete shopping cart workflow — line items, quantity controls, free shipping progress, upsells, order note, discount codes, trust indicators, and checkout — all without a full page reload.
+
+The drawer lives inside the theme's **Overlay group** alongside the Popup, and is composed of a section (`cart-drawer.liquid`) plus five specialized snippets. It uses Shopify's Cart Ajax API and Section Rendering API for all updates.
+
+![Cart Drawer example](/img/cart-drawer.png)
+
+---
+
+## Overview
+
+The Cart Drawer provides:
+
+- **AJAX cart** — add, update, remove, and refresh without page reloads.
+- **Line items** — image, title, variant, selling plan, properties, prices, compare-at, line-level discounts.
+- **Quantity controls** — `−` / input / `+` with zero-to-remove, loading state, and validation.
+- **Free shipping bar** — promotional progress indicator with configurable threshold and messages.
+- **Upsell** — "You may also like" with manual product picker or Shopify Product Recommendations.
+- **Empty cart** — editorial empty state with editable copy, Shop all CTA, and optional recommendations.
+- **Order note** — collapsible textarea saved via `/cart/update.js` (debounced).
+- **Discount code** — collapsible input with apply / remove via Cart Ajax API.
+- **Trust row** — secure-checkout message plus native Shopify payment icons.
+- **Cart count sync** — header cart count updates live.
+- **Three colour schemes** — Light, Dark, Light+Accent.
+- **Full accessibility** — dialog semantics, focus trap, Escape, focus restoration, live region.
+
+All settings are available in the Theme Editor under **Overlay → Cart Drawer**.
+
+---
+
+## How to Use
+
+The Cart Drawer is a global overlay — it is not added to individual page templates.
+
+1. In Shopify Admin → **Online Store → Themes → Customize**.
+2. In the Theme Editor, select the **Overlay group** (nested under Footer) from the section navigator.
+3. Choose **Cart Drawer**.
+4. Configure settings and blocks.
+5. The drawer will automatically appear on the storefront whenever the customer clicks the header cart icon.
+
+**Prerequisite:** the header must be configured with `Cart type = Drawer` in the theme's **Cart** settings. If `Cart type = Page`, the drawer is not rendered.
+
+---
+
+## Section Settings
+
+The Cart Drawer section provides a comprehensive set of options, grouped into logical categories.
+
+![Cart Drawer section settings](/img/cart-drawer-section-settings.png)
+
+### Cart Drawer
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Heading** | Text | `Your bag` | Drawer title shown at the top. Rendered in uppercase via CSS. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` | Colour scheme applied to the entire drawer. |
+| **Show compare-at** | Checkbox | `true` | Shows the original (compare-at) price next to the sale price when applicable. |
+
+### Free shipping
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable free shipping bar** | Checkbox | `true` | Toggles the entire free shipping progress block. |
+| **Free shipping threshold** | Number | `100` | Order subtotal (in store currency) required to unlock free shipping. The theme converts this to subunits automatically. |
+| **Free shipping message** | Text | `You're [amount] away from free shipping.` | Message shown before the threshold is reached. Use `[amount]` as a placeholder for the remaining amount. |
+| **Free shipping unlocked** | Text | `You've unlocked free shipping ✦` | Message shown after the threshold is reached. |
+
+<Callout type="info">
+  The free shipping bar is a **promotional indicator only**. It does not verify a real Shopify shipping rate. The merchant is responsible for configuring the corresponding free-shipping rate in Shopify admin.
+</Callout>
+
+### Upsell
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable upsell** | Checkbox | `true` | Toggles the "You may also like" block for a populated cart. |
+| **Heading** | Text | `You may also like` | Section heading. |
+| **Upsell source** | Select | `Manual products`, `Product recommendations` | `Manual products` | Source for upsell products. |
+| **Products** | Product list | – | Manual product picker (up to 4) when `Manual` source is selected. |
+| **Maximum products** | Range (1–4) | `4` | Maximum number of upsell items shown. |
+| **Show vendor** | Checkbox | `false` | Shows vendor name on each upsell row. |
+
+### Empty cart
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Empty heading** | Text | `Your bag is waiting.` | Heading shown when cart is empty. |
+| **Empty description** | Textarea | `Discover considered beauty essentials designed for your everyday ritual.` | Supporting text. |
+| **Button label** | Text | `Shop all` | CTA button label. |
+| **Button link** | URL | – | CTA destination. Defaults to `/collections/all`. |
+| **Show recommendations** | Checkbox | `true` | Shows "You may also like" below the empty state. |
+| **Recommendations heading** | Text | `You may also like` | Section heading for empty-cart recommendations. |
+| **Recommendations products** | Product list | – | Manual product picker (up to 4). |
+| **Maximum products** | Range (1–4) | `4` | Maximum number of recommendations. |
+
+<Callout type="info">
+  For empty carts, only **Manual products** are supported. Shopify's Product Recommendations API requires a product context (a `product_id`), which does not exist when the cart is empty. This is a native Shopify limitation.
+</Callout>
+
+### Order note
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show order note** | Checkbox | `true` | Toggles the collapsible order note field. |
+| **Order note label** | Text | `Order note` | Toggle label. |
+| **Order note placeholder** | Text | `Add a note to your order...` | Textarea placeholder. |
+
+### Discount code
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show discount code** | Checkbox | `true` | Toggles the collapsible discount code field. |
+| **Discount label** | Text | `Have a discount code?` | Toggle label. |
+| **Discount placeholder** | Text | `Discount code` | Input placeholder. |
+| **Discount button label** | Text | `Apply` | Submit button label. |
+
+### Trust
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show trust message** | Checkbox | `true` | Toggles the trust row below the checkout button. |
+| **Trust message** | Text | `Secure checkout` | Trust message text. Payment icons are automatically pulled from Shopify. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Drawer slides in from the **right**, width `min(100vw, 28rem)`.
+- **Structure** (top to bottom):
+  1. Header (title + item count + close button)
+  2. Free shipping bar (when applicable)
+  3. Scrollable area: line items → upsell → note/discount collapsibles
+  4. Sticky footer: subtotal → checkout → view cart → trust row
+- **Overlay backdrop** dims the page behind the drawer.
+
+### Mobile (990px)
+
+- Drawer takes the full viewport width (`100vw`), no left border.
+- Checkout button stays visible at the bottom of the viewport.
+- Height follows the **visual viewport** (`100dvh`) so the keyboard does not push the checkout off-screen.
+- All interactive controls (quantity, remove, close, apply) use a 44px touch target.
+
+### Empty state
+
+- No free shipping bar.
+- No line items.
+- Centered editorial copy + Shop all CTA.
+- Optional "You may also like" block below the copy.
+
+---
+
+## Component Structure
+
+The Cart Drawer is composed of one section and five snippets.
+
+| File | Purpose |
+|------|---------|
+| `sections/cart-drawer.liquid` | Section: dialog wrapper, heading, all Theme Editor settings, data attributes on `<dialog>` for JS. |
+| `snippets/cosme-cart-drawer-content.liquid` | Line items, quantity controls, remove, subtotal, checkout, view cart, empty state. |
+| `snippets/cosme-cart-drawer-shipping.liquid` | Free shipping progress bar with message and unlocked state. |
+| `snippets/cosme-cart-drawer-upsell.liquid` | Upsell block (heading + product list). |
+| `snippets/cosme-cart-drawer-upsell-item.liquid` | Single compact upsell row (image + title + price + Add). |
+| `snippets/cosme-cart-drawer-extras.liquid` | Order note, discount code, trust row (rendered in two parts: `tools` and `trust`). |
+
+### Cart drawer content (line items)
+
+Each line item includes:
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Image | `.cosme-cart-drawer__item-media` | Linked to the product page, aspect ratio 1:1. |
+| Title | `.cosme-cart-drawer__item-title` | Linked to the product page. |
+| Variant | `.cosme-cart-drawer__item-variant` | Shown when the product has more than one variant. |
+| Selling plan | `.cosme-cart-drawer__item-plan` | Shown for subscription items. |
+| Properties | `.cosme-cart-drawer__item-property` | Public custom properties (keys not starting with `_`). |
+| Price | `.cosme-cart-drawer__price` | Line price; compare-at is shown when applicable. |
+| Line discounts | `.cosme-cart-drawer__discount` | Each line-level discount allocation. |
+| Quantity | `.cosme-cart-drawer__quantity` | `−` / number input / `+`. |
+| Remove | `.cosme-cart-drawer__remove` | Close icon button. |
+
+### Footer (summary)
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Cart-level discounts | `.cosme-cart-drawer__cart-discounts` | Applied cart discounts. |
+| Savings | `.cosme-cart-drawer__savings` | Total savings when discounts exist. |
+| Subtotal | `.cosme-cart-drawer__subtotal` | `cart.total_price` formatted with the store currency. |
+| Checkout | `.cosme-cart-drawer__checkout` | `formaction="{{ routes.checkout_url }}"`, `name="checkout"`. |
+| View cart | `.cosme-cart-drawer__view-cart` | Secondary button to `/cart`. |
+| Trust | `.cosme-cart-drawer__trust` | Secure checkout message + payment icons. |
+
+---
+
+## Free Shipping Bar
+
+- Rendered only when `cart.item_count > 0` **and** `show_free_shipping` is enabled.
+- Threshold is set in **store currency** (e.g. `100` = `$100.00`).
+- Progress = `cart.total_price / (threshold × 100)`, clamped to `0–100%`.
+- When `progress = 100%`:
+  - The fill turns on the `is-complete` state.
+  - The message switches to the **unlocked** text.
+  - A small shipping icon appears.
+- The bar updates automatically after every AJAX cart mutation.
+
+---
+
+## Upsell
+
+Two modes are available:
+
+### Manual products
+
+The merchant picks up to 4 products via the native product picker. The list is rendered server-side on the `<dialog>` and persists across AJAX updates. Out-of-stock products are automatically skipped.
+
+### Product recommendations
+
+Uses Shopify's **Product Recommendations API** (`/recommendations/products.json`) with the first product in the cart as the context. If the API returns no products, the block is hidden automatically.
+
+For each upsell row:
+
+- **Single-variant product** → `Add` button submits an AJAX add.
+- **Multi-variant product** → `Choose` button opens Quick View (if enabled), or links to the product page (if not).
+- **Unavailable product** → row is skipped.
+
+---
+
+## Empty Cart
+
+When `cart.item_count == 0`:
+
+- **Free shipping bar is hidden.**
+- **Editorial empty state** shows:
+  - Editable heading (default: "Your bag is waiting.")
+  - Editable description
+  - Primary CTA: "Shop all" → `/collections/all` (configurable URL)
+- **Optional recommendations** appear below the copy.
+  - Source: **Manual products only** (Shopify Recommendations requires a product context).
+  - If no manual products are selected, the block is hidden.
+
+---
+
+## Order Note, Discount Code, Trust
+
+### Order note
+
+- Collapsible `<details>` block.
+- Textarea saved via `POST /cart/update.js` with `{ note }`.
+- Debounced on input; flushed on drawer close and before checkout.
+
+### Discount code
+
+- Collapsible `<details>` block.
+- Uses the native Cart Ajax API to apply/remove discount codes.
+- Applied codes are shown with a "Remove" action.
+- Invalid codes trigger an error via `role="alert"`.
+- Codes are **not** stored in `localStorage`.
+
+### Trust row
+
+- Compact row below the checkout button.
+- Shows a secure-checkout message and the store's `enabled_payment_types` as SVG icons.
+- No hard-coded payment providers.
+
+---
+
+## AJAX Behaviour
+
+The drawer uses two Shopify APIs:
+
+1. **Cart Ajax API** — `/cart/change.js`, `/cart/add.js`, `/cart/update.js`, `/cart.js`.
+2. **Section Rendering API** — `?sections=cart-drawer` returns the updated HTML for the drawer.
+
+After every mutation, the following are synchronized:
+
+- Line items
+- Cart count (header badge)
+- Subtotal
+- Discounts
+- Free shipping bar
+- Upsell (not re-fetched unless the cart context changes)
+- Order note state
+- Discount code state
+
+**No full page reload** occurs during any cart operation.
+
+---
+
+## Accessibility
+
+- **`<dialog>` element** with `aria-modal="true"` and `aria-labelledby`.
+- **Focus trap** while the drawer is open; focus is restored to the trigger on close.
+- **Escape** key closes the drawer.
+- **Focusable elements** on open: close button first.
+- **Live region** announces cart updates (item added, quantity updated, item removed, errors).
+- **Quantity controls** have descriptive `aria-label`s.
+- **Remove** button has an `aria-label` including the product name.
+- **Discount errors** use `role="alert"`.
+- **Trust and payment icons** are decorative or labelled.
+- **Reduced motion** disables all drawer animations.
+
+---
+
+## Performance
+
+- **AJAX only** — no page reload for any cart mutation.
+- **Section Rendering** fetches only the drawer HTML, not the whole page.
+- **No external libraries** — vanilla JavaScript, no jQuery, no third-party cart framework.
+- **Passive listeners** for scroll.
+- **Images** are lazy-loaded (`loading="lazy"`) except for the first item.
+- **ARIA busy state** prevents duplicate requests while an operation is in progress.
+- **Cleanup** on section unload removes all event listeners.
+
+---
+
+## Technical Details
+
+- **Section:** `sections/cart-drawer.liquid`
+- **Snippets:** `cosme-cart-drawer-content`, `cosme-cart-drawer-shipping`, `cosme-cart-drawer-upsell`, `cosme-cart-drawer-upsell-item`, `cosme-cart-drawer-extras`
+- **Overlay group:** `sections/overlay-group.json`
+- **Header integration:** `sections/header.liquid` (contains `initCosmeHeaderCart` JS)
+- **JS entry point:** `assets/theme.js` or inline `{% javascript %}` inside the header section
+- **Shopify APIs:** Cart Ajax API, Section Rendering API, Product Recommendations API
+- **Data flow:** All merchant settings for the drawer are read once from `<dialog>` data attributes on initial render, then reused by JS after every AJAX section refresh — this avoids the Overlay-group limitation where `?sections=` does not return group-level settings.
+
+### Key data attributes on `<dialog>`
+
+The section writes the following attributes to the `<dialog>` element so JS can read merchant settings without re-fetching them from the API:
+
+- `data-free-shipping-enabled`, `data-free-shipping-threshold`, `data-free-shipping-message`, `data-free-shipping-unlocked`
+- `data-empty-heading`, `data-empty-message`, `data-empty-button-label`, `data-empty-button-link`
+- `data-empty-recs-enabled`, `data-empty-recs-source`, `data-empty-recs-heading`, `data-empty-recs-limit`
+- `data-upsell-enabled`, `data-upsell-source`, `data-upsell-limit`, `data-upsell-heading`, `data-upsell-show-vendor`
+- `data-show-order-note`, `data-order-note-label`, `data-order-note-placeholder`
+- `data-show-discount`, `data-discount-label`, `data-discount-placeholder`, `data-discount-button`
+- `data-show-trust`, `data-trust-message`
+- `data-money-format`
+
+---
+
+## Troubleshooting
+
+### Drawer does not open when clicking the header cart icon
+- Ensure `settings.cart_type == 'drawer'` in the theme settings.
+- Verify the header has `data-cart-drawer="true"`.
+- Check the browser console for JS errors.
+
+### Drawer opens but does not show the free shipping bar
+- The bar is hidden when `cart.item_count == 0` — this is intentional.
+- Verify **Enable free shipping bar** is on.
+- If the threshold was changed but the bar still reflects the old value, check that the theme was reloaded (settings are read from `<dialog>` on initial render).
+
+### Threshold updates don't apply after AJAX
+- Settings are read from `<dialog>` data attributes, not from the schema defaults returned by `?sections=`. If the bar shows the old threshold, ensure the `data-free-shipping-threshold` attribute is correctly set on the `<dialog>` element.
+
+### Upsell does not appear for empty cart
+- Empty-cart upsell only supports **Manual products**. Select products in the Theme Editor — Shopify Product Recommendations cannot run without a product context.
+
+### Discount code fails to apply
+- Ensure the discount code exists in **Shopify Admin → Discounts** and is active.
+- Codes are applied via the Cart Ajax API; invalid codes show an `role="alert"` error.
+
+### Order note doesn't save
+- The note is saved via `/cart/update.js` on debounce. If it does not persist, check the browser console for network errors.
+
+### Cart count in the header doesn't update
+- The header cart count uses the same `data-header-cart-count` element. Verify the header section is loaded and `initCosmeHeaderCart` initialized.
+
+### Free shipping progress bar does not update after AJAX
+- The bar is re-rendered from the section HTML, then updated by `updateFreeShippingBar()` using the cart API response. Ensure the JS for that function is loaded.
+
+### Drawer height is wrong on mobile keyboard
+- The drawer height uses `--cart-drawer-vh` set to `100dvh`. On iOS/Android, ensure the visual viewport event is wired to update the CSS variable.
+
+### Variables with `{{ amount }}` cause an upload error
+- Never use `{{ amount }}` inside `overlay-group.json` or the schema defaults — it conflicts with Liquid parsing. Use `[amount]` instead; the Liquid renderer replaces it with the formatted value.
+
+---
+
+## Usage Examples
+
+### Full premium cart drawer (default)
+- Keep all settings enabled.
+- Use manual products for upsell (2–4 items).
+- Set free shipping threshold to the store's real threshold.
+
+### Minimal cart drawer (no upsell, no note, no discount)
+- Disable **Upsell**, **Order note**, and **Discount code**.
+- The drawer will show only line items, free shipping bar, subtotal, checkout.
+
+### Empty cart with editorial copy + Shop all
+- Set empty heading to your brand voice (e.g., "Nothing here yet.").
+- Choose a warm description.
+- Point the Shop all button to a curated collection.
+
+### Dark scheme with accent CTA
+- Set **Color scheme** to `Dark` (scheme-2).
+- The checkout button uses the accent colour automatically.
+
+### Free shipping threshold $200
+- Set **Free shipping threshold** to `200`.
+- Update the message text if needed (e.g., "Add [amount] more for free shipping").
+
+---
+
+## Related Documentation
+
+- [Popup](/popup) — also lives inside the Overlay group.
+- [Cart Page](/pagecartgroup/page_cart) — the full-page cart fallback.
+- [Header](/headergroup/header) — contains the cart trigger and header count sync.
+- [Quick View](/quick_view) — used by upsell for multi-variant products.
+
+---
+
+## Conclusion
+
+The COSME Cart Drawer is a complete AJAX shopping cart experience that combines Shopify's native Cart API with a premium editorial aesthetic. Its modular architecture — one section plus five snippets — makes it easy to extend and maintain, while the block-based settings give merchants full control over free shipping, upsells, empty states, order notes, discount codes, and trust indicators.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,324 @@
+---
+sidebarTitle: Collections List
+---
+
+# Collections List
+
+The **Collections List** page (`/collections/`) is the gateway to all product collections in the COSME theme. It presents a curated, editorial overview of available collections, allowing merchants to showcase their entire catalog or a selected subset in a premium, image‑driven layout.
+
+The page is built as a single section (`collections.liquid`) that supports two modes: **All collections** (dynamically pulling from Shopify) or **Selected collections** (manually chosen via theme blocks). Each collection is rendered using the `cosme-collection-card` snippet, which provides a consistent editorial card with image, title, optional description, product count, and a call‑to‑action.
+
+![Collections List example](/img/collections-list.png)
+
+---
+
+## Overview
+
+The Collections List page provides the following key features:
+
+- **Editorial introduction** – configurable eyebrow, heading, and description, with alignment options.
+- **Collection source** – choose between **All collections** (paginated) or **Selected collections** (manual block selection).
+- **Responsive grid** – 3, 4, or 5 columns on desktop (default 3), automatically adjusting to tablet and mobile.
+- **Image ratios** – 4:5 (portrait), 1:1 (square), or 4:3 (landscape) – default 4:5 for a premium beauty/fashion feel.
+- **Collection cards** – each card includes:
+  - Collection image (or placeholder)
+  - Editorial index (01, 02, …)
+  - Collection title
+  - Optional description (truncated)
+  - Optional product count
+  - Optional “Explore collection” CTA with arrow icon
+- **Interactive hover** – image scale (1.03), title and CTA change to accent colour, arrow slides right; fully CSS-driven and respects `prefers-reduced-motion`.
+- **Color schemes** – fully supports Light, Dark, and Light+Accent.
+- **Theme Editor settings** – everything is configurable without touching code.
+
+---
+
+## Section Settings
+
+The Collections List section offers a comprehensive set of options, grouped into logical categories.
+
+![Collections List settings](/img/collections-list-settings.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `Explore` | Small uppercase text above the heading. |
+| **Show eyebrow** | Checkbox | `true` | Toggles the eyebrow visibility. |
+| **Heading** | Text | `Collections` | The main page heading. |
+| **Description** | Textarea | `Discover carefully curated collections designed around your beauty rituals.` | Introductory paragraph below the heading. |
+| **Show description** | Checkbox | `true` | Toggles the description visibility. |
+| **Text alignment** | Select | `Left`, `Center` | `Left` | Alignment of the intro text block. |
+
+### Collections Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Collection source** | Select | `All collections`, `Selected collections` | `All collections` | Determines which collections are displayed. |
+| *Selected collections blocks* | Blocks | – | When `Selected collections` is chosen, add collection blocks to manually pick which collections appear. The block order determines the display order. |
+
+### Grid Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Desktop columns** | Select | `3`, `4`, `5` | `3` | Number of columns on desktop (≥1440px). |
+| **Image ratio** | Select | `4:5` (Portrait), `1:1` (Square), `4:3` (Landscape) | `4:5` | Aspect ratio of collection images. |
+| **Grid gap** | Select | `Small`, `Medium`, `Large` | `Medium` | Spacing between grid items (uses Cosme spacing tokens). |
+
+### Card Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show collection description** | Checkbox | `false` | When enabled, shows a truncated (18 words) version of `collection.description`. |
+| **Show product count** | Checkbox | `true` | Displays the number of products in the collection (e.g., “12 products”). |
+| **Show CTA** | Checkbox | `true` | Shows the “Explore collection” link with an arrow icon. |
+| **Enable hover effect** | Checkbox | `true` | When enabled, cards scale the image and shift colours on hover/focus. Disabling this removes all hover animations. |
+
+### Color Scheme
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+
+### Section Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Section spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the section. |
+
+---
+
+## Blocks
+
+When **Collection source** is set to `Selected collections`, the section uses a single block type:
+
+### Collection Block
+
+Each block represents one manually selected collection.
+
+| Setting | Type | Description |
+|---------|------|-------------|
+| **Collection** | Collection picker | Choose a Shopify collection to display. The block order determines the card order. Duplicates are automatically skipped. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥1440px)
+
+- **Grid**: 3, 4, or 5 columns (depending on setting).
+- **Images**: use the chosen aspect ratio; image height is calculated from width.
+- **Typography**: heading scales with column count (5 columns uses smaller title).
+- **Hover effects**: active (scale, colour shift, arrow movement).
+
+### Tablet (768–1439px)
+
+- **Grid**: automatically adjusts to 2 or 3 columns:
+  - If desktop columns = 3 → tablet = 2.
+  - If desktop columns = 4 or 5 → tablet = 3.
+- **Intro text**: remains readable with generous spacing.
+
+### Mobile (768px)
+
+- **Grid**: single column (full width).
+- **Cards**: stack vertically with large images.
+- **Intro**: aligned as per setting; text wraps naturally.
+
+---
+
+## Collection Card (Snippet)
+
+The `cosme-collection-card` snippet is responsible for rendering each collection tile. It is designed to be used inside a link (provided by the parent section) to avoid nested links.
+
+### Snippet Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `collection` | Object | The Shopify collection object. |
+| `aspect_ratio` | String | CSS aspect ratio (e.g., `4/5`). |
+| `image_width` | Number | Maximum image width in pixels. |
+| `image_height` | Number | Cropped image height in pixels. |
+| `sizes` | String | Responsive `sizes` attribute for images. |
+| `card_index` | Number | 1‑based index used for the editorial number (e.g., `01`, `02`). |
+| `loading` | String | `lazy` or `eager`. |
+| `fetchpriority` | String | `high`, `low`, or `auto`. |
+| `show_description` | Boolean | Whether to show the truncated collection description. |
+| `show_product_count` | Boolean | Whether to show the product count. |
+| `show_cta` | Boolean | Whether to show the “Explore collection” CTA. |
+| `placeholder_name` | String | Shopify placeholder SVG name (e.g., `collection-1`). |
+
+### Card Structure
+
+1. **Image container** – uses `cosme-image` snippet or a placeholder SVG.
+2. **Content area** (below the image):
+   - **Index** – decorative number (e.g., `01`), hidden from screen readers.
+   - **Title** – `<h2>` with the collection title.
+   - **Description** – truncated to 18 words (only if `show_description` is true).
+   - **Product count** – e.g., `12 products` (only if `show_product_count` is true).
+   - **CTA** – “Explore collection” + arrow icon (only if `show_cta` is true).
+
+### Hover/Focus Effects
+
+- The parent section applies a class (`cosme-list-collections--hover`) to enable effects.
+- **Image** – scales to `1.03` (only on devices that support hover; focus‑visible also triggers it).
+- **Title** – changes to `--color-accent`.
+- **CTA** – gap increases slightly, text changes to accent colour, arrow moves right.
+- All transitions respect `prefers-reduced-motion`.
+
+---
+
+## Component Structure
+
+The Collections List section is composed of the following CSS classes:
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-list-collections` | Main container with full width and color scheme. |
+| Inner container | `.cosme-list-collections__inner` | Constrained to `--page-width` with `--page-margin`. |
+| Intro header | `.cosme-list-collections__intro` | Wraps eyebrow, heading, description. |
+| Eyebrow | `.cosme-list-collections__eyebrow` | Small uppercase text. |
+| Heading | `.cosme-list-collections__heading` | Main `<h1>` of the page. |
+| Description | `.cosme-list-collections__description` | Introductory paragraph. |
+| Grid | `.cosme-list-collections__grid` | CSS Grid container. |
+| Grid item | `.cosme-list-collections__item` | Each collection card wrapper (an `<li>`). |
+| Link | `.cosme-list-collections__link` | The full‑card link to `collection.url`. |
+| Card | `.cosme-collection-card` | Snippet container. |
+| Card media | `.cosme-collection-card__media` | Image/placeholder wrapper. |
+| Card content | `.cosme-collection-card__content` | Text block below image. |
+| Card index | `.cosme-collection-card__index` | Editorial number (e.g., `01`). |
+| Card title | `.cosme-collection-card__title` | Collection title (`<h2>`). |
+| Card description | `.cosme-collection-card__description` | Truncated description (clamped to 2 lines). |
+| Card count | `.cosme-collection-card__count` | Product count. |
+| Card CTA | `.cosme-collection-card__cta` | “Explore collection” + arrow. |
+| Pagination | `.cosme-list-collections__pagination` | Numbered pagination (only in All collections mode). |
+
+---
+
+## Accessibility
+
+The Collections List page is built with accessibility as a priority:
+
+- **Heading hierarchy** – the main heading is an `<h1>`, and each collection title is an `<h2>`.
+- **Semantic HTML** – uses `<section>`, `<header>`, `<h1>`, `<h2>`, `<ul>`, `<li>`, `<nav>` appropriately.
+- **Image alt text** – uses `collection.featured_image.alt` or falls back to `collection.title`.
+- **Keyboard navigation** – each collection card is a single link; focus‑visible triggers hover effects and outlines.
+- **Focus indicators** – outline with `--color-accent` and `--focus-ring-width`.
+- **Decorative elements** – index and CTA text are hidden from screen readers (`aria-hidden="true"`), but the link itself is fully accessible.
+- **Live region** – not used on this page (no dynamic updates).
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`; hover effects are disabled.
+- **Contrast** – text colours meet WCAG requirements in all three color schemes.
+
+---
+
+## Performance
+
+- **Lazy loading** – images below the first 3 cards are lazy‑loaded; first 3 use `eager` + `fetchpriority="high"`.
+- **Responsive images** – uses Shopify’s `image_url` with appropriate `sizes` attribute calculated from column settings.
+- **No JavaScript** – the grid and cards are pure HTML + CSS; pagination is native Shopify links.
+- **CSS Grid** – efficient layout without complex calculations.
+- **No external dependencies** – uses only existing Cosme snippets and tokens.
+
+---
+
+## Technical Details
+
+- **File:** `sections/collections.liquid`
+- **Snippet:** `snippets/cosme-collection-card.liquid`
+- **Template:** `templates/list-collections.json` (uses the section)
+- **Snippets used:** `cosme-image`, `cosme-icon`
+- **CSS classes:** as listed above.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+  - `--overlay-opacity`, `--color-overlay` (not used here)
+- **Pagination:** uses Shopify’s `paginate` object, limiting to 24 collections per page.
+
+---
+
+## Troubleshooting
+
+### No collections are displayed
+- If using **All collections** mode, ensure there is at least one published collection.
+- If using **Selected collections** mode, add at least one collection block and select a collection.
+- Check that the collection URL is not empty.
+
+### The grid is single column on desktop
+- Verify that the **Desktop columns** setting is set to 3, 4, or 5.
+- Ensure that the viewport width is ≥1440px for the full column count.
+- Inspect the `style` attribute on the section – it should contain `--list-cols`, `--list-cols-lg`, `--list-cols-md`.
+
+### Images are cropped incorrectly
+- Adjust the **Image ratio** setting.
+- For portrait collections, use `4:5`; for square, use `1:1`; for landscape, use `4:3`.
+- The image focal point is always `center` (not adjustable per card).
+
+### The description does not appear
+- Enable **Show collection description** in settings.
+- Ensure the collection has a description in Shopify admin.
+- The description is truncated to 18 words; if the description is shorter, it will appear fully.
+
+### Product count is missing
+- Enable **Show product count**.
+- Ensure the collection has at least one product.
+- The count comes from `collection.products_count`.
+
+### CTA link does not work
+- The CTA is not a separate link – the entire card is a link. If the card is not clickable, check that the parent `<a>` exists and has `href="{{ collection.url }}"`.
+- The CTA text is decorative and does not affect navigation.
+
+### Hover effects are not working
+- Ensure **Enable hover effect** is turned on.
+- On touch devices, hover may not be triggered; focus‑visible will still show the effect.
+- If `prefers-reduced-motion` is enabled, the effects are disabled.
+
+### The page width is too wide or too narrow
+- The section respects the global **Page width** setting (via `--page-width`).
+- If the page is full‑width, check that `--page-width` is set correctly in the theme’s CSS variables.
+
+### Pagination appears even with few collections
+- Pagination only shows when there are more than 24 collections (the default pagination limit).
+- If you have fewer than 24, no pagination appears.
+
+---
+
+## Usage Examples
+
+### Full editorial catalog (All collections)
+- Set **Collection source** to `All collections`.
+- Choose **Desktop columns**: `3` for a spacious editorial look.
+- **Image ratio**: `4:5` (portrait) for beauty/fashion.
+- Enable **Show product count** and **Show CTA**.
+- Disable **Show collection description** to keep cards clean.
+- Enable **Hover effect** for interactive feedback.
+
+### Curated selection (Selected collections)
+- Set **Collection source** to `Selected collections`.
+- Add collection blocks in the desired order.
+- Blocks are displayed in the order they appear; duplicates are skipped automatically.
+- Use the same grid and card settings as above.
+
+### Clean, minimal grid (no CTA, no count)
+- Disable **Show product count** and **Show CTA**.
+- Only image, title, and index remain.
+- This creates a very minimal, editorial mood board.
+
+### 5‑column full‑width layout
+- Set **Desktop columns** to `5`.
+- Ensure the store has a wide viewport (≥1440px).
+- The titles will be smaller and descriptions hidden automatically to prevent crowding.
+
+### Dark scheme for contrast
+- Choose **Color scheme**: `Dark` (scheme-2) for a dramatic look.
+- The background and text invert accordingly.
+
+---
+
+## Conclusion
+
+The COSME Collections List page is a premium, editorial gateway to your store’s collections. With flexible source options, responsive grid, and rich card customisation, it gives merchants complete control over how collections are presented. The section is fully accessible, performant, and integrates seamlessly with the COSME design system.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,213 @@
+---
+sidebarTitle: Cart Recommendations
+---
+
+import { Callout } from 'nextra/components'
+
+# Cart Recommendations
+
+The **Cart Recommendations** section appears below the cart items and order summary on the Cart Page. It allows merchants to manually select up to 4 products to suggest to customers, encouraging additional purchases at the final stage of the shopping journey.
+
+Unlike automatic recommendation systems, this section gives merchants full control over which products are displayed — perfect for promoting best‑sellers, new arrivals, or complementary items.
+
+![Cart Recommendations in action](/img/product-recommendations2.png)
+
+---
+
+## Overview
+
+The Cart Recommendations section is a full‑width, editorial‑style product grid that typically sits at the bottom of the Cart Page, below the order summary. It includes:
+
+- **Manual product selection** – merchants choose products directly in the Theme Editor via blocks.
+- **Up to 4 products** – configurable, with a recommended default of 3.
+- **Editorial product cards** – reuses the same `cosme-product-card` component as Popular Products and Product Recommendations.
+- **Responsive grid** – adapts to desktop, tablet, and mobile.
+- **Mobile horizontal scroll** – on smaller screens, products scroll horizontally with snap behaviour.
+- **Configurable card options** – show/hide vendor, secondary image, badges, and choose aspect ratio.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Empty state** – the section hides entirely when no products are selected.
+- **Theme Editor preview** – shows a helpful message when no products are configured.
+
+All settings are available directly in the Shopify Theme Editor under **Templates → Cart** – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Heading** | Text | `You may also like` | The main heading of the recommendation block. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+| **Products per row (desktop)** | Select | `3`, `4` | `3` | The number of products displayed in a row on desktop (≥990px). |
+
+### Product Card Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show vendor** | Checkbox | `false` | Whether to display the product vendor/brand on recommendation cards. |
+| **Show secondary image** | Checkbox | `true` | Whether to show the secondary product image on hover (desktop). |
+| **Image aspect ratio** | Select | `3/4`, `1/1`, `4/5` | `3/4` | The aspect ratio of the product images. |
+| **Show badges** | Checkbox | `true` | Whether to display product badges (Sale, Sold out). |
+
+---
+
+## Blocks
+
+The section uses a single block type: **Recommendation product**.
+
+| Block | Setting | Description |
+|-------|---------|-------------|
+| **Recommendation product** | `product` (product picker) | Each block represents one manually selected product. |
+
+### Block Behaviour
+
+- **Add** – click **Add block → Recommendation product** to add a new product.
+- **Remove** – click the block's menu and select **Remove block**.
+- **Reorder** – drag and drop blocks to change the display order.
+- **Limit** – maximum of 4 blocks.
+
+<Callout type="info">
+  If fewer than 3 products are selected, the grid will display only the selected products. If no products are selected, the section is hidden entirely.
+</Callout>
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- Products are displayed in a grid with the chosen number of columns (3 or 4).
+- The heading is displayed above the grid.
+- Each product card shows the image, title, price, and optional vendor and badges.
+- Cards span the full width of the page container.
+
+### Tablet (768–989px)
+
+- The grid displays **2 columns** (regardless of the desktop setting).
+- Spacing is slightly reduced.
+- Cards remain readable and well‑proportioned.
+
+### Mobile (768px)
+
+- Products are displayed in a **horizontal scrolling carousel** with `scroll-snap-type: x mandatory`.
+- Each card is approximately 62% of the viewport width.
+- The next card is partially visible to indicate scrollability.
+- Touch scrolling works natively; no JavaScript library is required.
+- Cards have a `tabindex="0"` for keyboard accessibility.
+
+---
+
+## Product Card Integration
+
+The recommendations use the existing **`cosme-product-card`** component, ensuring visual consistency with other product sections:
+
+| Feature | Support |
+|---------|---------|
+| Product image | ✅ |
+| Product title | ✅ |
+| Product price | ✅ |
+| Vendor (optional) | ✅ |
+| Badges (optional) | ✅ |
+| Secondary image on hover (optional) | ✅ |
+| Quick View | ❌ (not needed in cart context) |
+| Add to Cart | ❌ (recommendations are informational) |
+
+Clicking a recommendation navigates to the product page, just like any other product card in the theme.
+
+---
+
+## Accessibility
+
+The Cart Recommendations section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<div>` with appropriate roles.
+- **Heading hierarchy** – the section heading is an `<h2>`.
+- **Keyboard navigation** – the mobile scroller has `tabindex="0"` and a visible `:focus-visible` ring.
+- **Focus management** – all interactive elements (product links) are focusable with visible focus states.
+- **Image alt text** – product images use the product title as alt text.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – cards have sufficient touch targets for mobile interaction.
+
+---
+
+## Performance
+
+- **Lazy loading** – all product images use `loading="lazy"`.
+- **No preloading** – images are not preloaded to prioritise cart content.
+- **No external libraries** – the horizontal scroll is implemented with native CSS and HTML.
+- **Lightweight CSS** – minimal, scoped styles.
+
+---
+
+## Technical Details
+
+- **File:** `sections/cart-recommendations.liquid`
+- **Dependencies:** `cosme-product-card`, `cosme-image`
+- **CSS classes:** `.cosme-cart-recs`, `__inner`, `__header`, `__heading`, `__editor-empty`, `__scroller`, `__grid`, `__item`.
+- **CSS variables (tokens):**
+  - `--cart-recs-columns` (set inline)
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** None – all functionality is CSS‑only.
+
+---
+
+## Customization Tips
+
+- **Add more products** – up to 4 blocks are supported. Add products directly in the Theme Editor.
+- **Change the heading** – customise the heading text to match your brand voice (e.g., "Complete your look" or "Our picks for you").
+- **Adjust columns** – choose 3 or 4 desktop columns to control grid density.
+- **Hide vendor** – if your products don't have meaningful brands, turn off **Show vendor** for a cleaner look.
+- **Hide secondary image** – if your product images don't have good secondary variants, turn off **Show secondary image**.
+- **Change aspect ratio** – `3/4` (portrait) is ideal for beauty products; `1/1` (square) works well for lifestyle items.
+- **Preview in Theme Editor** – the section shows an empty message when no products are selected, helping merchants understand what to do.
+
+---
+
+## Troubleshooting
+
+### The section is empty
+- Ensure at least one **Recommendation product** block is added in Theme Editor.
+- If no products are selected, the section is hidden entirely.
+- Products must be published and available to appear in the storefront.
+
+### Products are not showing on the storefront
+- Check that the product is still published and not out of stock.
+- Verify that the product has a valid image.
+- Ensure the product is not archived or deleted.
+
+### The grid shows the wrong number of columns
+- On desktop, the grid uses the **Products per row** setting (3 or 4).
+- On tablet (768–989px), the grid always shows 2 columns.
+- On mobile (768px), products scroll horizontally rather than in a grid.
+
+### Mobile scrolling does not work
+- The horizontal scroll uses native CSS `overflow-x: auto` with `scroll-snap-type: x mandatory`.
+- Ensure the section has a `max-width` that allows horizontal overflow.
+- On touch devices, swipe left/right should work naturally.
+- If scroll is not working, check that `display: flex` on the grid is preserved on mobile.
+
+### Card styles are inconsistent with other sections
+- The section reuses `cosme-product-card` directly. Any changes to that component will be reflected here.
+- If you want different styling for cart recommendations, modify the `cosme-product-card` API parameters or add wrapper styles.
+
+### The section appears in Theme Editor but not on the storefront
+- If no products are selected, the section is hidden (`{% if recommendation_count > 0 %}`).
+- In Theme Editor (`request.design_mode`), the section shows an empty message even if no products are selected.
+- Check that the section is included in `templates/cart.json`.
+
+---
+
+## Conclusion
+
+The Cart Recommendations section is a simple yet powerful way to encourage additional purchases at the checkout stage. With manual product selection, responsive design, and full integration with the COSME card system, it provides a premium, editorial cross‑sell experience that feels native to the brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

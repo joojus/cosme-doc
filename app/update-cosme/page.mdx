@@ -1,0 +1,115 @@
+---
+sidebarTitle:  Update Cosme theme
+
+---
+import { Callout } from 'nextra/components'
+
+# Update Cosme theme
+
+Each Cosme theme purchase includes all future versions of that theme. Regular releases for new versions provide bug fixes, added features, platform requirements, or other improvements.
+
+The most up-to-date version of the theme is available on [Shopify Theme Store](https://themes.shopify.com/).&#x20;
+
+***
+
+<Callout type="warning">
+
+All code customizations in your theme are **not transferred** to the new theme version **by default**.&#x20;
+
+You need to duplicate and move the code to the new version yourself.
+
+</Callout>
+
+## Update the theme automatically
+
+In your Shopify admin, open the **Themes** page of your **Online Store**.
+
+When a theme update is available, a notification will appear in your theme library.&#x20;
+
+![image](/img/image_5fw8K6C8.png)
+
+Click on the notification to read more details.
+
+Then, select **Add to theme library** to add the updated version to your theme library, or select **View release notes** to read the new release details.
+
+![image](/img/image_r9I7lRNJ.png)
+
+## I can't see the update notice, what should I do?
+
+If you do not see such auto-notification for any new version, the reason could be that you have made some code modifications that unfortunately conflict with the notification system.&#x20;
+
+In this case, you can [re-install your theme](/get-cosme) and update it [manually](#create-a-backup-of-your-current-theme).&#x20;
+
+It's worth noting that **all customization and third-party app snippets will not be kept in the new updated version**. Please check the customization code and move it to the new updated version accordingly.
+
+For app integration, we suggest you contact the app providers to assist you with re-installing the apps.&#x20;
+
+### Create a backup of your current theme
+
+Duplicate your work before attempting any theme update.&#x20;
+
+If you encounter any errors, you can use the duplicated (backup) version to restore to the original function and styling.
+
+<Callout type="info">
+
+**Steps**
+
+1. In your Shopify admin > **Online store**, click **Actions**.
+2. Select **Duplicate**.
+3. Rename the copied file.
+
+</Callout>
+
+### Upload the latest Cosme theme version
+
+Check and download the latest version of Cosme from [Shopify Theme Store]
+
+
+{/* Check and download the latest version of Cosme from [Shopify Theme Store](https://themes.shopify.com/themes/Cosme/presets/Cosme?utm_source=foxecom\&utm_medium=help_center_Cosme_update_Cosme_theme\&utm_campaign=anchor_text\&utm_term=shopify_theme_store).&#x20; */}
+
+<Callout type="info">
+
+Once you have the theme file ready, you can upload it to your Shopify store.
+
+**Steps:**
+
+1. From your Shopify dashboard, go to **Online Store**.
+2. In the **Theme library**, select **Add theme** > **Upload zip file.**
+3. In the Upload theme modal, click **Add file** and select the file you want to upload.
+4. Click **Upload file**.
+
+</Callout>
+
+![image](/img/image_YdsYSylT.png)
+
+### Move the theme settings and your pages
+
+<Callout type="info">
+
+**Steps:**
+
+1. Locate your old theme > select **Actions** > **Edit code.**
+2. Copy the content of the following files from the current theme and paste them into the same folders in the new version. These files include:
+   * All *edited* JSON files in the **Templates** folder
+   * The settings\_data.json file in the **Config** folder.
+3. Re-implement your code modification works (if any).
+
+</Callout>
+
+![image](/img/image_U8LG8NEs.png)
+
+<Callout type="info">
+
+Files with the green dot are the files you have made changes to.
+
+For custom templates, you'll need to create the JSON template in the new theme files since they won't exist there by default. More details [here](https://help.shopify.com/manual/online-store/themes/theme-structure/templates#create-a-new-template) from Shopify on creating new templates in the theme.
+
+</Callout>
+
+### Re-install apps
+
+Any apps that add code to your theme's files will need to be re-installed. This can be an automatic or manual process depending on the app, so **confirm with the app's developer whether removing and adding the app is enough to connect with the new version.**
+
+Find the app documentation in the [App Store](https://apps.shopify.com/) to follow the installation instructions.&#x20;
+
+If you're unfamiliar with this process, you can go to **Apps >** click **View details** to find the support email for that Shopify app.

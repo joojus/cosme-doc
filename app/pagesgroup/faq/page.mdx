@@ -1,0 +1,368 @@
+---
+sidebarTitle: FAQ Page
+---
+
+# FAQ Page
+
+The **FAQ Page** is a dedicated, editorial help center for the COSME theme. It transforms a standard Shopify page into a premium, interactive FAQ experience with search, category filtering, and a clean accordion layout. Designed for beauty and skincare brands, the page provides merchants with a flexible, block‑based system to manage questions and answers directly from the Theme Editor.
+
+The page is built as a custom section (`main-faq.liquid`) that uses Shopify section blocks for individual FAQ items, native `<details>`/`<summary>` accordion, and client‑side filtering with zero external dependencies.
+
+![FAQ Page example](/img/faq.png)
+
+---
+
+## Overview
+
+The FAQ Page provides the following key features:
+
+- **Editorial hero** – configurable eyebrow, heading, description, alignment, and spacing.
+- **Two‑column desktop layout** – a sticky `QUESTIONS` label on the left, accordion on the right (optional single‑column mode available).
+- **Accordion** – native `<details>`/`<summary>` with plus/minus icons, smooth height animation, and automatic close of previously opened items.
+- **Search** – client‑side filtering of questions, answers, and categories with live result count and clear button.
+- **Category navigation** – dynamic category buttons derived from FAQ block categories; combines with search.
+- **FAQ blocks** – each block contains Question, Answer (rich text), Category, and Open‑by‑default toggle.
+- **Optional note** – a subtle message below the FAQ list.
+- **Contact CTA** – full‑width editorial band with eyebrow, heading, description, and a button linking to a contact page.
+- **Color schemes** – main page and CTA each have independent colour scheme settings.
+- **Accessibility** – keyboard‑friendly accordion, focus rings, reduced‑motion support, ARIA labels.
+
+All FAQ content is managed entirely through Theme Editor blocks — no Shopify Page content is required.
+
+---
+
+## How to Use
+
+1. In Shopify Admin, go to **Online Store → Pages**.
+2. Create a new page (e.g., `FAQ`).
+3. In the **Theme template** dropdown, select **`faq`**.
+4. Save the page.
+5. Go to **Online Store → Themes → Customize**.
+6. Select the **FAQ** page from the dropdown at the top.
+7. Add, remove, or reorder FAQ blocks; configure all settings as needed.
+
+---
+
+## Section Settings
+
+The FAQ section provides a comprehensive set of options, grouped by functionality.
+
+![FAQ Page settings](/img/faq-settings.png)
+
+### Hero Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show eyebrow** | Checkbox | `true` | Toggles the eyebrow text above the heading. |
+| **Eyebrow** | Text | `HELP CENTER` | Small uppercase text above the heading. |
+| **Heading** | Text | `Frequently Asked Questions` | Main page heading. If empty, falls back to the page title. |
+| **Description** | Textarea | `Find answers to questions about our products, orders, shipping, returns and more.` | Supporting text below the heading. |
+| **Hero alignment** | Select | `Left`, `Center` | `Left` | Alignment of the hero text. |
+| **Heading size** | Select | `Small`, `Medium`, `Large` | `Large` | Size of the main heading. |
+| **Hero max width** | Select | `Narrow`, `Medium`, `Wide` | `Narrow` | Maximum width of the hero text block. |
+| **Hero spacing top** | Select | `Small`, `Medium`, `Large` | `Large` | Top padding of the hero section. |
+| **Hero spacing bottom** | Select | `Small`, `Medium`, `Large` | `Medium` | Bottom padding of the hero section. |
+| **Intro label** | Text | `QUESTIONS` | The label displayed in the left column (desktop). |
+
+### FAQ Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable search** | Checkbox | `true` | Enables the client‑side search bar. |
+| **Search placeholder** | Text | `Search questions...` | Placeholder text for the search input. |
+| **Enable category navigation** | Checkbox | `true` | Enables the dynamic category filter buttons. |
+| **Show result count** | Checkbox | `true` | Shows the number of visible questions after filtering. |
+| **FAQ width** | Select | `Narrow`, `Medium`, `Wide` | `Wide` | Maximum width of the FAQ list. |
+| **FAQ alignment** | Select | `Left`, `Center` | `Left` | Horizontal alignment of the entire FAQ block. |
+| **Question size** | Select | `Small`, `Medium`, `Large` | `Medium` | Font size of question text. |
+| **Answer size** | Select | `Small`, `Medium`, `Large` | `Medium` | Font size of answer text. |
+| **Show category** | Checkbox | `true` | Displays the category label above each question. |
+| **Show numbering** | Checkbox | `true` | Displays editorial numbering (`01`, `02`, …) next to each question. |
+| **Open first** | Checkbox | `true` | Opens the first FAQ item by default on page load. |
+
+### Layout Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Desktop columns** | Select | `1`, `2` | `2` | Number of columns on desktop (label + FAQ list). |
+| **Content max width** | Select | `Narrow`, `Medium`, `Wide` | `Medium` | Maximum width of the entire content area. |
+| **Section spacing top** | Select | `Small`, `Medium`, `Large` | `Small` | Top padding of the entire section. |
+| **Section spacing bottom** | Select | `Small`, `Medium`, `Large` | `Large` | Bottom padding of the entire section. |
+
+### Appearance Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Main colour scheme for the FAQ section. |
+| **Border width** | Range (0–4px) | `1px` | Thickness of the separator lines between FAQ items. |
+| **Border opacity** | Range (10–100%) | `40%` | Opacity of the separator lines. |
+| **Accordion spacing** | Range (12–40px) | `20px` | Vertical padding inside each FAQ item. |
+
+### Note Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable FAQ note** | Checkbox | `true` | Enables the optional note below the FAQ list. |
+| **Note title** | Text | `Can't find what you're looking for?` | Heading of the note. |
+| **Note text** | Textarea | `Contact our team and we'll be happy to help.` | Supporting text of the note. |
+
+### Contact CTA Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Enable contact CTA** | Checkbox | `true` | Enables the full‑width contact band. |
+| **CTA eyebrow** | Text | `NEED MORE HELP?` | Small uppercase text above the CTA heading. |
+| **CTA heading** | Text | `Still have questions?` | Main heading of the CTA block. |
+| **CTA description** | Textarea | `Our team is here to help.` | Supporting text below the heading. |
+| **CTA button label** | Text | `Contact Us` | Label for the CTA button. |
+| **CTA button link** | URL | – | The destination URL for the button. Falls back to `/pages/contact` if empty. |
+| **CTA color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | Independent colour scheme for the CTA block. |
+| **CTA spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the CTA block. |
+
+---
+
+## Blocks
+
+The FAQ section uses a single block type:
+
+### FAQ Item Block
+
+Each block represents one question and answer pair.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Question** | Text | `How long does shipping take?` | The question text displayed in the accordion. |
+| **Answer** | Richtext | `<p>Standard shipping typically arrives in 3–6 business days after dispatch.</p>` | The answer content (supports paragraphs, lists, links, etc.). |
+| **Category** | Text | `Shipping` | The category label for the question (used for filtering). |
+| **Open by default** | Checkbox | `false` | If enabled, this item will be open on page load (overrides `Open first` for this item). |
+
+Merchants can add, remove, and reorder blocks freely. The block order determines the display order of FAQ items.
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Two‑column layout** (when `Desktop columns = 2`):
+  - **Left column**: sticky `QUESTIONS` label (position: sticky).
+  - **Right column**: search, category navigation, FAQ accordion.
+- **Single‑column layout** (when `Desktop columns = 1`):
+  - All content is displayed in a single column.
+- **Hero**: left‑ or centre‑aligned.
+- **Contact CTA**: full‑width, centred.
+
+### Tablet (768–989px)
+
+- The two‑column layout collapses to a single column.
+- The `QUESTIONS` label appears above the FAQ list (not sticky).
+- Search and category navigation remain full‑width.
+
+### Mobile (768px)
+
+- **Single column**: all content stacks vertically.
+- **Search**: full‑width with icon and clear button.
+- **Category navigation**: horizontal scroll with `overflow-x: auto`.
+- **Accordion**: touch‑friendly with comfortable tap targets.
+- **Contact CTA**: button is full‑width for easy tapping.
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-faq` | Full‑width container with color scheme. |
+| Inner container | `.cosme-faq__inner` | Constrained to `--page-width`. |
+| Hero | `.cosme-faq__hero` | Header area with eyebrow, heading, description. |
+| Body | `.cosme-faq__body` | Grid container for label + content. |
+| Label | `.cosme-faq__label` | `QUESTIONS` label (left column, sticky on desktop). |
+| Content | `.cosme-faq__content` | Right column containing tools + list. |
+| Tools | `.cosme-faq__tools` | Wrapper for search + category nav + count. |
+| Search | `.cosme-faq__search` | Search form with icon, input, clear button. |
+| Nav | `.cosme-faq__nav` | Category filter buttons. |
+| Count | `.cosme-faq__count` | Live result count. |
+| List | `.cosme-faq__list` | Container for all FAQ items. |
+| Item | `.cosme-faq__item` | Individual FAQ `<details>` element. |
+| Summary | `.cosme-faq__summary` | Clickable header (question + icon). |
+| Panel | `.cosme-faq__panel` | Answer container (animated). |
+| Empty state | `.cosme-faq__empty` | Shown when no results match filters. |
+| Note | `.cosme-faq__note` | Optional note below the list. |
+| CTA | `.cosme-faq__cta` | Full‑width contact band. |
+
+### Modifier Classes
+
+| Class | Effect |
+|-------|--------|
+| `cosme-faq--cols-2` | Enables two‑column desktop layout. |
+| `cosme-faq--faq-align-center` | Centres the FAQ block. |
+| `cosme-faq--faq-align-left` | Left‑aligns the FAQ block. |
+| `cosme-faq--numbered` | Enables numbering (`01`, `02`, …). |
+| `cosme-faq--has-search` / `has-nav` / `has-cta` | Controls conditional styling. |
+| `cosme-faq--animated` | Enables entry animations and accordion transitions. |
+
+---
+
+## Search & Filtering
+
+The FAQ search and category filtering work entirely on the client side:
+
+- **Search**: filters questions, answers, and categories in real time as the user types.
+- **Category navigation**: clicking a category button filters the list to show only items in that category.
+- **Combine**: search and category filters work together (e.g., `Shipping` + `track`).
+- **Clear**: the clear button resets the search input and restores results.
+- **Result count**: live updates showing the number of visible questions.
+- **Empty state**: appears when no items match the current filters.
+
+No page reload, no Shopify search API, and no external dependencies.
+
+---
+
+## Accordion Behaviour
+
+The FAQ accordion uses native HTML `<details>`/`<summary>` with a JavaScript enhancement:
+
+- **Open by default**: the first item (or items marked `Open by default`) is open on page load.
+- **Auto‑close**: when a new item is opened, the previously opened item is automatically closed.
+- **Smooth animation**: the answer panel slides open/closed with a `max-height` and `opacity` transition (when global animations are enabled).
+- **Reduced motion**: if `prefers-reduced-motion` is enabled, animations are disabled.
+
+---
+
+## Accessibility
+
+The FAQ Page is built with accessibility as a priority:
+
+- **Heading hierarchy** – one `<h1>` for the main heading; CTA uses `<h2>`.
+- **Keyboard navigation** – all interactive elements (summary, search, category buttons) are focusable with visible focus rings.
+- **Accordion** – uses native `<details>`/`<summary>`; keyboard‑accessible by default.
+- **Search** – has a visible label and accessible placeholder; clear button has `aria-label`.
+- **Category buttons** – use `aria-pressed` to indicate active state.
+- **Live regions** – result count updates via `aria-live="polite"`; empty state is announced.
+- **Focus indicators** – uses `--color-accent` with `--focus-ring-width`.
+- **Reduced motion** – animations respect `prefers-reduced-motion` and the global animation setting.
+- **Contrast** – all text meets WCAG contrast requirements in all three color schemes.
+
+---
+
+## Performance
+
+- **No external libraries** – all functionality is Vanilla JavaScript + CSS.
+- **Client‑side filtering** – lightweight; no server requests during search.
+- **Native accordion** – uses HTML `<details>`/`<summary>`; JavaScript only for auto‑close and animation.
+- **CSS transitions** – smooth animations powered by CSS; minimal JavaScript.
+- **Eager loading** – no images in this section; all content is text‑based.
+- **CSS variables** – uses existing Cosme tokens for consistent styling.
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-faq.liquid`
+- **Template:** `templates/page.faq.json`
+- **Snippets used:** `cosme-icon`, `cosme-button`
+- **CSS classes:** `.cosme-faq`, `__inner`, `__hero`, `__hero-copy`, `__eyebrow`, `__heading`, `__description`, `__body`, `__label`, `__content`, `__tools`, `__search`, `__search-icon`, `__search-input`, `__search-clear`, `__nav`, `__nav-track`, `__nav-item`, `__count`, `__list`, `__item`, `__summary`, `__number`, `__summary-copy`, `__category`, `__question`, `__icon`, `__icon-plus`, `__icon-minus`, `__panel`, `__answer`, `__empty`, `__note`, `__cta`, etc.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+  - `--faq-border-width`, `--faq-border-opacity`, `--faq-accordion-spacing` (set via inline styles)
+  - `--header-sticky-offset` (for sticky label positioning)
+- **JavaScript:** Handles:
+  - Accordion auto‑close (only one open at a time).
+  - Client‑side search filtering (question, answer, category).
+  - Category navigation filtering.
+  - Combined filtering (search + category).
+  - Result count updates.
+  - Clear button behaviour.
+  - Live region updates.
+  - Animation control (respects `prefers-reduced-motion` and global animation setting).
+  - Event cleanup on section unload.
+
+---
+
+## Troubleshooting
+
+### The FAQ template is not available in the Theme Editor
+- Ensure `templates/page.faq.json` exists in the theme.
+- Create a page in Shopify Admin and assign the `faq` template to it.
+- In Theme Editor, select the **FAQ** page from the dropdown.
+
+### The accordion does not animate
+- Ensure global animations are enabled (`settings.enable_animations`).
+- If `prefers-reduced-motion` is enabled, animations are disabled.
+- The animation uses `max-height` transition; if it's not working, check the CSS in `{% stylesheet %}`.
+
+### Search is not filtering
+- Ensure **Enable search** is on.
+- The search filters against `data-faq-search` attributes on each item.
+- If you add or remove blocks, the attribute is automatically updated.
+
+### Category navigation does not appear
+- Ensure **Enable category navigation** is on.
+- Categories are derived from FAQ block categories; if no categories exist, the nav is hidden.
+- The nav appears only if at least two categories are present.
+
+### The result count is incorrect
+- The count updates after each filter change.
+- If items are hidden due to search or category, the count reflects the visible items.
+- Check that each FAQ block has a non‑empty question.
+
+### The CTA link does not work
+- The link defaults to `/pages/contact` if `cta_link` is empty.
+- Ensure the contact page exists in Shopify Admin.
+- The link can be set to any URL via the Theme Editor.
+
+### The two‑column layout is not showing on desktop
+- Ensure **Desktop columns** is set to `2`.
+- The two‑column layout applies only at ≥990px.
+- The label is sticky only when `Desktop columns = 2`.
+
+### The FAQ note is not showing
+- Ensure **Enable FAQ note** is on.
+- The note appears only if at least one of `Note title` or `Note text` is filled.
+
+### The accordion opens multiple items at once
+- The JavaScript auto‑close feature ensures only one item is open at a time.
+- If multiple items are open, check that the JavaScript is running (`data-faq-accordion` attribute on the section).
+
+### The page is not centred
+- Use the **FAQ alignment** setting to centre the FAQ block.
+- For the hero, use **Hero alignment**.
+- The overall page width is controlled by the theme’s `--page-width` variable.
+
+---
+
+## Usage Examples
+
+### Full FAQ page (with all features)
+- Enable all settings.
+- Add 6–10 FAQ blocks across categories (Orders, Shipping, Products, Returns, Payments).
+- Enable search, category navigation, result count, and the contact CTA.
+- Set **Desktop columns** to `2`.
+
+### Minimal FAQ (no search, no categories)
+- Disable **Enable search** and **Enable category navigation**.
+- Disable **Show numbering** and **Show category**.
+- Only the accordion with questions and answers remains.
+
+### Centred FAQ (single column)
+- Set **Desktop columns** to `1`.
+- Set **Hero alignment** to `Center`.
+- Set **FAQ alignment** to `Center`.
+- This creates a clean, centred reading experience.
+
+### Dark scheme with accent CTA
+- Set main **Color scheme** to `Dark` (scheme-2).
+- Set **CTA color scheme** to `Light + Accent` (scheme-3) for a contrasting CTA band.
+
+---
+
+## Conclusion
+
+The COSME FAQ Page is a premium, fully configurable help center that combines editorial design with powerful functionality. With block‑based content management, real‑time filtering, and comprehensive Theme Editor settings, it provides merchants with a flexible and beautiful FAQ experience that requires no code.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

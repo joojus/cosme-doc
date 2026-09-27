@@ -1,0 +1,269 @@
+---
+sidebarTitle: Collection Toolbar
+---
+
+# Collection Toolbar
+
+The **Collection Toolbar** is the functional heart of the COSME collection page — it provides product filtering, sorting, collection switching, and a live product count in a clean, editorial interface. Designed to be both powerful and unobtrusive, the toolbar sits between the collection header and the product grid, offering merchants a flexible set of controls that adapt to the shopper's needs.
+
+The toolbar is built as a single section that integrates with Shopify's native filtering (`collection.filters`) and sorting (`collection.sort_options`), with a custom dropdown system for a premium look and feel.
+
+![Collection Toolbar example](/img/collection-header-settings.png)
+
+---
+
+## Overview
+
+The Collection Toolbar provides the following key elements:
+
+- **Collection switcher** – a custom dropdown to quickly navigate between collections (optional).
+- **Horizontal collection links** – a row of editorial links to selected collections (optional, merchant‑controlled).
+- **Filters button** – opens a left‑aligned animated drawer with all available filters from Shopify Search & Discovery.
+- **Product count** – the number of products in the current collection (or filtered result).
+- **Sort by** – a custom dropdown with Shopify’s native sort options.
+- **Active filter chips** – shows active filters with remove actions and a "Clear all" link.
+- **Filter drawer** – a fully accessible, animated left‑side panel with accordion filter groups.
+- **Sticky toolbar** – optional fixed behaviour for the toolbar bar (via JavaScript) when scrolling.
+
+All settings are available in the Theme Editor under **Templates → Default collection** (or any collection template).
+
+---
+
+## Section Settings
+
+The Collection Toolbar provides a curated set of options grouped by functionality.
+
+![Collection Toolbar settings](/img/collection-toolbar-settings.png)
+
+### Collection Navigation
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show collection dropdown** | Checkbox | `true` | Displays a custom dropdown in the toolbar to switch between collections. Hides automatically when fewer than two collections exist. |
+| **Show horizontal links** | Checkbox | `false` | Displays a row of horizontal links to selected collections above the toolbar bar. |
+| **Show "All collections" link** | Checkbox | `true` | When horizontal links are enabled, shows a link to "All collections" (visible only if `Show horizontal links` is on). |
+| **Horizontal links alignment** | Select | `Left`, `Center`, `Right` | `Center` | Alignment of the horizontal collection links. |
+| **Collections to show** | Collection list (multiselect) | – | Manually select up to 6 collections to display as horizontal links (only used when horizontal links are enabled). |
+
+### Toolbar Controls
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show filters** | Checkbox | `true` | Shows the "Filters" button that opens the filter drawer. When disabled, the button and the filter drawer are hidden. |
+| **Show sorting** | Checkbox | `true` | Shows the sort dropdown in the toolbar. |
+| **Show product count** | Checkbox | `true` | Shows the product count in the centre of the toolbar. On mobile, it is hidden to save space. |
+| **Sticky toolbar** | Checkbox | `false` | When enabled, the toolbar bar (filters, count, sort) sticks to the top of the viewport on scroll. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the toolbar background and text. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Toolbar bar**: three‑column grid:
+  - **Left**: collection dropdown (if enabled) + Filters button.
+  - **Centre**: product count.
+  - **Right**: sort dropdown.
+- **Horizontal links** (if enabled): appear above the bar, centred (or aligned via setting), with horizontal scroll on overflow.
+- **Filter drawer**: opens as a left panel (max width `26rem`) with overlay, animation from `translateX(-100%)`.
+
+### Tablet (768–989px)
+
+- Same three‑column grid, with slightly reduced spacing.
+- Collection dropdown and sort dropdown have adjusted widths.
+- Horizontal links remain visible with `overflow-x: auto`.
+
+### Mobile (768px)
+
+- **Toolbar bar**: stacked layout:
+  - **First row**: collection dropdown (left) and Filters button (right) — both full‑width with space‑between.
+  - **Second row**: "Sort by" label and sort dropdown — full‑width with space‑between.
+- **Product count** is hidden (saves space).
+- **Horizontal links**: scroll horizontally.
+- **Filter drawer**: opens as a bottom‑like sheet (still left‑aligned but width `min(92vw, 26rem)`).
+
+---
+
+## Component Structure
+
+The Collection Toolbar consists of these main parts:
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Section wrapper | `.cosme-collection-toolbar` | Main container with full width and color scheme. |
+| Inner container | `.cosme-collection-toolbar__inner` | Constrained to `--page-width`. |
+| Horizontal links nav | `.cosme-collection-toolbar__links` | Row of collection links (optional). |
+| Toolbar bar | `.cosme-collection-toolbar__bar` | Contains the main controls. |
+| Start | `.cosme-collection-toolbar__start` | Left‑aligned group (dropdown + Filters). |
+| Count | `.cosme-collection-toolbar__count` | Product count text (centre). |
+| End | `.cosme-collection-toolbar__end` | Right‑aligned group (sort). |
+| Active filter chips | `.cosme-collection-toolbar__chips` | Wrapper for active filter tags and Clear all. |
+
+### Custom Dropdowns
+
+The toolbar uses a custom dropdown system (`.cosme-dropdown`) for both collection switching and sorting. Each dropdown consists of:
+
+- A trigger button (`.cosme-dropdown__trigger`) that toggles the menu.
+- A hidden native `<select>` for form submissions (sort only).
+- A menu (`.cosme-dropdown__menu`) containing options (`.cosme-dropdown__option`).
+- Options have `is-selected` state and a checkmark.
+
+This approach gives full control over styling, accessibility, and keyboard navigation.
+
+---
+
+## Filter Drawer
+
+The filter drawer is opened by the **Filters** button. It is implemented using a native `<dialog>` element with custom animation.
+
+### Drawer Features
+
+| Feature | Description |
+|---------|-------------|
+| **Animation** | Slides in from the left (`translateX(-100%)` → `translateX(0)`) with a subtle transition. |
+| **Overlay** | Semi‑transparent backdrop that closes the drawer on click. |
+| **Scroll lock** | Body scroll is locked when the drawer is open. |
+| **Close methods** | × button, overlay click, Escape key, and automatically after applying filters. |
+| **Accordion groups** | Each filter group uses `<details>`/`<summary>` for expand/collapse. |
+| **Price range** | Separate From/To inputs with number fields. |
+| **List filters** | Checkboxes with counts, disabled states, and swatch support (if provided by Shopify). |
+| **Apply & Clear** | "Apply" submits the form (GET request); "Clear all" resets all filters. |
+
+### Supported Filter Types
+
+The drawer dynamically renders all filters available from `collection.filters`:
+
+- **List filters** (e.g., Vendor, Product type, Color, Size) – checkboxes with counts.
+- **Boolean filters** (e.g., Availability) – checkboxes.
+- **Price range** – From/To inputs.
+- **Swatch filters** – if Shopify provides `value.swatch` (image or color), a swatch circle is displayed.
+
+The filters are not hardcoded – they are entirely driven by Shopify Search & Discovery, so merchants can add or remove filters without touching the theme code.
+
+---
+
+## Accessibility
+
+The Collection Toolbar is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<button>`, `<label>`, `<details>`, `<dialog>` appropriately.
+- **Keyboard navigation** – all interactive elements (buttons, dropdowns, filter controls) are fully keyboard‑accessible.
+- **Focus management** – when the filter drawer opens, focus moves to the heading; when closed, focus returns to the Filters button.
+- **ARIA attributes** – `aria-expanded`, `aria-controls`, `aria-haspopup`, `aria-modal`, `aria-labelledby` are used correctly.
+- **Active filters** – chips have `aria-label` for removal.
+- **Live regions** – none in this section (filtering is a full page reload or GET form submission).
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Touch targets** – all interactive elements are at least 44px for easy touch interaction.
+
+---
+
+## Performance
+
+- **Native filtering** – uses Shopify’s GET‑based filtering, no custom JavaScript filtering engine.
+- **Custom dropdowns** – lightweight Vanilla JS, no external libraries.
+- **Lazy rendering** – filters are rendered only when `collection.filters` is available.
+- **Sticky toolbar** – uses `requestAnimationFrame` for smooth performance.
+- **No unnecessary network requests** – filter application is a standard form submission (no AJAX, no infinite scroll).
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-collection-toolbar.liquid`
+- **Snippets used:** `cosme-icon`, `cosme-button`
+- **CSS classes:** `.cosme-collection-toolbar`, `__inner`, `__bar`, `__start`, `__count`, `__end`, `__links`, `__links-list`, `__link`, `__link--active`, `__filters-button`, `__sort`, `__sort-label`, `__sort-control`, `__chips`, `__chip`, `__clear`, `.cosme-dropdown`, `.cosme-dropdown__trigger`, `.cosme-dropdown__menu`, `.cosme-dropdown__option`, `.cosme-collection-filters` (drawer), etc.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-overlay`, `--overlay-opacity`
+  - `--font-body--family`, `--line-height-body`, `--letter-spacing-body`
+  - `--radius-card`, `--radius-button`, `--radius-input`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+  - `--header-sticky-offset` (for sticky bar positioning)
+- **JavaScript:** Handles:
+  - Dropdown toggle (collection and sort) with keyboard support.
+  - Filter drawer open/close (dialog, overlay, scroll lock, focus).
+  - Sticky toolbar (position: fixed via JS) when `sticky_toolbar` is enabled.
+  - Sort select change submits the form.
+  - Event cleanup on section unload.
+
+---
+
+## Troubleshooting
+
+### The collection dropdown does not appear
+- Ensure **Show collection dropdown** is enabled.
+- The dropdown is hidden when there are fewer than two collections in the store.
+- Check that `shop.collections` contains at least two collections (or `collections` fallback).
+
+### The horizontal collection links are not showing
+- Enable **Show horizontal links**.
+- Select at least two collections in **Collections to show** (a multiselect field).
+- The links are hidden if fewer than two collections are selected.
+
+### Filters are not showing (only Availability and Price)
+- Filters come from `collection.filters` – they are controlled by Shopify **Search & Discovery**.
+- Ensure you have configured additional filters (Vendor, Product type, variant options) in the Shopify admin under **Search & Discovery → Filtering**.
+- Without Search & Discovery, only Availability and Price are available by default.
+
+### The filter drawer does not open
+- Check that **Show filters** is enabled.
+- Ensure that the `dialog` element exists in the DOM and has the correct `id` and `data-filter-dialog` attribute.
+- Look for JavaScript errors in the console.
+
+### Sticky toolbar does not work
+- Enable **Sticky toolbar** in the settings.
+- The sticky behaviour uses JavaScript (not pure CSS) and requires the toolbar bar to be present.
+- Check that the `data-sticky-toolbar="true"` attribute is set on the section.
+- If the toolbar is not sticking, verify that the `cosme-collection-toolbar--sticky` class is applied to the section.
+
+### Sort dropdown shows duplicate options
+- Sort options come from `collection.sort_options` – this is controlled by Shopify.
+- If you see duplicates, check the store’s sorting configuration in Shopify admin.
+
+### The product count is missing
+- Enable **Show product count**.
+- The count uses `collection.products_count` – if the collection is empty, it may display "0 products".
+
+### Active filter chips do not appear
+- Active filters are shown when `has_active_filters` is true.
+- This happens when at least one filter is active (including price range).
+- If filters are applied via URL parameters, chips should appear. If not, check the filter loops.
+
+### The filter drawer animation is jumpy
+- Ensure that `prefers-reduced-motion` is not active.
+- The animation uses CSS transitions; if it’s jumpy, check that the `cosme-collection-toolbar--animated` class is applied (controlled by `settings.enable_animations`).
+
+---
+
+## Usage Examples
+
+### Simple toolbar (no collection switching)
+- Disable **Show collection dropdown** and **Show horizontal links**.
+- Only Filters, product count, and Sort remain.
+
+### Multi‑collection navigation with horizontal links
+- Enable **Show horizontal links**.
+- Select 3–6 collections in **Collections to show**.
+- Optionally enable **Show "All collections" link**.
+- Set alignment to `Left` or `Center`.
+
+### Full featured toolbar
+- Enable all settings:
+  - Collection dropdown (for quick switching).
+  - Horizontal links (for editorial category navigation).
+  - Filters, sorting, product count, and sticky toolbar.
+- This provides a premium browsing experience.
+
+### Mobile‑optimised toolbar
+- On mobile, the toolbar stacks rows and hides the product count.
+- The dropdowns are shortened to fit smaller screens.
+- The filter drawer occupies most of the screen but leaves a small visual margin.
+
+---
+
+## Conclusion
+
+The COSME Collection Toolbar is a powerful and flexible control centre for collection pages. By leveraging Shopify’s native filtering and sorting, combined with custom dropdowns and an animated filter drawer, it delivers a premium experience that is both functional and visually cohesive with the COSME brand. All key features are merchant‑configurable through the Theme Editor, making it easy to tailor the toolbar to any store’s needs.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

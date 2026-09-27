@@ -1,0 +1,221 @@
+---
+sidebarTitle: Editorial CTA
+---
+
+import { Callout } from 'nextra/components'
+
+# Editorial CTA
+
+The **Editorial CTA** section is a premium promotional block designed for the lower part of the homepage, positioned between the main content and the footer. It combines a large editorial image with compelling copy and calls to action, creating a refined, brand‑focused narrative that drives conversions without feeling like a standard Shopify banner.
+
+The section offers flexible layout options: image‑led (left or right), or a text‑only mode with full‑width copy aligned left, center, or right. It integrates seamlessly with the COSME design system, inheriting colour schemes, typography, spacing, and component styles.
+
+![Editorial CTA in action](/img/editorial-cta.png)
+
+---
+
+## Overview
+
+The Editorial CTA section is a full‑width, editorial‑style promotional block that typically sits near the bottom of the homepage, just before the Benefits / Trust Bar. It includes:
+
+- **Editorial composition** – a large image paired with thoughtfully spaced copy.
+- **Flexible layout** – image left / content right, content left / image right, or text‑only.
+- **Rich copy options** – eyebrow, heading, description, and two call‑to‑action buttons.
+- **Image management** – desktop and mobile images, fit (contain/cover), focal point, and optional link.
+- **Background control** – choose between `--color-background` and `--color-background-2`.
+- **Subtle animation** – optional reveal on scroll, respecting reduced motion.
+- **Three colour schemes** – Light, Dark, Light+Accent, fully integrated with the global colour system.
+- **Fully responsive** – adapts to desktop, tablet, and mobile with consistent spacing and typography.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, grouped into logical categories.
+
+![Editorial CTA in action](/img/editorial-cta-settings.png)
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Eyebrow** | Text | `THE EVERYDAY EDIT` | Small uppercase text displayed above the heading. |
+| **Heading** | Text | `Make space for your ritual.` | Main editorial heading. |
+| **Description** | Textarea | `Thoughtfully selected essentials designed to become part of your everyday.` | Supporting text below the heading. |
+| **Primary button label** | Text | `Shop essentials` | Label for the primary call‑to‑action button. |
+| **Primary button link** | URL | – | Link destination for the primary button. |
+| **Secondary button label** | Text | `Explore collections` | Label for the secondary call‑to‑action button. |
+| **Secondary button link** | URL | – | Link destination for the secondary button. |
+
+### Image Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Image** | Image picker | – | The main editorial image (desktop). |
+| **Mobile image** | Image picker | – | Optional image for mobile; falls back to the desktop image if not set. |
+| **Image link** | URL | – | Makes the entire image clickable. |
+| **Image position** | Select | `Left`, `Center`, `Right` | `Center` | Horizontal alignment of the image within its container. |
+| **Image width** | Range (40–70%) | `58%` | Width of the image column on desktop. |
+| **Image fit** | Select | `Contain`, `Cover` | `Contain` | How the image fills its container: `Contain` preserves aspect ratio; `Cover` fills the area with cropping. |
+| **Image focal position** | Select | `Center`, `Top`, `Bottom`, `Left`, `Right`, `Top left`, `Top right`, `Bottom left`, `Bottom right` | `Center` | The focal point used when cropping with `Cover`. |
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Layout** | Select | `Image left / Content right`, `Content left / Image right`, `Text only` | `Image left` | Arrangement of image and content. In `Text only` mode, the image is hidden and the text spans the full width. |
+| **Content alignment** | Select | `Top`, `Center`, `Bottom` | `Center` | Vertical alignment of the text content relative to the image (or within the section for text‑only). |
+| **Section height** | Select | `Auto`, `Medium`, `Large` | `Large` | Controls the minimum height of the section. `Auto` follows content height; `Medium` and `Large` add vertical prominence. |
+| **Content width** | Range (280–640px) | `420px` | Maximum width of the text block. |
+| **Text alignment** | Select | `Left`, `Center`, `Right` | `Center` | Horizontal alignment of the text content – only visible when `Layout` is set to `Text only`. |
+
+### Appearance Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Background style** | Select | `Default`, `Alternate` | `Default` | `Default` uses `--color-background`; `Alternate` uses `--color-background-2` for a subtle contrast. |
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the section background and text. |
+| **Show border** | Checkbox | – | `false` | Adds a top and bottom border to the section. |
+| **Border width** | Range (1–4px) | `1px` | Thickness of the border when enabled. |
+| **Section spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the section. |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- The image and content sit side by side in a two‑column grid.
+- The image column width is adjustable (40–70%).
+- The content has a maximum width (content_width) and is vertically aligned as chosen (top/center/bottom).
+- Typography is large and editorial; the heading is capped at 14 characters (1–2 lines) for maximum impact.
+- A subtle reveal animation (opacity + translateY) is applied on scroll (when enabled).
+
+### Tablet (750–989px)
+
+- The two‑column grid is maintained with slightly reduced spacing.
+- Heading size is reduced proportionally.
+- Padding and gaps are optimised for the smaller screen.
+
+### Mobile (750px)
+
+- The image and content stack vertically (image above content, or content above image depending on layout).
+- The image height is capped (max-height: 46vh or 22rem) to avoid excessive scrolling.
+- The heading wraps naturally without a character limit.
+- Buttons stack if needed and remain touch‑friendly.
+- In `Text only` mode, the copy spans the full width and is aligned as chosen.
+
+---
+
+## Accessibility
+
+The Editorial CTA section is built with accessibility as a priority:
+
+- **Semantic HTML** – uses `<section>`, `<h2>`, `<p>` appropriately; the image link is keyboard‑accessible.
+- **Heading hierarchy** – the main heading is an `<h2>`; the eyebrow is a `<p>`.
+- **Image alt text** – uses the image’s `alt` attribute, or falls back to the section heading.
+- **Placeholder handling** – when no image is set, a placeholder SVG is given an appropriate `role` and `aria-label` (or `aria-hidden` when purely decorative).
+- **Keyboard navigation** – all interactive elements (buttons, image link) are focusable and have visible `:focus-visible` rings.
+- **Reduced motion** – the reveal animation respects `prefers-reduced-motion` and the global `enable_animations` setting.
+- **Contrast** – all text uses scheme‑appropriate colour tokens (e.g., `--color-heading`, `--color-muted`, `--color-foreground`).
+
+---
+
+## Performance
+
+- No JavaScript is used in this section – all interactivity is handled by native HTML/CSS.
+- Images are lazy‑loaded (via `loading="lazy"`) and optimised with responsive `srcset` and `sizes`.
+- The mobile image is conditionally loaded via `<picture>` with a `source` element, reducing bandwidth on small screens.
+- CSS is scoped to the section using BEM‑style classes and `{% stylesheet %}`.
+- The section uses existing COSME variables and components (`cosme-image`, `cosme-button`), avoiding duplication.
+
+---
+
+## Technical Details
+
+- **File:** `sections/editorial-cta.liquid`
+- **Dependencies:** `cosme-image`, `cosme-button`, `placeholder_svg_tag`
+- **CSS classes:** `.cosme-editorial-cta`, `__inner`, `__grid`, `__media`, `__media-link`, `__media-frame`, `__image`, `__img`, `__placeholder`, `__placeholder-svg`, `__content`, `__content-inner`, `__eyebrow`, `__heading`, `__description`, `__actions`, `__button`.
+- **CSS variables (tokens):**
+  - `--editorial-cta-image-width`, `--editorial-cta-content-width`, `--editorial-cta-border-width`, `--editorial-cta-focal`
+  - `--color-background`, `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-button-*`
+  - `--spacing-*`, `--page-width`, `--page-margin`
+  - `--font-heading--family`, `--font-heading--weight`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** None – the section is completely static (CSS‑only animation).
+
+---
+
+## Customization Tips
+
+- **Adjust image width** – use the **Image width** slider to give the image more or less prominence.
+- **Switch image fit** – `Cover` is ideal for full‑bleed editorial looks; `Contain` works well when you need to show the entire image.
+- **Hide the image** – choose the **Text only** layout to create a simple, typographic promotion.
+- **Change background** – switch **Background style** to `Alternate` to create visual separation from the previous section.
+- **Add a border** – enable **Show border** for a subtle divider between sections.
+- **Refine spacing** – use **Section spacing** (Small/Medium/Large) to control vertical rhythm.
+- **Use the image link** – make the entire image clickable to drive traffic to a collection or product page.
+- **Test different content widths** – adjust the **Content width** to control how wide the text block appears.
+
+---
+
+## Demo Data
+
+The section comes pre‑populated with the following demo content on first installation:
+
+| Field | Value |
+|-------|-------|
+| Eyebrow | `THE EVERYDAY EDIT` |
+| Heading | `Make space for your ritual.` |
+| Description | `Thoughtfully selected essentials designed to become part of your everyday.` |
+| Primary button | `Shop essentials` (no link set) |
+| Secondary button | `Explore collections` (no link set) |
+
+The image field is empty, so the section displays a placeholder SVG (lifestyle‑1) to demonstrate the layout. Merchants should replace the image and links with their own content.
+
+---
+
+## Troubleshooting
+
+### Image does not appear
+
+- Ensure an image is selected in the **Image** picker.
+- If using `Cover` fit, check that the image has sufficient resolution and that the focal point is set correctly.
+- On mobile, if the **Mobile image** is empty, the desktop image is used as a fallback.
+
+### Buttons are not aligned as expected
+
+- In **Text only** mode, use the **Text alignment** setting to control horizontal alignment (left/center/right).
+- In layout with image, buttons inherit the content alignment (top/center/bottom) but remain left‑aligned relative to the text block.
+
+### Section height seems too large
+
+- Change **Section height** to `Auto` to let the content determine the height, or reduce it to `Medium`.
+- Check that **Section spacing** is not set to `Large`.
+
+### Background colour does not change
+
+- Verify that the **Background style** is set to `Alternate` – this uses `--color-background-2`.
+- The **Color scheme** must be selected correctly – Light/Dark/Light+Accent.
+
+### Border is not visible
+
+- Ensure **Show border** is checked.
+- Adjust **Border width** if needed – the default is 1px, which may be subtle.
+
+### Animation does not play
+
+- The reveal animation is only active when global `enable_animations` is true and `prefers-reduced-motion` is not active.
+- Check the **Theme Settings → Animation → Enable animations** toggle.
+
+---
+
+## Conclusion
+
+The Editorial CTA section is a versatile, premium promotional block that lets you create a strong editorial narrative for your brand. With flexible layout options, responsive imagery, and full colour‑scheme integration, it provides a polished, on‑brand call to action that sits naturally within the COSME theme.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

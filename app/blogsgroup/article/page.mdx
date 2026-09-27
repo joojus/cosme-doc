@@ -1,0 +1,283 @@
+---
+sidebarTitle: Article Page
+---
+
+# Article Page
+
+The **Article Page** (`/blogs/[...]/[...]`) is the single‑post view of the COSME Journal. It transforms a standard Shopify blog article into a premium editorial reading experience, with a large hero image, refined typography, content sharing, article navigation, related stories, and an optional newsletter sign‑up — all within the Cosme design language.
+
+The page is built as a single section (`article.liquid`) that uses Shopify’s native article and blog objects. It reuses the `cosme-article-card` snippet for related articles and integrates with the existing Cosme form and button components.
+
+![Article Page example](/img/article.png)
+
+---
+
+## Overview
+
+The Article Page provides the following key features:
+
+- **Back link** – a “Back to Journal” link that returns to the blog index.
+- **Article header** – category (blog title), title, optional excerpt, and metadata (date, author, reading time).
+- **Hero image** – a large, responsive image with configurable aspect ratio (landscape, wide, square).
+- **Sharing** – social share links (Facebook, X, Pinterest), native Web Share API, and copy‑to‑clipboard.
+- **Article content** – full `article.content` with editorial styling for headings, paragraphs, lists, quotes, images, tables, and embedded media.
+- **Article footer** – optional author byline.
+- **Pagination** – previous/next article navigation with titles and arrows.
+- **Related stories** – automatically selected articles from the same blog (tag‑based first, then any other), excluding the current article.
+- **Comments** – native Shopify article comments with pagination and a comment form.
+- **Newsletter** – optional email sign‑up using Shopify’s native customer form, with its own color scheme setting.
+- **Color schemes** – full support for Light, Dark, and Light+Accent.
+
+All settings are available in the Theme Editor under **Templates → Article**.
+
+---
+
+## Section Settings
+
+The Article section provides a comprehensive set of options, grouped by functionality.
+
+![Article Page settings](/img/article-settings.png)
+
+### Content & Metadata
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show back link** | Checkbox | `true` | Displays a “Back to Journal” link above the article header. |
+| **Show excerpt** | Checkbox | `true` | Shows the article excerpt below the title (if `article.excerpt` exists). |
+| **Show date** | Checkbox | `true` | Displays the publication date. |
+| **Show author** | Checkbox | `true` | Displays the article author (if `article.author` is set). |
+| **Show reading time** | Checkbox | `true` | Calculates and displays the estimated reading time from `article.content`. |
+| **Hero image ratio** | Select | `Landscape` (16/10), `Wide` (16/9), `Square` (1/1) | `Landscape` | Aspect ratio of the hero image. |
+| **Show share** | Checkbox | `true` | Enables the social sharing and copy‑link block. |
+
+### Related Stories
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show related** | Checkbox | `true` | Enables the “Related Stories” section. |
+| **Related count** | Range (1–6) | `3` | Number of related articles to display. |
+| **Related heading** | Text | `Related Stories` | Heading for the related stories block. |
+| **Related description** | Textarea | – | Optional descriptive text below the heading. |
+
+### Newsletter
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Show newsletter** | Checkbox | `true` | Enables the newsletter sign‑up block at the end of the article. |
+| **Newsletter eyebrow** | Text | `THE COSME JOURNAL` | Small uppercase text above the newsletter heading. |
+| **Newsletter heading** | Text | `Beauty, thoughtfully curated.` | Main heading of the newsletter block. |
+| **Newsletter description** | Textarea | `Receive new stories, rituals and discoveries from Cosme.` | Supporting text below the heading. |
+| **Newsletter button label** | Text | `Subscribe` | Label for the submit button. |
+| **Newsletter color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-2` (Dark) | The colour scheme for the newsletter block (can be different from the main article scheme). |
+
+### Color Scheme & Spacing
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The colour scheme for the main article area. |
+| **Section spacing** | Select | `Small`, `Medium`, `Large` | `Medium` | Vertical padding of the article section. |
+
+---
+
+## Component Structure
+
+| Element | Class | Description |
+|---------|-------|-------------|
+| Article wrapper | `.cosme-article` | Main container with full width and color scheme. |
+| Inner container | `.cosme-article__inner` | Constrained to `--page-width` with `--page-margin`. |
+| Back link | `.cosme-article__back` | Link to blog index with chevron icon. |
+| Header | `.cosme-article__header` | Centered block containing eyebrow, title, excerpt, metadata. |
+| Eyebrow | `.cosme-article__eyebrow` | Blog title / category. |
+| Title | `.cosme-article__title` | Article `<h1>`. |
+| Excerpt | `.cosme-article__excerpt` | Article excerpt (if shown). |
+| Meta | `.cosme-article__meta` | Date, author, reading time. |
+| Hero | `.cosme-article__hero` | Hero image wrapper. |
+| Layout | `.cosme-article__layout` | Grid container for share + content (desktop). |
+| Share | `.cosme-article__share` | Social share and copy buttons. |
+| Content | `.cosme-article__content` | Article content with editorial styling. |
+| Byline | `.cosme-article__byline` | Author byline (if shown). |
+| Pager | `.cosme-article__pager` | Previous/next article navigation. |
+| Related | `.cosme-article__related` | Related stories section. |
+| Comments | `.cosme-article__comments` | Comments and comment form (if enabled). |
+| Newsletter | `.cosme-article__newsletter` | Newsletter sign‑up block (optional). |
+
+---
+
+## Visual Layout
+
+### Desktop (≥990px)
+
+- **Layout**: two‑column grid for share + content.
+  - **Left column**: sticky share buttons (vertical), with label rotated.
+  - **Right column**: article content.
+- **Header**: centered with generous whitespace.
+- **Hero**: full‑width image (within page width) with rounded corners.
+- **Content**: constrained to a readable width (~48rem for body, ~44rem for headings).
+- **Pager**: horizontal, with prev on left, next on right.
+- **Related**: up to 3 columns (depending on count).
+- **Newsletter**: centred, full‑width block with its own color scheme.
+
+### Tablet (768–989px)
+
+- **Layout**: share moves to the top (horizontal row) above content.
+- **Hero**: reduced height.
+- **Related**: 2 columns (if count ≥3) or 1 column.
+- **Typography**: scaled down proportionally.
+
+### Mobile (768px)
+
+- **Layout**: vertical stack (header, hero, share (horizontal), content, pager, related, etc.).
+- **Share**: horizontal row of icon buttons.
+- **Pager**: stacked vertically (prev above next).
+- **Related**: single column.
+- **Newsletter**: full‑width with stacked form fields.
+
+---
+
+## Metadata & Reading Time
+
+- **Date**: uses `article.published_at` with Shopify’s `date` format.
+- **Author**: uses `article.author`; hidden if empty.
+- **Reading time**: calculated from `article.content` by stripping HTML, counting words (approx. 200 words/min), and rounding up to the nearest minute. If the article has no content, reading time is hidden.
+
+---
+
+## Related Stories Logic
+
+Related articles are selected from the same blog, with the following priority:
+
+1. **Tag‑matched**: articles that share at least one tag with the current article.
+2. **Any other articles**: if not enough tag‑matched articles are found, the remaining slots are filled with any other articles from the blog (excluding the current article).
+
+The number of related articles is limited by the **Related count** setting. The order is determined by the order of articles in the blog (usually newest first).
+
+---
+
+## Newsletter
+
+The newsletter block uses Shopify’s native `{% form 'customer' %}`. It submits the email address with:
+
+- `contact[tags] = "newsletter"`
+- `customer[accepts_marketing] = "true"`
+
+This adds the subscriber to the store’s customer list with the `newsletter` tag and enables marketing emails. The form is entirely native and does not require any third‑party app.
+
+After submission, a success message is displayed, and the form is replaced with the status message.
+
+---
+
+## Accessibility
+
+The Article Page is built with accessibility as a priority:
+
+- **Heading hierarchy** – one `<h1>` for the article title; other headings (related, comments, newsletter) are `<h2>`.
+- **Semantic HTML** – uses `<article>`, `<header>`, `<section>`, `<nav>`, `<ul>`, `<li>` appropriately.
+- **Image alt text** – uses `article.image.alt` or falls back to `article.title`.
+- **Keyboard navigation** – all interactive elements (links, buttons, form fields) are focusable and have visible focus rings.
+- **Share buttons** – have descriptive accessible names (e.g., “Share on Facebook”).
+- **Copy link** – provides a live status message via `aria-live="polite"`.
+- **Form labels** – all inputs have explicit `<label>` elements.
+- **Comments form** – uses `default_errors` for error feedback.
+- **Reduced motion** – all transitions respect `prefers-reduced-motion`.
+- **Contrast** – all text meets WCAG contrast requirements in all three color schemes.
+
+---
+
+## Performance
+
+- **Hero image** – loaded eagerly (`loading="eager"`, `fetchpriority="high"`).
+- **Related articles** – rendered server‑side with Liquid; no extra requests.
+- **Responsive images** – uses Shopify’s `image_url` with appropriate `sizes`.
+- **No external libraries** – all JavaScript is vanilla (share functionality).
+- **Lazy loading** – related article images are lazy‑loaded.
+- **Minimal JavaScript** – only for native share and copy‑to‑clipboard.
+
+---
+
+## Technical Details
+
+- **File:** `sections/article.liquid`
+- **Snippets used:** `cosme-image`, `cosme-icon`, `cosme-article-card`, `cosme-form-field`, `cosme-button`
+- **CSS classes:** `.cosme-article`, `__inner`, `__back`, `__header`, `__eyebrow`, `__title`, `__excerpt`, `__meta`, `__hero`, `__layout`, `__share`, `__share-list`, `__share-link`, `__content`, `__byline`, `__pager`, `__related`, `__related-grid`, `__comments`, `__newsletter`, etc.
+- **CSS variables (tokens):**
+  - `--page-width`, `--page-margin`, `--spacing-*`, `--grid-gap`
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`
+  - `--font-heading--family`, `--font-heading--weight`, `--font-heading--style`, `--line-height-heading`, `--letter-spacing-heading`
+  - `--font-body--family`, `--line-height-body`
+  - `--radius-card`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`
+- **JavaScript:** Handles:
+  - Native Web Share API (if available) and copy‑to‑clipboard.
+  - Status messages for copy/share actions.
+
+---
+
+## Troubleshooting
+
+### The hero image does not appear
+- Ensure the article has a featured image in Shopify.
+- Verify that **Hero image ratio** is set correctly.
+- The image uses `article.image` – if it’s empty, the hero block is skipped entirely.
+
+### The excerpt is not showing
+- Enable **Show excerpt**.
+- The excerpt only appears if `article.excerpt` is not empty. It does not fall back to `article.content`.
+
+### Reading time is not calculated
+- Enable **Show reading time**.
+- The calculation requires `article.content` to have text. Empty content yields no reading time.
+
+### Related stories are not showing
+- Enable **Show related**.
+- There must be at least one other article in the same blog.
+- If the blog has only one article, the related section is hidden.
+
+### Previous/Next navigation is missing
+- The pagination shows only if a previous or next article exists in the same blog.
+- For the first article, "Previous" is hidden; for the last article, "Next" is hidden.
+
+### Share buttons do not work
+- Facebook, X, and Pinterest links open in a new tab.
+- The native share button appears only on devices that support `navigator.share`.
+- The copy button uses the Clipboard API; if it fails, a fallback status is shown.
+
+### Newsletter subscription fails
+- Ensure the store’s customer accounts are enabled.
+- The form uses Shopify’s native customer endpoint; no third‑party app is required.
+- Check that the email field is correctly named `contact[email]`.
+
+### Comments form returns a 401 error
+- This is a known issue when running `shopify theme dev` locally.
+- Use the external preview URL (provided by Shopify CLI) to test comments, or test on a live store.
+
+### The content width is too wide
+- The article content is constrained to `max-width: 48rem` for body text and `44rem` for headings.
+- If you want to adjust these values, modify the CSS in `cosme-article__content > *` rules.
+
+---
+
+## Usage Examples
+
+### Default editorial article
+- Leave all settings as default.
+- The article will display a full hero image, metadata, social sharing, pagination, related stories, and a dark‑scheme newsletter block.
+
+### Minimal article (no hero, no sharing)
+- Disable **Show hero image** (if you want to skip hero, just remove the image from the article in Shopify admin).
+- Disable **Show share**, **Show related**, and **Show newsletter**.
+- Only the title, metadata, and content remain.
+
+### Custom newsletter colour
+- Set **Newsletter color scheme** to `Light` or `Light + Accent` to match the article’s main scheme.
+- The newsletter block will inherit that scheme independently.
+
+### Long‑form article with table of contents (not included)
+- The theme does not include an automatic table of contents; it can be added manually in the article content using Shopify’s rich text editor (headings + anchor links).
+
+---
+
+## Conclusion
+
+The COSME Article Page is a sophisticated, editorial single‑post template that elevates the standard Shopify blog article into a luxury beauty Journal experience. With flexible metadata, sharing, related stories, comments, and a native newsletter, it provides a complete reading environment that is fully accessible and performant.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,255 @@
+---
+sidebarTitle: Collections Editorial
+---
+
+import { Callout } from 'nextra/components'
+
+# Collections Editorial
+
+The **Collections Editorial** section presents your Shopify collections as large, immersive editorial cards. It is designed for beauty and lifestyle brands that want to showcase collections in a premium, visual‑first manner.
+
+You can display up to 8 collection cards in a horizontal carousel (2 per view on desktop, 1 on mobile), with autoplay, pagination dots, and a subtle vertical navigation. Each card can be linked directly to a Shopify collection, and you can override images, titles, and text colors independently of the global color scheme.
+
+![Collections Editorial Settings in Theme Editor](/img/collections-editorial.png)
+
+---
+
+## Overview
+
+The Collections Editorial section is a full‑width, editorial‑style carousel that sits between your Hero and other content. It includes:
+
+- **Collection blocks** – Each block references a real Shopify collection (or uses demo content).
+- **Large editorial images** – Images are the focal point, with text overlaid.
+- **Typography** – Eyebrow, heading, and link label overlaid on the image.
+- **Card numbers** – Subtle slide numbers (e.g., `1.1`, `2.1`, …) in the upper‑right.
+- **Carousel** – Horizontal scrolling with 2 cards on desktop, 1 on mobile.
+- **Autoplay** – Auto‑advance with adjustable interval (3–8 seconds), pauses on hover.
+- **Pagination** – Dot indicators at the bottom (number of pages, not cards).
+- **Vertical navigation** – An editorial navigation list on the right (`| 1.1`, `| 1.2`, …) for desktop.
+- **Color Schemes** – Inherits from global Light / Dark / Light+Accent, with option to override text colors.
+- **Custom text colors** – Override heading, eyebrow, and link colors independently of the scheme.
+- **Responsive** – Optimised for desktop, tablet, and mobile.
+
+All settings are available directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The section provides a curated set of options, avoiding unnecessary clutter.
+
+### Content Settings
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Heading** | Text | – | Optional section heading above the carousel. |
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Layout** | Select | `Editorial`, `Editorial compact` | `Editorial` | Reduces spacing for a tighter layout. |
+| **Image aspect ratio** | Select | `Portrait`, `Landscape`, `Square`, `Auto` | `Landscape` | Controls the shape of the images. |
+| **Image fit** | Select | `Cover`, `Contain` | `Cover` | How images fill the card area. |
+
+### Slider Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Show card numbers** | Checkbox | – | `true` | Displays a subtle number in the upper‑right of each card. |
+| **Show navigation** | Checkbox | – | `true` | Displays the vertical editorial navigation on the right (desktop only). |
+| **Enable carousel** | Checkbox | – | `true` | Turns the static grid into a horizontal carousel (automatically disables when ≤2 cards). |
+| **Autoplay** | Checkbox | – | `false` | Auto‑advances slides. Disabled when ≤2 cards, reduced motion, or animations off. |
+| **Autoplay interval** | Select | `3`, `4`, `5`, `6`, `8` seconds | `5` | How long each page is shown before advancing. |
+| **Show arrows** | Checkbox | – | `false` | Displays left/right chevron buttons. |
+| **Show pagination** | Checkbox | – | `false` | Displays dot indicators (number of pages). |
+
+### Colors Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The color scheme for the background and default text. |
+
+### Typography Settings (custom text colours)
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| **Text color source** | Select | `Scheme` / `Custom` | `Scheme` | Whether to use the active scheme’s colours or override with custom ones. |
+| **Heading color** | Color | `#1A1A1A` | (Shown only when `Custom` is selected) Colour of the card title. |
+| **Eyebrow color** | Color | `#6B6B6B` | (Shown only when `Custom` is selected) Colour of the eyebrow text. |
+| **Link color** | Color | `#1A1A1A` | (Shown only when `Custom` is selected) Colour of the link label. |
+
+<Callout type="info">
+  Custom text colours override the scheme’s colours. This is useful when your images are light and the scheme’s default text becomes hard to read.
+</Callout>
+
+---
+
+## Blocks
+
+### Collection Block
+
+Each card in the carousel corresponds to one **Collection block**. You can add, remove, or reorder blocks in the Theme Editor.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Collection** | Collection picker | – | Select a Shopify collection. The section will use its URL, title, and featured image. |
+| **Image** | Image picker | – | Override the collection’s default image. |
+| **Image alt** | Text | – | Alternative text for accessibility. |
+| **Image focal position** | Select | `Center`, `Top`, `Bottom`, `Left`, `Right` | `Center` | Where the image is cropped (for Cover fit). |
+| **Eyebrow** | Text | `SHOP` | Small text above the title. |
+| **Title** | Text | – | Override the collection title. If empty, the collection title is used. |
+| **Link label** | Text | – | The label for the bottom link (e.g., “Shop Outdoors”). If empty, a sensible label is generated. |
+
+If no collection is selected, the block still renders as a demo card with placeholder image and the provided title/eyebrow/link label.
+
+---
+
+## Visual Layout
+
+### Desktop (Editorial layout)
+
+![Collections Editorial Home](/img/collections-editorial-main.png)
+
+- **Cards** occupy the main area, 2 visible at a time.
+- **Vertical navigation** on the right (when enabled) shows page numbers (`1.1`, `1.2`, …).
+- **Pagination dots** at the bottom show the number of pages.
+- **Arrows** (optional) appear on the sides.
+
+### Mobile
+
+- One card per view (full width).
+- Vertical navigation is hidden; only dots and optional arrows remain.
+- Touch swipe works natively.
+
+---
+
+## Carousel Behaviour
+
+### Autoplay
+
+- When enabled, slides advance automatically at the chosen interval.
+- Autoplay is **disabled** if:
+  - There are 2 or fewer cards.
+  - `prefers-reduced-motion: reduce` is active.
+  - Global `enable_animations` is off.
+- Pauses on hover and resumes when the mouse leaves.
+- Manual navigation (clicking dots, arrows, or keyboard) restarts the timer.
+
+### Manual Controls
+
+- **Pagination dots** – Click a dot to jump to that page.
+- **Navigation arrows** – Click left/right to move one page.
+- **Keyboard** – When the section is focused (`tabindex="0"`), use `ArrowLeft` and `ArrowRight`.
+- **Vertical navigation** – Click the page numbers on the right to go directly to that page.
+
+### Touch / Drag
+
+- On mobile, swipe left/right to move between cards.
+- A swipe threshold of 40px triggers a page change; smaller swipes do nothing.
+
+---
+
+## Color Scheme Integration
+
+The section uses the same global color scheme system as the rest of COSME. The selected scheme affects:
+
+- **Section background** (uses `--color-background-2` for a subtle alternate background).
+- **Default heading, eyebrow, and link colours** (if `Text color source` is set to `Scheme`).
+- **Pagination dots, arrows, and vertical navigation** (using `--color-slider-arrows`).
+
+If you enable **Custom text colors**, the heading, eyebrow, and link colours are fixed and do not change when the scheme changes. This gives you full control over readability on your chosen images.
+
+---
+
+## Accessibility
+
+The Collections Editorial section is built with accessibility as a priority:
+
+- **Semantic HTML** – Uses `<section>`, `<article>`, `<h2>`, `<h3>` appropriately.
+- **ARIA attributes** – `aria-roledescription="carousel"`, `role="group"`, `aria-label` for slides, pagination, and navigation.
+- **Keyboard navigation** – Arrow keys work when the section is focused; all controls are focusable.
+- **Focus management** – Visible `:focus-visible` rings are applied.
+- **Live region** – An `aria-live="polite"` region announces slide changes.
+- **Reduced motion** – All animations respect `prefers-reduced-motion` and the global animation setting.
+- **Image alt** – Uses custom alt, collection title, or empty alt for decorative images.
+
+---
+
+## Example Use Cases
+
+- **Beauty brand with seasonal collections** – Showcase 4 collections (e.g., Spring, Summer, Autumn, Winter) with editorial images.
+- **Lifestyle store** – Display categories like “Outdoors”, “Indoors”, “Essentials”, “New Arrivals” with corresponding lifestyle images.
+- **Product catalog** – Highlight key product ranges with large, high‑quality photos.
+
+---
+
+## Default Demo Data
+
+When you add the Collections Editorial section to a new COSME theme, it comes pre‑populated with 4 demo blocks:
+
+1. **Outdoors** – Eyebrow: SHOP, Title: Outdoors, Link: Shop Outdoors
+2. **Indoors** – Eyebrow: SHOP, Title: Indoors, Link: Shop Indoors
+3. **Essentials** – Eyebrow: SHOP, Title: Essentials, Link: Shop Essentials
+4. **New Arrivals** – Eyebrow: SHOP, Title: New Arrivals, Link: Shop New Arrivals
+
+Each block uses Shopify placeholder images (`collection-1`, `collection-2`, etc.) so the section looks complete immediately after installation. Merchants only need to replace the demo content with real collections and images.
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-collections-editorial.liquid`
+- **CSS classes:** `.cosme-collections-editorial`, `.cosme-collections-editorial__card`, `.cosme-collections-editorial__media`, `.cosme-collections-editorial__content`, `.cosme-collections-editorial__title`, `.cosme-collections-editorial__eyebrow`, `.cosme-collections-editorial__link`, `.cosme-collections-editorial__navigation`, `.cosme-collections-editorial__pagination`, etc.
+- **Snippets used:** `cosme-image`, `cosme-icon`.
+- **CSS variables (tokens):**
+  - `--color-background-2`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-slider-arrows`
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-*`, `--line-height-*`, `--letter-spacing-*`
+  - `--radius-*`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** Provides carousel logic: pagination, navigation, autoplay, keyboard support, touch/swipe handling, and dynamic rebuild on resize.
+- **Lifecycle events:** Uses `shopify:section:load`, `shopify:section:unload`, `shopify:section:reorder`, `shopify:section:select`, `shopify:section:deselect` to prevent duplicate timers/listeners.
+
+---
+
+## Customization Tips
+
+- **Replace placeholder images** – Upload your own images in each Collection block.
+- **Change image fit** – Use `Cover` for a full‑bleed look, `Contain` to show the entire image.
+- **Adjust aspect ratio** – `Portrait` gives a taller card, `Landscape` (default) gives a wider card.
+- **Add more blocks** – Add up to 8 collection blocks; the carousel and pagination adjust automatically.
+- **Hide controls** – Turn off card numbers, navigation, pagination, or arrows for a cleaner look.
+- **Override text colours** – Use the custom text colour settings to ensure readability on any image.
+
+---
+
+## Troubleshooting
+
+### Images are cropped unexpectedly
+
+- Switch `Image fit` to `Contain`.
+- Adjust the `Image focal position` to better align the subject.
+
+### Last page with a single card is not visible
+
+- The carousel correctly allows the last card to appear alone. If it does not, check that you have the latest version of the section (the `getMaxIndex` function uses `blockCount - 1`).
+
+### Autoplay does not work
+
+- Ensure `Autoplay` is enabled and there are more than 2 cards.
+- Check that `Enable carousel` is on.
+- If you have `prefers-reduced-motion` or `enable_animations` disabled, autoplay will be disabled (this is intentional).
+
+### The custom text colours do not apply
+
+- Make sure `Text color source` is set to `Custom`.
+- The custom colours are applied inline and override the scheme’s colours.
+
+---
+
+## Conclusion
+
+The Collections Editorial section is a powerful way to showcase your store’s collections in a premium, editorial style. With flexible settings, real Shopify collection integration, and full colour control, it helps you create a visually stunning storefront that feels curated and on‑brand.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

@@ -1,0 +1,280 @@
+---
+sidebarTitle: Hero
+---
+
+import { Callout } from 'nextra/components'
+
+# Hero
+
+The **Hero** is the centerpiece of your COSME store's homepage. It features an editorial, beauty‑focused composition with a left navigation column, a large central product image, and a right information panel. The hero supports multiple slides with autoplay, manual controls, and full integration with your store's color schemes.
+
+The design follows the premium beauty reference (1‑shop.webp): generous whitespace, restrained typography, thin borders, and no generic e‑commerce cards or heavy shadows. The product image is the undisputed focal point.
+
+![Hero Settings in Theme Editor](/img/hero-admin.png)
+
+---
+
+## Overview
+
+The Hero section is a full‑width, immersive editorial banner that sits at the top of your homepage. It includes:
+
+- **Left category navigation** – A configurable list of category links (e.g., Primers, Night Creams, Moisturizers, Day Creams) with a vertical divider line.
+- **Central product image** – A large, high‑quality product image that supports `contain` or `cover` fit, focal positioning, and responsive sizing.
+- **Right information panel** – Eyebrow, heading (split naturally over two lines), optional description, and a call‑to‑action button.
+- **Slide controls** – Pagination dots (• ○ ○ ○), optional navigation arrows (chevrons), and automatic slide numbering (1.0, 2.0, …).
+- **Slider functionality** – Autoplay with configurable interval, manual navigation via dots/arrows/keyboard, and smooth fade transitions.
+- **Color Scheme integration** – Uses the existing COSME Light / Dark / Light+Accent schemes for backgrounds, text, borders, and controls.
+- **Responsive behaviour** – On mobile, the layout reorganises into a vertical flow while preserving the editorial feel.
+
+All settings and content are editable directly in the Shopify Theme Editor – no code required.
+
+---
+
+## Section Settings
+
+The Hero provides a curated set of options, avoiding unnecessary clutter.
+
+### Layout Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Layout** | Select | `Editorial`, `Editorial compact` | `Editorial` | The overall spacing and density of the hero. Compact reduces padding for a tighter layout. |
+| **Hero height** | Select | `Auto`, `Large`, `Full viewport` | `Large` | Controls the vertical height. `Auto` adapts to content, `Large` uses a generous fixed height, and `Full viewport` fills the screen. |
+| **Content alignment** | Select | `Default`, `Centered` | `Default` | Aligns the information panel text. Centered is useful for a more symmetrical look. |
+| **Navigation heading** | Text | – | `Shop` | The heading above the category links (left column). |
+
+### Slider Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Autoplay** | Checkbox | – | `On` | Automatically advances slides. Disabled when there is only one slide or reduced motion is active. |
+| **Autoplay interval** | Select | `3`, `4`, `5`, `6`, `8` seconds | `5` | How long each slide is shown before advancing. |
+| **Show navigation arrows** | Checkbox | – | `Off` | Displays left/right chevron buttons over the hero. |
+| **Show slide numbers** | Checkbox | – | `On` | Displays the slide number (e.g., `1.0`) in the information panel. |
+| **Show pagination** | Checkbox | – | `On` | Displays the dot indicators (• ○ ○ ○) at the bottom. |
+
+### Colors Settings
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Color scheme** | Color scheme picker | Light, Dark, Light+Accent | `scheme-1` (Light) | The color scheme applied to the entire hero (background, text, borders, controls). |
+
+---
+
+## Blocks
+
+### Category Link (nav_link)
+
+The left navigation column consists of configurable category links. Add, remove, or reorder them as needed.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Text** | Text | `Category` | The visible label of the category link. |
+| **Link** | URL | – | The URL the link points to (e.g., `/collections/primers`). |
+
+<Callout type="info">
+  If no link is provided, the category appears as static text (non‑interactive). This is useful for menu headings.
+</Callout>
+
+### Slide (slide)
+
+Each slide represents a single hero panel. You can add up to as many slides as you like; the pagination and controls will adapt automatically.
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Image** | Image picker | – | The main product image. Recommended size: at least 1200×1200px. |
+| **Image alt** | Text | – | Alternative text for accessibility. |
+| **Image link** | URL | – | Optional link for the entire image area. |
+| **Image focal position** | Select | `Center` | Where the image is cropped (Center, Top, Bottom, Left, Right). |
+| **Image width** | Range (400–1600 px) | `1200` | Maximum width of the image in pixels. |
+| **Image fit** | Select | `Contain` | `Contain` shows the whole image; `Cover` crops to fill the container. |
+| **Eyebrow** | Text | `Limited edition` | Small text above the heading (e.g., "Limited edition", "New Arrival"). |
+| **Heading** | Text | `Illuminating Face Primer` | The main title. It naturally wraps over two lines on desktop. |
+| **Description** | Textarea | – | Optional supporting text below the heading. Empty by default. |
+| **CTA label** | Text | `Shop Now` | Text on the call‑to‑action button. |
+| **CTA link** | URL | – | Link for the CTA button. If empty, the button is not shown. |
+
+---
+
+## Visual Layout
+
+### Desktop (Editorial layout)
+
+
+![Mega Menu Settings in Theme Editor](/img/hero-o.png)
+
+
+- **Left**: `Shop` heading + thin vertical line + category links.
+- **Centre**: Large product image (the visual focal point).
+- **Right**: Slide number (if enabled), eyebrow, heading, optional description, CTA button.
+- **Bottom**: Pagination dots (and optional arrows if enabled).
+
+### Mobile
+
+The layout collapses vertically for smaller screens:
+
+1. **Shop** heading + category links (horizontal scroll/wrap).
+2. Large product image.
+3. Eyebrow, heading, description, CTA.
+4. Pagination controls.
+
+The product image remains large and the editorial feeling is preserved — no generic stacking.
+
+---
+
+## Slider Behaviour
+
+### Autoplay
+
+- When **Autoplay** is enabled, slides advance automatically at the selected interval.
+- Autoplay is **disabled** if:
+  - There is only one slide.
+  - `enable_animations` is turned off globally.
+  - The user has `prefers-reduced-motion: reduce` enabled in their OS.
+- Hovering over the hero **pauses** autoplay; moving the mouse away resumes it (unless reduced motion is active).
+
+### Manual Controls
+
+- **Pagination dots** – Click any dot to jump to that slide.
+- **Navigation arrows** – Click left/right chevrons (if enabled) to move one slide at a time.
+- **Keyboard** – When the hero is focused (tabindex="0"), press `ArrowLeft` and `ArrowRight` to navigate slides.
+- The autoplay timer **resets** whenever a user manually changes a slide.
+
+### Transitions
+
+- The hero uses a **subtle opacity fade** transition between slides.
+- No 3D effects, zoom, or flashy animations — keeping the editorial, calm feel.
+- Transitions respect `prefers-reduced-motion` and the global `enable_animations` setting.
+
+---
+
+## Color Scheme Integration
+
+The Hero uses the same Color Scheme system as the rest of COSME. The selected scheme affects:
+
+- **Hero background**
+- **Heading** and **body text** colours
+- **Category links** (muted by default, accent on hover)
+- **Borders** (the vertical divider line and any optional borders)
+- **Slider controls** (dots, arrows, slide number)
+- **CTA button** (secondary outline style with accent on hover)
+- **Placeholder images** (muted fallback colours)
+
+No hard-coded colors are used — everything inherits from the current scheme.
+
+<Callout type="info">
+  To change the hero's colour scheme, simply select a different option in the **Color scheme** setting. The entire hero will update instantly.
+</Callout>
+
+---
+
+## Performance
+
+- **First slide image**: Uses `loading="eager"` and `fetchpriority="high"` for fast LCP.
+- **Subsequent slides**: Use `loading="lazy"` to defer loading until needed.
+- **Responsive images**: The `cosme-image` snippet generates appropriate `srcset` and `sizes` attributes based on the `image_width` setting.
+- **No external dependencies**: All code is vanilla JavaScript and Liquid.
+
+---
+
+## Accessibility
+
+The Hero is built with accessibility as a priority:
+
+- **Semantic HTML** – Uses `<section>`, `<header>`, `<nav>`, `<h2>`, `<h3>`, `<button>` appropriately.
+- **ARIA roles** – `aria-roledescription="carousel"`, `role="group"`, `aria-label` for slides and controls.
+- **Keyboard navigation** – Arrow keys work when the hero is focused; all controls are focusable.
+- **Focus management** – Focus remains on the hero; controls have visible `:focus-visible` rings.
+- **Live region** – A `aria-live="polite"` region announces slide changes to screen readers.
+- **Reduced motion** – All animations respect `prefers-reduced-motion` and the global animation setting.
+
+---
+
+## Example Use Cases
+
+- **Beauty brand with editorial hero** – Use the default `Editorial` layout with autoplay enabled to showcase product imagery.
+- **Limited‑time promotion** – Add a "Sale" eyebrow and a "Shop Now" CTA linked to a sale collection.
+- **Multiple product highlights** – Add 4 slides, each highlighting a different product category (e.g., "Primers", "Serums", "Moisturizers", "Masks").
+- **Minimalist brand** – Use `Editorial compact` layout with autoplay off and a single slide for a clean, static hero.
+
+---
+
+## Default Demo Data
+
+When you add the Hero to a new COSME theme, it comes pre‑populated with:
+
+- **4 category links**: Primers, Night Creams, Moisturizers, Day Creams.
+- **4 slides**:
+  1. Limited edition / Illuminating Face Primer / Shop Now
+  2. New Arrival / Hydrating Serum / Explore
+  3. Best Seller / Firming Cream / Shop
+  4. Featured / Brightening Mask / Learn More
+- **4 pagination dots** (• ○ ○ ○).
+- **Autoplay** enabled (5‑second interval).
+- **Layout**: Editorial, Large height, Default alignment.
+
+Merchants only need to:
+1. Replace the placeholder images with their own product photos.
+2. Update the text and links.
+3. Optionally add or remove slides.
+
+---
+
+## Technical Details
+
+- **File:** `sections/main-hero.liquid`
+- **CSS classes:** `.main-hero`, `.main-hero__inner`, `.main-hero__nav`, `.main-hero__visual`, `.main-hero__info`, `.main-hero__controls`, `.main-hero__panel`, `.main-hero__media`, etc.
+- **Snippets used:** `cosme-image`, `cosme-button`.
+- **CSS variables (tokens):**
+  - `--color-background`, `--color-foreground`, `--color-heading`, `--color-muted`, `--color-accent`, `--color-border`, `--color-slider-arrows`, etc.
+  - `--spacing-*`, `--page-width`, `--page-margin`, `--grid-gap`
+  - `--font-*`, `--line-height-*`, `--letter-spacing-*`
+  - `--radius-button`, `--border-width`, `--focus-ring-width`
+  - `--transition-duration`, `--transition-easing`, `--animation-duration`
+- **JavaScript:** Provides slider logic: autoplay, manual navigation, keyboard support, reduced motion handling, and live region updates.
+
+---
+
+## Customization Tips
+
+- **Replace default images** – Upload your own product images in each Slide block. The placeholder SVGs will be replaced automatically.
+- **Change slide count** – Add or remove Slide blocks; the pagination and controls update dynamically.
+- **Adjust image fit** – Use `Contain` for full product visibility or `Cover` for a more immersive, cropped look.
+- **Hide controls** – Turn off slide numbers, pagination dots, or navigation arrows for a cleaner hero.
+- **Add categories** – Use the Category Link blocks to build your own left navigation.
+
+---
+
+## Troubleshooting
+
+### The hero image does not appear
+
+- Ensure an image is uploaded in the Slide block.
+- Check that the image file is not corrupted and is accessible.
+- The placeholder SVG will appear if no image is set.
+
+### Autoplay is not working
+
+- Verify that `Autoplay` is enabled in the section settings.
+- Ensure there is more than one slide.
+- Check that `enable_animations` is turned on in the global theme settings.
+- If you have `prefers-reduced-motion: reduce` enabled in your OS, autoplay will be disabled (this is intentional for accessibility).
+
+### The image is cropped unexpectedly
+
+- Try switching `Image fit` to `Contain`.
+- Adjust the `Image focal position` to better align the subject.
+- Increase the `Image width` if the image appears too small.
+
+### The left navigation categories are not links
+
+- Each category block requires a `Link` to become clickable.
+- If no link is provided, the category is displayed as static text.
+
+---
+
+## Conclusion
+
+The Hero is the most prominent visual element of your COSME store. With its editorial composition, flexible slider, and full colour scheme integration, it gives your brand a premium, luxury beauty feel while remaining easy to manage through the Theme Editor.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

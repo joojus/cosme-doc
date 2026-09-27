@@ -1,0 +1,438 @@
+---
+sidebarTitle: Editorial Media Hero
+---
+
+import { Callout } from 'nextra/components'
+
+# Editorial Media Hero
+
+The **Editorial Media Hero** is a universal hero component that adapts to four distinct editorial layouts. Unlike the classic [Hero](/homegroup/hero), this section is designed to be reused across different theme presets — beauty, grooming, fashion, and jewelry — with radically different visual outcomes from the same code.
+
+Each layout is a curated preset in itself:
+
+- **Fullscreen** — immersive campaign hero with a single large visual
+- **Large** — editorial banner with reduced height
+- **Split** — two-column composition (media + text)
+- **Grid Carousel** — horizontal editorial gallery with seamless infinite loop
+
+The section is available in **Add section → Editorial Media Hero** and is not automatically added to any preset. Use it in Faro, Facet, or any custom setup without touching Cosme's original Hero.
+
+![Editorial Media Hero in Theme Editor](/img/editorial-media-hero-admin.png)
+
+---
+
+## Overview
+
+The Editorial Media Hero is a full‑width, block-based section with:
+
+- **Four layout modes** — Fullscreen, Large, Split, Grid Carousel — selectable via a single setting
+- **Slide blocks** — up to 8 slides per section, each independently configurable
+- **Image or Video per slide** — native Shopify video picker, no apps, no external embeds
+- **Per-slide content color** — Auto, Light, or Dark, for readable text over any imagery
+- **Per-slide alignment** — override the section-level alignment per slide (Fullscreen and Large only)
+- **Slider controls** — dots, counter (`01 / 06`), arrows, autoplay
+- **Seamless infinite loop** — in Grid Carousel, slides wrap continuously without a rewind
+- **Controls color** — force light or dark controls when sitting over media
+- **Section width** — Full (edge-to-edge) or Page (constrained)
+- **Full color scheme integration** — every visual inherits from the selected COSME scheme
+
+All settings and content are editable in the Shopify Theme Editor — no code required.
+
+---
+
+## Section Settings
+
+### Layout
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Layout** | Select | `Fullscreen`, `Large`, `Split`, `Grid Carousel` | `Fullscreen` | The overall structure of the hero. Each layout is documented below. |
+| **Section width** | Select | `Full width`, `Page width` | `Full width` | Full = edge-to-edge. Page = constrained to the theme page width. |
+
+### Layout: Fullscreen
+
+A single immersive hero, media fills the section, text overlays it.
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop height** | Select | `Adapt`, `60vh`, `75vh`, `100vh` | `75vh` | Desktop viewport height. `Adapt` fits content. |
+| **Mobile height** | Select | `Adapt`, `70vh`, `85vh`, `100vh` | `85vh` | Mobile viewport height. |
+| **Horizontal alignment** | Select | `Left`, `Center`, `Right` | `Left` | Where the text block sits over the media. |
+| **Vertical alignment** | Select | `Top`, `Center`, `Bottom` | `Bottom` | Vertical position of the text block. |
+| **Text width** | Select | `Small`, `Medium`, `Large` | `Medium` | Max width of the copy block (22rem / 36rem / 48rem). |
+| **Overlay opacity** | Range (0–80%) | – | `35` | Dark overlay over media to keep text readable. |
+| **Controls color** | Select | `Auto`, `Light`, `Dark` | `Auto` | Arrows, dots, and counter color. Auto follows the color scheme. |
+
+### Layout: Large
+
+Same structure as Fullscreen, but with more restrained spacing.
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop height** | Select | `Adapt`, `60vh`, `75vh`, `100vh` | `75vh` | Same as Fullscreen. |
+| **Mobile height** | Select | `Adapt`, `70vh`, `85vh`, `100vh` | `85vh` | Same as Fullscreen. |
+| **Horizontal alignment** | Select | `Left`, `Center`, `Right` | `Left` | Same as Fullscreen. |
+| **Vertical alignment** | Select | `Top`, `Center`, `Bottom` | `Bottom` | Same as Fullscreen. |
+| **Text width** | Select | `Small`, `Medium`, `Large` | `Medium` | Same as Fullscreen. |
+| **Overlay opacity** | Range (0–80%) | – | `35` | Same as Fullscreen. |
+| **Controls color** | Select | `Auto`, `Light`, `Dark` | `Auto` | Same as Fullscreen. |
+
+### Layout: Split
+
+Two-column composition. Media and text sit side by side.
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Media position** | Select | `Media left`, `Media right` | `Media left` | Which side the image or video sits on. |
+
+<Callout type="info">
+  Split layout ignores Horizontal alignment, Vertical alignment, Text width, Overlay opacity, and Controls color — it uses fixed editorial proportions instead. On mobile, Split collapses into a stacked single-column layout.
+</Callout>
+
+### Layout: Grid Carousel
+
+Horizontal editorial carousel with 1–3 visible panels on desktop.
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Desktop visible items** | Select | `1`, `2`, `3` | `3` | How many panels are visible side by side on desktop. |
+| **Mobile visible items** | Select | `1`, `1.2`, `2` | `1.2` | 1.2 shows a "peek" of the next panel — a common editorial pattern. |
+| **Grid gap** | Select | `Small`, `Medium`, `Large` | `Medium` | Space between panels. Uses theme spacing tokens. |
+| **Content position** | Select | `Below media`, `Overlay active media` | `Below media` | Below = caption under each panel. Overlay = text only on the active panel. |
+| **Image ratio** | Select | `Portrait`, `Square`, `Landscape` | `Portrait` | Aspect ratio of the media on desktop. |
+| **Image ratio (mobile)** | Select | `Portrait`, `Square`, `Landscape` | – | Optional mobile override. Leave blank to inherit the desktop ratio. |
+
+<Callout type="info">
+  In Grid Carousel, Horizontal and Vertical alignment still control copy alignment inside each panel. Per-slide alignment (`slide_alignment_x`, `slide_alignment_y`) is hidden and has no effect in this layout — panels are too narrow for meaningful per-slide positioning.
+</Callout>
+
+### Slider
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Autoplay** | Checkbox | – | `On` | Automatically advances slides. Disabled when there is only one slide or reduced motion is active. |
+| **Autoplay delay** | Range (2000–9000 ms) | – | `5000` | How long each slide is shown before advancing. |
+
+### Global
+
+| Setting | Type | Options | Default | Description |
+|---------|------|---------|---------|-------------|
+| **Heading tag** | Select | `H1`, `H2`, `H3` | `H1` | Semantic HTML tag for slide headings. Use `H2` when the hero is not the page's main heading. |
+| **Color scheme** | Color scheme picker | Light / Dark / Light+Accent | `scheme-1` | Background, text, borders, controls, and button styling. |
+
+---
+
+## Blocks
+
+### Slide
+
+Each slide is an independent panel. Add up to 8 per section. The section renders clones automatically for the seamless infinite loop in Grid Carousel — you only manage real slides.
+
+#### Content
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Eyebrow** | Text | `The collection` | Small uppercase label above the heading. |
+| **Heading** | Text | `Crafted for the light` | Main title. Uses the theme heading font. |
+| **Text** | Textarea | `A restrained campaign edit...` | Short supporting paragraph. Line breaks are preserved. |
+| **Content color** | Select | `Auto` | `Auto` uses the color scheme. `Light` forces a soft off-white for dark imagery. `Dark` forces a soft ink for light imagery. |
+| **Slide alignment (horizontal)** | Select | `Inherit from section` | Per-slide override for Fullscreen and Large only. |
+| **Slide alignment (vertical)** | Select | `Inherit from section` | Per-slide override for Fullscreen and Large only. |
+| **Primary button label** | Text | `Shop the edit` | Label for the primary CTA. Leave empty to hide. |
+| **Primary button link** | URL | – | Where the primary button points. |
+| **Secondary button label** | Text | – | Optional second CTA (outline style). |
+| **Secondary button link** | URL | – | Where the secondary button points. |
+
+#### Media
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| **Media type** | Select | `Image` | `Image` or `Video`. The fields below change based on this selection. |
+| **Video** | Video picker | – | Native Shopify video. Only shown when Media type is Video. |
+| **Mobile video** | Video picker | – | Optional mobile-specific video. Falls back to the desktop video if empty. |
+| **Image** | Image picker | – | Desktop image, or video poster fallback. |
+| **Mobile image** | Image picker | – | Optional mobile-specific image. Falls back to the desktop image. |
+| **Image focal position** | Select | `Center` | Where the media is cropped. 9 options: Center, Top, Bottom, Left, Right, Top-left, Top-right, Bottom-left, Bottom-right. |
+| **Image alt** | Text | – | Accessibility text. If empty, falls back to the image's own alt, the video's alt, or the slide heading. |
+
+---
+
+## Visual Layout
+
+### Fullscreen / Large — Desktop
+
+- **Full-bleed media** behind everything (image or autoplaying muted video)
+- **Configurable overlay** for text readability
+- **Content block** positioned via Horizontal + Vertical alignment
+- **Controls** (dots, counter, arrows) pinned to the bottom edge
+
+### Split — Desktop
+
+```
+┌──────────────────────┬──────────────────────┐
+│                      │                      │
+│       MEDIA          │       CONTENT        │
+│                      │                      │
+│                      │   EYEBROW            │
+│                      │   Heading            │
+│                      │   Text               │
+│                      │   [ CTA ]            │
+└──────────────────────┴──────────────────────┘
+```
+
+Media column is slightly wider (1.2fr vs 0.8fr). The side is controlled by **Media position**.
+
+### Grid Carousel — Desktop (3 visible)
+
+```
+┌──────────┬──────────┬──────────┐
+│          │          │          │
+│  MEDIA   │  MEDIA   │  MEDIA   │
+│          │          │          │
+└──────────┴──────────┴──────────┘
+  CAPTION    CAPTION    CAPTION
+```
+
+Horizontal scroll with snap. Seamless wrap — after the last panel, the first appears without a rewind.
+
+### Grid Carousel — Mobile (1.2 visible)
+
+One full panel plus a slice of the next. Native horizontal swipe with touch momentum. Snap points align to panel edges.
+
+### Mobile — Fullscreen / Large / Split
+
+All three collapse into a vertical stack:
+
+1. Media (above)
+2. Content (below)
+
+Split ignores its two-column layout below 990px. Controls stay pinned to the bottom of the media area.
+
+---
+
+## Slider Behaviour
+
+### Autoplay
+
+- Advances slides at the configured interval
+- Disabled when: only one slide, `enable_animations` is off, or `prefers-reduced-motion` is active
+- **Pauses** when the section is off-screen (IntersectionObserver)
+- **Pauses** on focus, hover
+- **Resumes** after user interaction timeout
+
+### Seamless Infinite Loop (Grid Carousel only)
+
+The Grid Carousel uses a **clone + snap** technique:
+
+- Real slides are rendered between lead clones (last N) and tail clones (first N), where N = maximum visible items
+- When the user scrolls into a clone zone, the viewport scrolls back by exactly one cycle width — visually identical, imperceptible
+- Uses `scrollend` event in modern browsers, falls back to a debounced scroll timer
+- Videos inside clones are never hydrated or played
+
+### Manual Controls
+
+- **Dots** — jump directly to a slide
+- **Arrows** — move one slide at a time
+- **Keyboard** — when focus is inside the section, `ArrowLeft` / `ArrowRight` navigate
+- **Touch** — native horizontal swipe with momentum, snap to panel edges
+- Autoplay resets when the user interacts manually
+
+### Transitions
+
+- Fullscreen / Large / Split: **subtle opacity fade** between slides
+- Grid Carousel: **no cross-fade** between panels — native scroll-snap motion
+- All transitions respect `prefers-reduced-motion`
+
+---
+
+## Video Behaviour
+
+- Videos autoplay **muted** and **looped**, with `playsinline` for iOS
+- First slide loads `eager`, others `lazy`
+- Videos hydrate only when their slide becomes active or visible
+- When a slide becomes inactive, its video **pauses and resets** to frame 0
+- Mobile-specific video overrides desktop video below 750px
+- If a video fails to load, its poster image is used as fallback
+
+<Callout type="info">
+  Browsers block autoplay with sound. The section always sets `muted=true` and `playsinline` — no way to autoplay audio, and this is expected.
+</Callout>
+
+---
+
+## Color Scheme Integration
+
+The selected scheme affects:
+
+- Section background (visible in Split and Grid)
+- Heading, body text, eyebrow
+- Overlay tint over media
+- Controls (arrows, dots, counter)
+- Button styling (via `cosme-button`)
+- Placeholder SVG (auto-inverts on dark backgrounds)
+
+### Per-Slide Content Color
+
+Each slide can override its own text color:
+
+- **Auto** — inherits from the color scheme (default)
+- **Light** — soft off-white text; useful over dark imagery
+- **Dark** — soft ink text; useful over light imagery
+
+This applies to eyebrow, heading, and text. Buttons keep the color scheme styling.
+
+### Controls Color
+
+When the controls sit over media (Fullscreen and Large), the **Controls color** setting forces:
+
+- **Auto** — uses `--color-slider-arrows` from the color scheme
+- **Light** — light arrows, dots, counter
+- **Dark** — dark arrows, dots, counter
+
+In Split and Grid, controls sit on the section background and always use the scheme — the setting is hidden.
+
+---
+
+## Performance
+
+- **First slide image**: `loading="eager"` + `fetchpriority="high"` for fast LCP
+- **Subsequent slides**: `loading="lazy"`
+- **Videos**: `preload="none"` until the slide is activated
+- **Responsive images**: `cosme-image` snippet generates `srcset` and `sizes` per layout
+- **Grid clones**: images are marked `lazy`, videos never hydrate
+- **No external dependencies**: pure Liquid + vanilla JavaScript
+
+---
+
+## Accessibility
+
+- **Semantic HTML**: `<section>`, `<article>`, `<nav>`, `<button>`
+- **ARIA**: `aria-roledescription="carousel"`, `role="group"`, `aria-live="polite"` for slide changes
+- **Keyboard navigation**: Arrow keys when focused; all controls reachable by Tab
+- **Focus management**: focus returns to the triggering control after closing lightbox-like overlays
+- **Reduced motion**: all animation and autoplay disabled when `prefers-reduced-motion` is set
+- **Clone slides**: `aria-hidden="true"` and `inert` — never reachable by keyboard or screen reader
+- **Contrast**: text over media is protected by the overlay opacity setting
+
+---
+
+## Example Use Cases
+
+### Fashion campaign hero (Fullscreen)
+
+Layout: Fullscreen, desktop height 100vh, one slide with a looping video. Content color: Light. Overlay opacity: 40.
+
+### Men's grooming editorial (Large)
+
+Layout: Large, image slide with focal position Top, content alignment Center. Controls color: Light. Autoplay 6s.
+
+### Fashion lookbook (Grid 3 columns)
+
+Layout: Grid Carousel, 3 visible on desktop, 1.2 on mobile. Portrait ratio. Content below. Autoplay on, 5s. Adds seamless scrolling through 6+ collection panels.
+
+### Jewelry editorial (Grid 2 columns)
+
+Layout: Grid Carousel, 2 visible, portrait ratio. Content below. Autoplay off. Focus on static portfolio presentation.
+
+### Split editorial story
+
+Layout: Split, media right. Content scheme Light+Accent. Used as a secondary hero below the main one.
+
+---
+
+## Default Demo Data
+
+When you add Editorial Media Hero to a section, it comes pre-populated with:
+
+- **Layout**: Fullscreen
+- **Height**: 75vh desktop, 85vh mobile
+- **Alignment**: Left, Bottom, Medium text width
+- **Overlay**: 35%
+- **Autoplay**: On, 5000ms
+- **Controls color**: Auto
+- **Two demo slides**:
+  1. "The collection" / "Crafted for the light" / "Shop the edit"
+  2. "New season" / "Quiet luxury, in focus" / "Explore"
+
+To customize, replace images or videos in each Slide block, update the text, and adjust the layout settings.
+
+---
+
+## Technical Details
+
+- **File**: `sections/editorial-media-hero.liquid`
+- **CSS classes**:
+  - `.cosme-editorial-media-hero`
+  - `.cosme-editorial-media-hero--fullscreen`, `--large`, `--split`, `--grid`
+  - `.cosme-editorial-media-hero__inner`, `__viewport`, `__track`, `__slide`, `__media`, `__content`, `__copy`, `__controls`
+  - `.cosme-editorial-media-hero__video`, `__poster`, `__img`, `__placeholder`
+  - `.cosme-editorial-media-hero__arrow`, `__dot`, `__status`
+  - `.cosme-editorial-media-hero__slide--content-light`, `--content-dark`
+- **Snippets used**: `cosme-image`, `cosme-button`, `cosme-icon`
+- **CSS variables (tokens)**:
+  - `--emh-min-height`, `--emh-height-desktop`, `--emh-height-mobile`
+  - `--emh-overlay`, `--emh-gap`, `--emh-cols-desktop`, `--emh-cols-mobile`, `--emh-ratio`, `--emh-ratio-mobile`
+  - `--emh-controls-color`, `--emh-controls-dot`, `--emh-controls-dot-active`
+  - `--emh-x-justify`, `--emh-x-text`, `--emh-x-justify-copy`, `--emh-y-align`
+  - `--emh-content-color`, `--emh-content-muted`, `--emh-copy-width`
+  - Theme tokens: `--color-*`, `--spacing-*`, `--font-*`, `--radius-*`, `--border-width`, `--transition-*`
+- **JavaScript**: Slider logic (autoplay, dots, arrows, keyboard, focus, reduced-motion), video hydration and playback, seamless loop (clone + scroll-snap + scrollend), IntersectionObserver visibility, mobile media query listener, Theme Editor lifecycle (`shopify:section:load`, `shopify:section:unload`, `shopify:block:select`)
+
+---
+
+## Customization Tips
+
+- **Change layout per use case** — one section covers four very different visual styles. No need to add a new section for each preset.
+- **Use video on the first slide** — the first slide loads eagerly and hydrates the video instantly. Great for hero campaign videos.
+- **Per-slide alignment is powerful** — in Fullscreen, put text on the left for one slide and right for the next if the composition of the image demands it.
+- **Content color per slide** — useful when your slide images alternate between dark and light backgrounds.
+- **Grid Carousel scales with content** — add 4 or 12 slides; the seamless loop handles any count.
+- **Controls color** — if your imagery is unpredictable, set Controls color to Light to guarantee visibility.
+- **Grid gap** — small gaps make panels read as a unified composition; large gaps make each panel feel isolated.
+
+---
+
+## Troubleshooting
+
+### Grid Carousel jumps back to the start
+
+The seamless loop requires real slides to be present. If the carousel wraps by scrolling all the way back, check that:
+
+- There are at least 2 slides
+- Your browser supports `scrollend` (Chrome 114+, Safari 16.4+, Firefox 109+)
+- JavaScript is enabled and no errors appear in the console
+
+### Videos don't autoplay
+
+- Confirm `Autoplay` is enabled in the section settings
+- Browser autoplay policies require `muted` — the section handles this automatically
+- Check that the video is uploaded in Shopify's native video picker, not embedded from YouTube or Vimeo
+- Reduced-motion OS settings will disable autoplay (this is intentional)
+
+### Text is invisible over dark media
+
+- Set **Content color** on that slide to **Light**
+- Or increase **Overlay opacity** to 40–50%
+- Or change the section **Color scheme** to a dark one and set Content color to Auto
+
+### Grid Carousel shows "peek" but panels look cramped
+
+- Reduce **Desktop visible items** from 3 to 2
+- Or increase **Grid gap** to Large
+
+### Arrows or dots are hard to see
+
+- Set **Controls color** to Light or Dark depending on your media
+- In Fullscreen and Large this overrides the scheme-based color
+
+### Split layout on mobile looks like a stack
+
+This is expected. Split layout collapses to a single column below 990px to preserve readability.
+
+---
+
+## Conclusion
+
+The **Editorial Media Hero** is the most flexible hero in COSME. Through four layouts, per-slide content control, and a seamless infinite loop in Grid Carousel, it covers beauty campaigns, fashion editorials, jewelry lookbooks, and men's grooming hero sections — all from the same code, with no duplicated Liquid.
+
+For further assistance, refer to the [COSME Theme Documentation](/) or [contact support](https://www.rootly.cc/contact).

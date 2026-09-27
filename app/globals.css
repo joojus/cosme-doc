@@ -1,0 +1,42 @@
+/* globals.css */
+
+.logo-light {
+    display: block;
+  }
+  .logo-dark {
+    display: none;
+  }
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+  /* Вот так нужно: через класс .dark */
+  html.dark .logo-light {
+    display: none;
+  }
+  html.dark .logo-dark {
+    display: block;
+  }
+  html.dark .logo {
+    color: #b5b8bd;
+}  
+/* По умолчанию (светлая тема) — инвертируем */
+.logo-invert {
+    filter: invert(1);
+  }
+  
+  /* В тёмной теме — убираем инверсию */
+  html.dark .logo-invert {
+    filter: invert(0);
+  }
+  
+.Sidebar_divider__COuse {
+    display: block;
+    background-color: #3e3e44;
+    width: 1px;
+    border-radius: 9999px;
+    height: 20px;
+    margin-left: 16px;
+    margin-right: 7px;
+}
